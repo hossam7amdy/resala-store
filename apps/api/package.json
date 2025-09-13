@@ -32,6 +32,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@medusajs/test-utils": "2.10.0",
     "@medusajs/types": "2.10.1",
     "@mikro-orm/cli": "6.4.3",
