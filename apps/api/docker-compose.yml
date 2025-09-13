@@ -1,0 +1,53 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: resala_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: resala
+      POSTGRES_USER: superuser
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - resala_network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: resala_redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    networks:
+      - resala_network
+
+  # Minio for S3
+  minio:
+    image: minio/minio:latest
+    container_name: resala_s3
+    restart: unless-stopped
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_REGION=us-east-1
+      - MINIO_ROOT_USER=superuser
+      - MINIO_ROOT_PASSWORD=password
+    networks:
+      - resala_network
+    volumes:
+      - minio_data:/data
+      - ./scripts/minio-entrypoint.sh:/scripts/minio-entrypoint.sh
+    entrypoint: ['/scripts/minio-entrypoint.sh']
+
+volumes:
+  postgres_data:
+  minio_data:
+
+networks:
+  resala_network:
+    driver: bridge
