@@ -1,4 +1,3 @@
 module.exports = {
-  '*.{js,ts,tsx}': ['pnpm run format', 'pnpm run lint --'],
-  '*.json': ['pnpm run format'],
+  '**/*': 'prettier --write --ignore-unknown',
 }
