@@ -1,0 +1,27 @@
+{
+  "name": "resala-store",
+  "description": "Resala is an online store for selling women's clothes.",
+  "private": true,
+  "version": "2.0.0",
+  "author": "Hossam Hamdy <hossamhamdy117@gmail.com>",
+  "scripts": {
+    "prepare": "husky",
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.0",
+    "turbo": "^2.5.6",
+    "lint-staged": "^16.1.6",
+    "husky": "^9.1.7"
+  },
+  "packageManager": "pnpm@8.15.6",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
