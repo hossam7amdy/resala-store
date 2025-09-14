@@ -6,7 +6,7 @@
   "author": "Hossam Hamdy <hossamhamdy117@gmail.com>",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky",
+    "prepare": "husky || echo 'husky not found'",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
