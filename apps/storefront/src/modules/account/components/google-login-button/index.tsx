@@ -11,7 +11,7 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = useCallback(async () => {
     setIsLoading(true)
     try {
-      await loginWithGoogle()
+      await loginWithGoogle(window.location.origin + '/oauth/google-callback')
     } catch (error) {
       console.error('Google login failed:', error)
       setIsLoading(false)

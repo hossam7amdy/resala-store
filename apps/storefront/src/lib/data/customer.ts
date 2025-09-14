@@ -127,8 +127,10 @@ export async function login(_currentState: unknown, formData: FormData) {
   }
 }
 
-export async function loginWithGoogle() {
-  const authUrl = await sdk.auth.login('customer', 'google', {})
+export async function loginWithGoogle(callbackUrl: string) {
+  const authUrl = await sdk.auth.login('customer', 'google', {
+    callback_url: callbackUrl,
+  })
 
   if (typeof authUrl !== 'string') {
     redirect(authUrl.location)
