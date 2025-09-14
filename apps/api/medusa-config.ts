@@ -9,8 +9,8 @@ loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 module.exports = defineConfig({
   admin: {
-    backendUrl: process.env.RESALA_BACKEND_URL,
-    storefrontUrl: process.env.RESALA_STOREFRONT_URL,
+    backendUrl: process.env.BACKEND_URL,
+    storefrontUrl: process.env.STOREFRONT_URL,
     disable: process.env.ADMIN_DISABLED === 'true',
   },
   projectConfig: {
@@ -32,9 +32,9 @@ module.exports = defineConfig({
             resolve: '@medusajs/medusa/file-s3',
             id: 's3',
             options: {
-              region: process.env.AWS_REGION,
-              access_key_id: process.env.AWS_ACCESS_KEY_ID,
-              secret_access_key: process.env.AWS_SECRET_ACCESS_KEY,
+              region: process.env.S3_REGION,
+              access_key_id: process.env.S3_ACCESS_KEY_ID,
+              secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
               bucket: process.env.S3_BUCKET,
               file_url: process.env.S3_FILE_URL,
               endpoint: process.env.S3_ENDPOINT,
