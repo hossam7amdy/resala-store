@@ -9,6 +9,7 @@ loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 module.exports = defineConfig({
   admin: {
+    path: '/',
     backendUrl: process.env.BACKEND_URL,
     storefrontUrl: process.env.STOREFRONT_URL,
     disable: process.env.ADMIN_DISABLED === 'true',
