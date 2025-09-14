@@ -59,7 +59,7 @@ function OrderPlacedEmailComponent({
     <Tailwind>
       <Html className="font-sans bg-gray-100">
         <Head />
-        <Preview>Thank you for your order from Medusa</Preview>
+        <Preview>Thank you for your order from Resala</Preview>
         <Body className="bg-white my-10 mx-auto w-full max-w-2xl">
           {/* Header */}
           <Section className="bg-[#27272a] text-white px-6 py-4">
