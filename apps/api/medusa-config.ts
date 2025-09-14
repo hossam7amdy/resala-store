@@ -4,6 +4,7 @@ import {
   defineConfig,
   ContainerRegistrationKeys,
 } from '@medusajs/framework/utils'
+import { z } from 'zod/v4'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
@@ -12,7 +13,7 @@ module.exports = defineConfig({
     path: '/',
     backendUrl: process.env.BACKEND_URL,
     storefrontUrl: process.env.STOREFRONT_URL,
-    disable: process.env.ADMIN_DISABLED === 'true',
+    disable: z.coerce.boolean().default(true).parse(process.env.ADMIN_DISABLED),
   },
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
