@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Heading } from '@medusajs/ui'
+import { Button, Heading, Tooltip, TooltipProvider } from '@medusajs/ui'
 
 import CartTotals from '@modules/common/components/cart-totals'
 import Divider from '@modules/common/components/divider'
@@ -12,6 +12,7 @@ type SummaryProps = {
   cart: HttpTypes.StoreCart & {
     promotions: HttpTypes.StorePromotion[]
   }
+  customer?: HttpTypes.StoreCustomer | null
 }
 
 function getCheckoutStep(cart: HttpTypes.StoreCart) {
@@ -24,8 +25,9 @@ function getCheckoutStep(cart: HttpTypes.StoreCart) {
   }
 }
 
-const Summary = ({ cart }: SummaryProps) => {
+const Summary = ({ cart, customer }: SummaryProps) => {
   const step = getCheckoutStep(cart)
+  const isLoggedIn = !!customer
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -35,12 +37,24 @@ const Summary = ({ cart }: SummaryProps) => {
       <DiscountCode cart={cart} />
       <Divider />
       <CartTotals totals={cart} />
-      <LocalizedClientLink
-        href={'/checkout?step=' + step}
-        data-testid="checkout-button"
-      >
-        <Button className="w-full h-10">Go to checkout</Button>
-      </LocalizedClientLink>
+      {isLoggedIn ? (
+        <LocalizedClientLink
+          href={'/checkout?step=' + step}
+          data-testid="checkout-button"
+        >
+          <Button className="w-full h-10">Go to checkout</Button>
+        </LocalizedClientLink>
+      ) : (
+        <TooltipProvider>
+          <Tooltip content="Please login first to complete your order">
+            <div className="w-full">
+              <Button className="w-full h-10" disabled={!isLoggedIn}>
+                Go to checkout
+              </Button>
+            </div>
+          </Tooltip>
+        </TooltipProvider>
+      )}
     </div>
   )
 }
