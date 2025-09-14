@@ -4,8 +4,8 @@
   "version": "2.0.0",
   "scripts": {
     "generate:static": "node ./scripts/generate-currencies.js && prettier --write ./src/lib/currencies.ts",
-    "dev": "vite",
-    "build": "vite build && node ./scripts/generate-types.js",
+    "dev": "vite --clearScreen false",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "vitest --run",
     "i18n:validate": "node ./scripts/i18n/validate-translation.js",
