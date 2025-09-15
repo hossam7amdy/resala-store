@@ -1,5 +1,6 @@
 'use client'
 
+import { useCallback, useEffect, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { isPaymob as isPaymobFunc, paymentInfoMap } from '@lib/constants'
 import { initiatePaymentSession } from '@lib/data/cart'
@@ -9,7 +10,7 @@ import ErrorMessage from '@modules/checkout/components/error-message'
 import PaymentContainer from '@modules/checkout/components/payment-container'
 import Divider from '@modules/common/components/divider'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import PaymobCardContainer from '../payment-container/paymob-container'
 
 const Payment = ({
   cart,
@@ -24,6 +25,7 @@ const Payment = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [cardComplete, setCardComplete] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     activeSession?.provider_id ?? ''
   )
@@ -38,10 +40,11 @@ const Payment = ({
 
   const isOpen = searchParams.get('step') === 'payment'
 
+  const isPaymob = isPaymobFunc(selectedPaymentMethod)
+
   const setPaymentMethod = async (method: string) => {
     setError(null)
     setSelectedPaymentMethod(method)
-
     await initiatePaymentSession(cart, {
       provider_id: method,
       data: {
@@ -51,11 +54,11 @@ const Payment = ({
     })
   }
 
-  const paidByGiftcard =
+  const paidByGiftCard =
     cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
 
   const paymentReady =
-    (activeSession && cart?.shipping_methods.length !== 0) || paidByGiftcard
+    (activeSession && cart?.shipping_methods.length !== 0) || paidByGiftCard
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -141,26 +144,35 @@ const Payment = ({
       </div>
       <div>
         <div className={isOpen ? 'block' : 'hidden'}>
-          {!paidByGiftcard && availablePaymentMethods?.length && (
-            <>
-              <RadioGroup
-                value={selectedPaymentMethod}
-                onChange={(value: string) => setPaymentMethod(value)}
-              >
-                {availablePaymentMethods.map((paymentMethod) => (
-                  <div key={paymentMethod.id}>
+          {!paidByGiftCard && availablePaymentMethods?.length && (
+            <RadioGroup
+              value={selectedPaymentMethod}
+              onChange={(value: string) => setPaymentMethod(value)}
+            >
+              {availablePaymentMethods.map((paymentMethod) => (
+                <div key={paymentMethod.id}>
+                  {isPaymobFunc(paymentMethod.id) ? (
+                    <PaymobCardContainer
+                      cart={cart}
+                      paymentProviderId={paymentMethod.id}
+                      selectedPaymentOptionId={selectedPaymentMethod}
+                      paymentInfoMap={paymentInfoMap}
+                      setError={setError}
+                      setCardComplete={setCardComplete}
+                    />
+                  ) : (
                     <PaymentContainer
                       paymentInfoMap={paymentInfoMap}
                       paymentProviderId={paymentMethod.id}
                       selectedPaymentOptionId={selectedPaymentMethod}
                     />
-                  </div>
-                ))}
-              </RadioGroup>
-            </>
+                  )}
+                </div>
+              ))}
+            </RadioGroup>
           )}
 
-          {paidByGiftcard && (
+          {paidByGiftCard && (
             <div className="flex flex-col w-1/3">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
                 Payment method
@@ -184,7 +196,7 @@ const Payment = ({
             className="mt-6"
             onClick={handleSubmit}
             isLoading={isLoading}
-            disabled={!selectedPaymentMethod && !paidByGiftcard}
+            disabled={(isPaymob && !cardComplete) || !selectedPaymentMethod}
             data-testid="submit-payment-button"
           >
             {!activeSession && isPaymobFunc(selectedPaymentMethod)
@@ -221,11 +233,10 @@ const Payment = ({
                       <CreditCard />
                     )}
                   </Container>
-                  <Text>Another step will appear</Text>
                 </div>
               </div>
             </div>
-          ) : paidByGiftcard ? (
+          ) : paidByGiftCard ? (
             <div className="flex flex-col w-1/3">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
                 Payment method

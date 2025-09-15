@@ -4,7 +4,7 @@ import { isManual, isPaymob } from '@lib/constants'
 import { placeOrder } from '@lib/data/cart'
 import { HttpTypes } from '@medusajs/types'
 import { Button } from '@medusajs/ui'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import ErrorMessage from '../error-message'
 
 type PaymentButtonProps = {
@@ -52,29 +52,30 @@ const PaymobPaymentButton = ({
   notReady: boolean
   'data-testid'?: string
 }) => {
+  const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const session = cart.payment_collection?.payment_sessions?.find(
     (s) => s.status === 'pending'
   )
 
-  const disabled = !session || typeof session.data.checkout_url !== 'string'
+  const disabled = !session || !window.Pixel
 
-  const handlePayment = async () => {
-    if (typeof session?.data.checkout_url === 'string') {
-      location.href = session?.data.checkout_url
-    } else {
-      setErrorMessage('Invalid checkout URL, Please try again!')
-    }
-  }
+  const handlePayment = useCallback(() => {
+    setErrorMessage(null)
+    const invoked = window.dispatchEvent(new Event('payFromOutside'))
+    setSubmitting(invoked)
+  }, [])
 
   return (
     <>
       <Button
+        isLoading={submitting}
         disabled={disabled || notReady}
         onClick={handlePayment}
         size="large"
         data-testid={dataTestId}
+        type="submit"
       >
         Place order
       </Button>

@@ -1,10 +1,10 @@
 import { Radio as RadioGroupOption } from '@headlessui/react'
 import { Text, clx } from '@medusajs/ui'
-import React, { useContext, useMemo, type JSX } from 'react'
+import React, { type JSX } from 'react'
 
 import Radio from '@modules/common/components/radio'
 
-type PaymentContainerProps = {
+export type PaymentContainerProps = {
   paymentProviderId: string
   selectedPaymentOptionId: string | null
   disabled?: boolean
