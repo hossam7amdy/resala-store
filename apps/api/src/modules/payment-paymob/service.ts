@@ -147,6 +147,7 @@ class PaymobPaymentProviderService extends AbstractPaymentProvider<Options> {
       extras: { session_id },
     })
 
+    sessionData['public_key'] = this._options.publicKey
     sessionData['checkout_url'] = this._paymob.payment.getCheckoutUrl(
       sessionData.client_secret
     )

@@ -15,18 +15,14 @@ const PaymentCallbackHandler: React.FC<PaymentCallbackHandlerProps> = ({
   const router = useRouter()
   const initialRenderRef = useRef(true)
   const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [errorMessage, _setErrorMessage] = useState<string | null>(null)
   const { countryCode } = useParams() as { countryCode: string }
 
   const handlePaymentCompletion = useCallback(() => {
     setSubmitting(true)
     placeOrder()
-      .catch((err) => {
-        setErrorMessage(err.message)
-      })
-      .finally(() => {
-        setSubmitting(false)
-      })
+      .catch(console.error)
+      .finally(() => setSubmitting(false))
   }, [])
 
   useEffect(() => {
