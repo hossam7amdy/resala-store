@@ -31,8 +31,9 @@ const Payment = ({
   const router = useRouter()
   const pathname = usePathname()
 
-  const [redirectionUrl] = useState(() =>
-    new URL('/checkout-callback', location.origin).toString()
+  const getRedirectionUrl = useCallback(
+    () => new URL('/checkout-callback', window?.location.origin).toString(),
+    []
   )
 
   const isOpen = searchParams.get('step') === 'payment'
@@ -44,7 +45,7 @@ const Payment = ({
     await initiatePaymentSession(cart, {
       provider_id: method,
       data: {
-        redirection_url: redirectionUrl,
+        redirection_url: getRedirectionUrl(),
         billing_address: cart.billing_address,
       },
     })
@@ -85,7 +86,7 @@ const Payment = ({
         await initiatePaymentSession(cart, {
           provider_id: selectedPaymentMethod,
           data: {
-            redirection_url: redirectionUrl,
+            redirection_url: getRedirectionUrl(),
             billing_address: cart.billing_address,
           },
         })
