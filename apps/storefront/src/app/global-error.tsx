@@ -36,7 +36,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] bg-gray-50 px-4 py-12">
-      <div className="bg-white rounded-lg shadow-md p-8 max-w-lg w-full">
+      <div className="bg-white rounded-lg shadow-md p-8 w-full">
         <Heading level="h1" className="text-2xl text-red-600 mb-2">
           Oops, something went wrong
         </Heading>

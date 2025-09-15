@@ -4,9 +4,8 @@ import { isManual, isPaymob } from '@lib/constants'
 import { placeOrder } from '@lib/data/cart'
 import { HttpTypes } from '@medusajs/types'
 import { Button } from '@medusajs/ui'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import ErrorMessage from '../error-message'
-import { useSearchParams } from 'next/navigation'
 
 type PaymentButtonProps = {
   cart: HttpTypes.StoreCart
@@ -53,22 +52,7 @@ const PaymobPaymentButton = ({
   notReady: boolean
   'data-testid'?: string
 }) => {
-  const initialRenderRef = useRef(true)
-  const searchParams = useSearchParams()
-  const isPaymentSuccess = searchParams.get('success') === 'true'
-  const [submitting, setSubmitting] = useState(() => isPaymentSuccess)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
-  const onPaymentCompleted = useCallback(async () => {
-    setSubmitting(true)
-    await placeOrder()
-      .catch((err) => {
-        setErrorMessage(err.message)
-      })
-      .finally(() => {
-        setSubmitting(false)
-      })
-  }, [])
 
   const session = cart.payment_collection?.payment_sessions?.find(
     (s) => s.status === 'pending'
@@ -79,22 +63,10 @@ const PaymobPaymentButton = ({
   const handlePayment = async () => {
     if (typeof session?.data.checkout_url === 'string') {
       location.href = session?.data.checkout_url
+    } else {
+      setErrorMessage('Invalid checkout URL, Please try again!')
     }
   }
-
-  useEffect(() => {
-    if (initialRenderRef.current) {
-      initialRenderRef.current = false
-
-      if (searchParams.get('success') === 'true') {
-        onPaymentCompleted()
-      }
-
-      return () => {
-        initialRenderRef.current = true
-      }
-    }
-  }, [searchParams, onPaymentCompleted])
 
   return (
     <>
@@ -102,7 +74,6 @@ const PaymobPaymentButton = ({
         disabled={disabled || notReady}
         onClick={handlePayment}
         size="large"
-        isLoading={submitting}
         data-testid={dataTestId}
       >
         Place order
