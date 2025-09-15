@@ -56,7 +56,7 @@ export const UserMenu = () => {
             </Link>
           </DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item asChild>
+          {/* <DropdownMenu.Item asChild>
             <Link to="https://docs.medusajs.com" target="_blank">
               <BookOpen className="text-ui-fg-subtle mr-2" />
               {t('app.menus.user.documentation')}
@@ -68,7 +68,7 @@ export const UserMenu = () => {
               {t('app.menus.user.changelog')}
             </Link>
           </DropdownMenu.Item>
-          <DropdownMenu.Separator />
+          <DropdownMenu.Separator /> */}
           <DropdownMenu.Item onClick={toggleModal}>
             <Keyboard className="text-ui-fg-subtle mr-2" />
             {t('app.menus.user.shortcuts')}
