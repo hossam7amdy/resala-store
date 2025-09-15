@@ -1,7 +1,7 @@
 'use client'
 
 import { RadioGroup } from '@headlessui/react'
-import { isStripe as isStripeFunc, paymentInfoMap } from '@lib/constants'
+import { isPaymob as isPaymobFunc, paymentInfoMap } from '@lib/constants'
 import { initiatePaymentSession } from '@lib/data/cart'
 import { CheckCircleSolid, CreditCard } from '@medusajs/icons'
 import { Button, Container, Heading, Text, clx } from '@medusajs/ui'
@@ -24,8 +24,6 @@ const Payment = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [cardBrand, setCardBrand] = useState<string | null>(null)
-  const [cardComplete, setCardComplete] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     activeSession?.provider_id ?? ''
   )
@@ -34,12 +32,10 @@ const Payment = ({
   const pathname = usePathname()
 
   const [redirectionUrl] = useState(() =>
-    new URL(pathname + '?step=review', location.origin).toString()
+    new URL('/checkout-callback', location.origin).toString()
   )
 
   const isOpen = searchParams.get('step') === 'payment'
-
-  const isStripe = isStripeFunc(selectedPaymentMethod)
 
   const setPaymentMethod = async (method: string) => {
     setError(null)
@@ -80,7 +76,7 @@ const Payment = ({
     setIsLoading(true)
     try {
       const shouldInputCard =
-        isStripeFunc(selectedPaymentMethod) && !activeSession
+        isPaymobFunc(selectedPaymentMethod) && !activeSession
 
       const checkActiveSession =
         activeSession?.provider_id === selectedPaymentMethod
@@ -187,13 +183,10 @@ const Payment = ({
             className="mt-6"
             onClick={handleSubmit}
             isLoading={isLoading}
-            disabled={
-              (isStripe && !cardComplete) ||
-              (!selectedPaymentMethod && !paidByGiftcard)
-            }
+            disabled={!selectedPaymentMethod && !paidByGiftcard}
             data-testid="submit-payment-button"
           >
-            {!activeSession && isStripeFunc(selectedPaymentMethod)
+            {!activeSession && isPaymobFunc(selectedPaymentMethod)
               ? ' Enter card details'
               : 'Continue to review'}
           </Button>
@@ -227,11 +220,7 @@ const Payment = ({
                       <CreditCard />
                     )}
                   </Container>
-                  <Text>
-                    {isStripeFunc(selectedPaymentMethod) && cardBrand
-                      ? cardBrand
-                      : 'Another step will appear'}
-                  </Text>
+                  <Text>Another step will appear</Text>
                 </div>
               </div>
             </div>
