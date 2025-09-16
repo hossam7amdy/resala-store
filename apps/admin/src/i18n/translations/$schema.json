@@ -3614,6 +3614,16 @@
       ],
       "additionalProperties": false
     },
+    "reviews": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        }
+      },
+      "required": ["domain"],
+      "additionalProperties": false
+    },
     "customerGroups": {
       "type": "object",
       "properties": {

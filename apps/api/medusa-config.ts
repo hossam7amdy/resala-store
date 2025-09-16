@@ -105,5 +105,9 @@ module.exports = defineConfig({
         ],
       },
     },
+    {
+      resolve: './src/modules/product-review',
+      options: {},
+    },
   ],
 })

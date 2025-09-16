@@ -22,13 +22,10 @@
   },
   "lint-staged": {
     "*": [
-      "prettier --write --cache --ignore-unknown"
+      "prettier --write --ignore-unknown"
     ],
     "apps/*/src/**/*.{ts,tsx}": [
-      "eslint --cache --fix"
-    ],
-    "apps/**/*.d.ts": [
-      "eslint --cache --fix"
+      "eslint --fix --report-unused-disable-directives"
     ]
   },
   "engines": {
