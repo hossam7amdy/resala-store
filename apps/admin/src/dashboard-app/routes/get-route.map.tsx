@@ -889,6 +889,19 @@ export function getRouteMap({
                 },
               ],
             },
+            {
+              path: '/reviews',
+              errorElement: <ErrorBoundary />,
+              handle: {
+                breadcrumb: () => t('reviews.domain'),
+              },
+              children: [
+                {
+                  path: '',
+                  lazy: () => import('../../routes/reviews'),
+                },
+              ],
+            },
             ...coreRoutes,
           ],
         },

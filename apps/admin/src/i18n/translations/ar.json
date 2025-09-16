@@ -937,6 +937,9 @@
     "guest": "ضيف",
     "hasAccount": "لديه حساب"
   },
+  "reviews": {
+    "domain": "المراجعات"
+  },
   "customerGroups": {
     "list": {
       "empty": {

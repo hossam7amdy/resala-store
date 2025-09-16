@@ -962,6 +962,9 @@
       }
     }
   },
+  "reviews": {
+    "domain": "Reviews"
+  },
   "customerGroups": {
     "domain": "Customer Groups",
     "subtitle": "Organize customers into groups. Groups can have different promotions and prices.",
