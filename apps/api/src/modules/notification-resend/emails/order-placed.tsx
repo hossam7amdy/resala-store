@@ -51,7 +51,6 @@ function OrderPlacedEmailComponent({
       return formatter.format(parseFloat(price))
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return price?.toString() || ''
   }
 

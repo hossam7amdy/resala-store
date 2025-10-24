@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Badge, usePrompt, toast, DropdownMenu } from '@medusajs/ui'
 import { Trash, PencilSquare, ArrowUturnLeft } from '@medusajs/icons'
 import {

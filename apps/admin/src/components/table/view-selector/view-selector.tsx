@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Select,
-  Button,
-  Tooltip,
-  DropdownMenu,
-  Badge,
-  usePrompt,
-  toast,
-} from '@medusajs/ui'
+import { Button, Tooltip, DropdownMenu, usePrompt } from '@medusajs/ui'
 import {
   Eye,
-  EyeSlash,
   Plus,
   Trash,
   PencilSquare,

@@ -21,7 +21,7 @@ type ShippingProps = {
   availableShippingMethods: HttpTypes.StoreCartShippingOption[] | null
 }
 
-function formatAddress(address) {
+function formatAddress(address: any) {
   if (!address) {
     return ''
   }
@@ -93,7 +93,9 @@ const Shipping: React.FC<ShippingProps> = ({
           const pricesMap: Record<string, number> = {}
           res
             .filter((r) => r.status === 'fulfilled')
-            .forEach((p) => (pricesMap[p.value?.id || ''] = p.value?.amount!))
+            .forEach(
+              (p) => (pricesMap[p.value?.id || ''] = p.value?.amount as number)
+            )
 
           setCalculatedPricesMap(pricesMap)
           setIsLoadingPrices(false)
@@ -383,7 +385,7 @@ const Shipping: React.FC<ShippingProps> = ({
                 <Text className="txt-medium text-ui-fg-subtle">
                   {cart.shipping_methods?.at(-1)?.name}{' '}
                   {convertToLocale({
-                    amount: cart.shipping_methods.at(-1)?.amount!,
+                    amount: cart.shipping_methods?.at(-1)?.amount as number,
                     currency_code: cart?.currency_code,
                   })}
                 </Text>

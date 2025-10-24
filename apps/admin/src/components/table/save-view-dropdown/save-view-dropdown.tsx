@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { DropdownMenu, Button, toast, usePrompt } from '@medusajs/ui'
-import { Plus, CloudArrowUp, SquarePlusMicro } from '@medusajs/icons'
+import React from 'react'
+import { DropdownMenu, Button, usePrompt } from '@medusajs/ui'
+import { CloudArrowUp, SquarePlusMicro } from '@medusajs/icons'
 
 interface SaveViewDropdownProps {
   isDefaultView: boolean
