@@ -106,7 +106,6 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
 
     if (!template) {
       this._logger.error(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         `Couldn't find an email template for ${notification.template}. The valid options are ${Object.values(Templates)}`
       )
       return {}

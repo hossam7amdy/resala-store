@@ -153,7 +153,7 @@ export async function loginWithGoogle(callbackUrl: string) {
 
 export async function handleGoogleCallback(queryParams: Record<string, any>) {
   try {
-    let token = await sdk.auth.callback('customer', 'google', queryParams)
+    const token = await sdk.auth.callback('customer', 'google', queryParams)
     await setAuthToken(token)
     const customerCacheTag = await getCacheTag('customers')
     revalidateTag(customerCacheTag)

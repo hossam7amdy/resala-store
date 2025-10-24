@@ -40,6 +40,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'egteqixkhxbiexflwrpt.supabase.co',
       },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
     ],
   },
 }
