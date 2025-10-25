@@ -13,6 +13,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@google-cloud/translate": "^9.2.1",
     "@medusajs/admin-sdk": "2.10.0",
     "@medusajs/cli": "2.10.0",
     "@medusajs/framework": "2.10.0",
@@ -29,9 +30,11 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@medusajs/test-utils": "2.10.0",
     "@medusajs/types": "2.10.1",
     "@mikro-orm/cli": "6.4.3",
+    "@repo/shared-types": "workspace:*",
     "@swc/core": "1.5.7",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.13",

@@ -51,6 +51,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@repo/shared-types": "workspace:*",
     "@medusajs/admin-shared": "2.10.1",
     "@medusajs/admin-vite-plugin": "2.10.1",
     "@medusajs/types": "2.10.1",

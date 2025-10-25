@@ -1,27 +1,29 @@
+import { AdminReviewListResponse } from '@repo/shared-types'
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
-import { createFindParams } from '@medusajs/medusa/api/utils/validators'
+import {
+  ContainerRegistrationKeys,
+  remoteQueryObjectFromString,
+} from '@medusajs/framework/utils'
 
-export const GetAdminReviewsSchema = createFindParams()
+export const GET = async (
+  req: MedusaRequest,
+  res: MedusaResponse<AdminReviewListResponse>
+) => {
+  const remoteQuery = req.scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
 
-export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
-  const query = req.scope.resolve('query')
-
-  const {
-    data: reviews,
-    metadata: { count, take, skip } = {
-      count: 0,
-      take: 20,
-      skip: 0,
+  const queryConfig = remoteQueryObjectFromString({
+    entryPoint: 'review',
+    variables: {
+      filters: req.filterableFields,
+      ...req.queryConfig.pagination,
     },
-  } = await query.graph({
-    entity: 'review',
-    ...req.queryConfig,
+    fields: req.queryConfig.fields,
   })
+
+  const { rows: reviews, metadata } = await remoteQuery(queryConfig)
 
   res.json({
     reviews,
-    count,
-    limit: take,
-    offset: skip,
+    ...metadata,
   })
 }

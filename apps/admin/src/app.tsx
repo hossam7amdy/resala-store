@@ -7,6 +7,8 @@ import menuItemModule from 'virtual:medusa/menu-items'
 import routeModule from 'virtual:medusa/routes'
 import widgetModule from 'virtual:medusa/widgets'
 
+import { customPlugins } from './plugins'
+
 import './index.css'
 
 const localPlugin = {
@@ -23,7 +25,7 @@ interface AppProps {
 
 function App({ plugins = [] }: AppProps) {
   const app = new DashboardApp({
-    plugins: [localPlugin, ...plugins],
+    plugins: [localPlugin, ...customPlugins, ...plugins],
   })
 
   return <div>{app.render()}</div>

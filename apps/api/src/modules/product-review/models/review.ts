@@ -1,7 +1,7 @@
 import { model } from '@medusajs/framework/utils'
 
 const Review = model.define('review', {
-  id: model.id().primaryKey(),
+  id: model.id({ prefix: 'rev' }).primaryKey(),
   title: model.text().nullable(),
   content: model.text(),
   rating: model.float(),

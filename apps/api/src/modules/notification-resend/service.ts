@@ -8,33 +8,54 @@ import {
   Logger,
 } from '@medusajs/framework/types'
 import { CreateEmailOptions, Resend } from 'resend'
-import { orderPlacedEmail } from './emails/order-placed'
-import { userInvitedEmail } from './emails/user-invited'
-import { passwordResetEmail } from './emails/password-reset'
 
-enum Templates {
+import { OrderPlacedEmail } from './emails/order-placed'
+import { OrderShippedEmail } from './emails/order-shipped'
+import { UserInvitedEmail } from './emails/user-invited'
+import { PasswordResetEmail } from './emails/password-reset'
+import { WelcomeEmail } from './emails/welcome'
+
+export enum Templates {
+  WELCOME = 'welcome',
   ORDER_PLACED = 'order-placed',
+  ORDER_SHIPPED = 'order-shipped',
   USER_INVITED = 'user-invited',
   PASSWORD_RESET = 'password-reset',
 }
 
-const templates: { [key in Templates]?: (props: unknown) => React.ReactNode } =
-  {
-    [Templates.ORDER_PLACED]: orderPlacedEmail,
-    [Templates.USER_INVITED]: userInvitedEmail,
-    [Templates.PASSWORD_RESET]: passwordResetEmail,
-  }
+interface Template {
+  subject: string
+  content: (props: unknown) => React.ReactNode
+}
+
+const templates: {
+  [key in Templates]?: Template
+} = {
+  [Templates.WELCOME]: {
+    subject: 'Welcome!',
+    content: WelcomeEmail,
+  },
+  [Templates.ORDER_PLACED]: {
+    subject: 'Order Confirmation - Order #{{orderId}}',
+    content: OrderPlacedEmail,
+  },
+  [Templates.ORDER_SHIPPED]: {
+    subject: 'Order Shipment Confirmation - Order #{{orderId}}',
+    content: OrderShippedEmail,
+  },
+  [Templates.USER_INVITED]: {
+    subject: "You're Invited!",
+    content: UserInvitedEmail,
+  },
+  [Templates.PASSWORD_RESET]: {
+    subject: 'Reset Your Password',
+    content: PasswordResetEmail,
+  },
+}
 
 type ResendOptions = {
   api_key: string
   from: string
-  html_templates?: Record<
-    string,
-    {
-      subject?: string
-      content: string
-    }
-  >
 }
 
 type InjectedDependencies = {
@@ -71,9 +92,6 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
   }
 
   getTemplate(template: Templates) {
-    if (this._options.html_templates?.[template]) {
-      return this._options.html_templates[template].content
-    }
     const allowedTemplates = Object.keys(templates)
 
     if (!allowedTemplates.includes(template)) {
@@ -83,20 +101,24 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     return templates[template]
   }
 
-  getTemplateSubject(template: Templates) {
-    if (this._options.html_templates?.[template]?.subject) {
-      return this._options.html_templates[template].subject
+  interpolateTemplateSubject(
+    template: Template,
+    data?: Record<string, any> | null
+  ) {
+    let subject = template.subject
+
+    if (!data) {
+      return subject
     }
-    switch (template) {
-      case Templates.ORDER_PLACED:
-        return 'Order Confirmation'
-      case Templates.USER_INVITED:
-        return "You're Invited!"
-      case Templates.PASSWORD_RESET:
-        return 'Reset Your Password'
-      default:
-        return 'New Email'
-    }
+
+    Object.keys(data).forEach((key) => {
+      subject = subject.replace(
+        new RegExp(`{{${key}}}`, 'g'),
+        String(data[key])
+      )
+    })
+
+    return subject
   }
 
   async send(
@@ -114,19 +136,19 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     const commonOptions = {
       from: this._options.from,
       to: [notification.to],
-      subject: this.getTemplateSubject(notification.template as Templates),
+      subject: this.interpolateTemplateSubject(template, notification.data),
     }
 
     let emailOptions: CreateEmailOptions
-    if (typeof template === 'string') {
+    if (typeof template.content === 'string') {
       emailOptions = {
         ...commonOptions,
-        html: template,
+        html: template.content,
       }
     } else {
       emailOptions = {
         ...commonOptions,
-        react: template(notification.data),
+        react: template.content(notification.data),
       }
     }
 
