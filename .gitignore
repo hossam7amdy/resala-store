@@ -1,12 +1,71 @@
-.DS_Store
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# IDEs
+.idea
+.vscode
+
+# dependencies
+/node_modules
 node_modules
-.turbo
-*.log
+/.pnp
+.pnp.js
+.yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# testing
+/coverage
+coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+build
+/dist
+
+# misc
+.DS_Store
+*.pem
+/uploads
+dump.rdb
+medusa-db.sql
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*
+!.env.template
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+./tsconfig.tsbuildinfo
+.swc
+
+# build
+.medusa
 .next
+.react-email
 dist
-dist-ssr
-*.local
-.env
+
+# cache
 .cache
-server/dist
-public/dist
+.turbo
