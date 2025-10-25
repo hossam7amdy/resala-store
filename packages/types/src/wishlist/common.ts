@@ -1,4 +1,4 @@
-import { ProductVariantDTO } from '@medusajs/framework/types'
+import type { ProductVariantDTO } from '@medusajs/framework/types'
 
 export type WishlistDTO = {
   id: string

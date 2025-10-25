@@ -1,5 +1,5 @@
 import type { PaginatedResponse } from '@medusajs/framework/types'
-import { StoreLocale } from './entities'
+import type { StoreLocale } from './entities'
 
 export type StoreLocaleResponse = {
   locale: StoreLocale

@@ -1,5 +1,5 @@
-import { PaginatedResponse } from '@medusajs/framework/types'
-import { AdminReview } from './entities'
+import type { PaginatedResponse } from '@medusajs/framework/types'
+import type { AdminReview } from './entities'
 
 export type AdminUpdateReviewsStatusResponse = {
   reviews: AdminReview[]

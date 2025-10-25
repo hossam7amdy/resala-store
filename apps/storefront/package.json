@@ -27,7 +27,7 @@
     "webpack": "^5"
   },
   "devDependencies": {
-    "@resala/types": "workspace:*",
+    "@repo/shared-types": "workspace:*",
     "@babel/core": "^7.28.4",
     "@medusajs/types": "2.10.0",
     "@medusajs/ui-preset": "2.10.0",
