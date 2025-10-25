@@ -223,7 +223,7 @@ export const addCustomerAddress = async (
 
   return sdk.store.customer
     .createAddress(address, {}, headers)
-    .then(async ({ customer }) => {
+    .then(async ({ customer: _ }) => {
       const customerCacheTag = await getCacheTag('customers')
       revalidateTag(customerCacheTag)
       return { success: true, error: null }

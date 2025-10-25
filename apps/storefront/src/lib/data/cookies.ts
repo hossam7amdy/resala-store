@@ -26,7 +26,7 @@ export const getCacheTag = async (tag: string): Promise<string> => {
     }
 
     return `${tag}-${cacheId}`
-  } catch (error) {
+  } catch {
     return ''
   }
 }
