@@ -105,7 +105,19 @@ module.exports = defineConfig({
       },
     },
     {
+      resolve: '@medusajs/index',
+      options: {},
+    },
+    {
       resolve: './src/modules/product-review',
+      options: {},
+    },
+    {
+      resolve: './src/modules/translation',
+      options: {},
+    },
+    {
+      resolve: './src/modules/wishlist',
       options: {},
     },
   ],

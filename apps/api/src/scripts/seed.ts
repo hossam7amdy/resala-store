@@ -5,7 +5,7 @@ import {
   ProductStatus,
 } from '@medusajs/framework/utils'
 import {
-  createApiKeysWorkflow,
+  createCollectionsWorkflow,
   createInventoryLevelsWorkflow,
   createProductCategoriesWorkflow,
   createProductsWorkflow,
@@ -15,7 +15,6 @@ import {
   createShippingProfilesWorkflow,
   createStockLocationsWorkflow,
   createTaxRegionsWorkflow,
-  linkSalesChannelsToApiKeyWorkflow,
   linkSalesChannelsToStockLocationWorkflow,
   updateStoresWorkflow,
 } from '@medusajs/medusa/core-flows'
@@ -250,32 +249,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
   })
   logger.info('Finished seeding stock location data.')
 
-  logger.info('Seeding publishable API key data...')
-  const { result: publishableApiKeyResult } = await createApiKeysWorkflow(
-    container
-  ).run({
-    input: {
-      api_keys: [
-        {
-          title: 'Webshop',
-          type: 'publishable',
-          created_by: '',
-        },
-      ],
-    },
-  })
-  const publishableApiKey = publishableApiKeyResult[0]
-
-  await linkSalesChannelsToApiKeyWorkflow(container).run({
-    input: {
-      id: publishableApiKey.id,
-      add: [defaultSalesChannel[0].id],
-    },
-  })
-  logger.info('Finished seeding publishable API key data.')
-
   logger.info('Seeding product data...')
-
   const { result: categoryResult } = await createProductCategoriesWorkflow(
     container
   ).run({
@@ -301,7 +275,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
     },
   })
 
-  await createProductsWorkflow(container).run({
+  const { result: products } = await createProductsWorkflow(container).run({
     input: {
       products: [
         {
@@ -717,6 +691,30 @@ export default async function seedDemoData({ container }: ExecArgs) {
       ],
     },
   })
+
+  await createCollectionsWorkflow(container).run({
+    input: {
+      collections: [
+        {
+          title: 'Top Sellers',
+          product_ids: products.slice(0, 3).map((product) => product.id),
+          handle: 'top-sellers',
+          metadata: {
+            description: 'Top Sellers',
+          },
+        },
+        {
+          title: 'New Arrivals',
+          product_ids: products.map((product) => product.id),
+          handle: 'new-arrivals',
+          metadata: {
+            description: 'New Arrivals',
+          },
+        },
+      ],
+    },
+  })
+
   logger.info('Finished seeding product data.')
 
   logger.info('Seeding inventory levels.')
