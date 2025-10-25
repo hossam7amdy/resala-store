@@ -1,5 +1,3 @@
-import { HttpTypes } from '@medusajs/types'
-
 export enum ColumnAlignment {
   LEFT = 'left',
   CENTER = 'center',

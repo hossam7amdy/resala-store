@@ -49,7 +49,7 @@ const ShippingAddress = ({
     address?: HttpTypes.StoreCartAddress,
     email?: string
   ) => {
-    address &&
+    if (address)
       setFormData((prevState: Record<string, any>) => ({
         ...prevState,
         'shipping_address.first_name': address?.first_name || '',
@@ -63,7 +63,7 @@ const ShippingAddress = ({
         'shipping_address.phone': address?.phone || '',
       }))
 
-    email &&
+    if (email)
       setFormData((prevState: Record<string, any>) => ({
         ...prevState,
         email: email,

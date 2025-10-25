@@ -1,37 +1,39 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
-import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
+import {
+  ContainerRegistrationKeys,
+  remoteQueryObjectFromString,
+} from '@medusajs/framework/utils'
+import { StoreProductReviewsListResponse } from '@repo/shared-types'
+import type ProductReviewModuleService from '../../../../../modules/product-review/service'
 import { PRODUCT_REVIEW_MODULE } from '../../../../../modules/product-review'
-import ProductReviewModuleService from '../../../../../modules/product-review/service'
-import { createFindParams } from '@medusajs/medusa/api/utils/validators'
 
-export const GetStoreReviewsSchema = createFindParams()
-
-export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
+export const GET = async (
+  req: MedusaRequest,
+  res: MedusaResponse<StoreProductReviewsListResponse>
+) => {
   const { id } = req.params
 
-  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const reviewModuleService: ProductReviewModuleService = req.scope.resolve(
+  const remoteQuery = req.scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
+  const reviewModuleService = req.scope.resolve<ProductReviewModuleService>(
     PRODUCT_REVIEW_MODULE
   )
 
-  // Get reviews for product
-  const {
-    data: reviews,
-    metadata: { count, take, skip } = { count: 0, take: 10, skip: 0 },
-  } = await query.graph({
-    entity: 'review',
-    filters: {
-      product_id: id,
-      status: 'approved',
+  const queryConfig = remoteQueryObjectFromString({
+    entryPoint: 'review',
+    variables: {
+      filters: {
+        product_id: id,
+        status: 'approved',
+      },
+      ...req.queryConfig.pagination,
     },
-    ...req.queryConfig,
+    fields: req.queryConfig.fields,
   })
+  const { rows: reviews, metadata } = await remoteQuery(queryConfig)
 
   res.json({
     reviews,
-    count,
-    limit: take,
-    offset: skip,
     average_rating: await reviewModuleService.getAverageRating(id),
+    ...metadata,
   })
 }

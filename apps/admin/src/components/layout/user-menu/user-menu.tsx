@@ -1,10 +1,8 @@
 import {
-  BookOpen,
   CircleHalfSolid,
   EllipsisHorizontal,
   Keyboard,
   OpenRectArrowOut,
-  TimelineVertical,
   User as UserIcon,
   XMark,
 } from '@medusajs/icons'

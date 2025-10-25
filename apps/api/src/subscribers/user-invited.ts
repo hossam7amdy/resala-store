@@ -1,3 +1,4 @@
+import { Templates } from '../modules/notification-resend'
 import { SubscriberArgs, type SubscriberConfig } from '@medusajs/framework'
 
 export default async function inviteCreatedHandler({
@@ -25,7 +26,7 @@ export default async function inviteCreatedHandler({
 
   await notificationModuleService.createNotifications({
     to: invite.email,
-    template: 'user-invited',
+    template: Templates.USER_INVITED,
     channel: 'email',
     data: {
       invite_url: `${backendUrl}${adminPath}/invite?token=${invite.token}`,

@@ -153,7 +153,7 @@ export async function loginWithGoogle(callbackUrl: string) {
 
 export async function handleGoogleCallback(queryParams: Record<string, any>) {
   try {
-    let token = await sdk.auth.callback('customer', 'google', queryParams)
+    const token = await sdk.auth.callback('customer', 'google', queryParams)
     await setAuthToken(token)
     const customerCacheTag = await getCacheTag('customers')
     revalidateTag(customerCacheTag)
@@ -223,7 +223,7 @@ export const addCustomerAddress = async (
 
   return sdk.store.customer
     .createAddress(address, {}, headers)
-    .then(async ({ customer }) => {
+    .then(async ({ customer: _ }) => {
       const customerCacheTag = await getCacheTag('customers')
       revalidateTag(customerCacheTag)
       return { success: true, error: null }

@@ -1,0 +1,3 @@
+import { ReviewDTO } from '../../common'
+
+export type StoreReview = Omit<ReviewDTO, 'deleted_at'>
