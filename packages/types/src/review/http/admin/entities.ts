@@ -1,5 +1,5 @@
 import type { AdminCustomer, AdminProduct } from '@medusajs/framework/types'
-import { ReviewDTO } from '../../common'
+import type { ReviewDTO } from '../../common'
 
 export interface AdminReview extends ReviewDTO {
   /** Product associated with the review */

@@ -1,4 +1,4 @@
-import { WishlistDTO } from '../../common'
+import type { WishlistDTO } from '../../common'
 
 export type StoreCreateWishlistResponse = {
   wishlist: WishlistDTO

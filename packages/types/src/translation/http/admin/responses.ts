@@ -1,4 +1,4 @@
-import { PaginatedResponse } from '@medusajs/framework/types'
+import type { PaginatedResponse } from '@medusajs/framework/types'
 
 export type AdminUpsertTranslationsResponse<Entity> = {
   translations: Entity[]
