@@ -2,29 +2,14 @@ import type {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from '@medusajs/framework/http'
-import { createReviewWorkflow } from '../../../workflows/create-review'
+import type { StoreCreateReviewResponse } from '@repo/shared-types'
 
-import { z } from 'zod'
-
-export const PostStoreReviewSchema = z.object({
-  title: z.string().optional(),
-  content: z.string(),
-  rating: z.preprocess((val) => {
-    if (val && typeof val === 'string') {
-      return parseInt(val)
-    }
-    return val
-  }, z.number().min(1).max(5)),
-  product_id: z.string(),
-  first_name: z.string(),
-  last_name: z.string(),
-})
-
-type PostStoreReviewReq = z.infer<typeof PostStoreReviewSchema>
+import { StoreCreateReviewType } from './validators'
+import { createReviewWorkflow } from '../../../workflows/review'
 
 export const POST = async (
-  req: AuthenticatedMedusaRequest<PostStoreReviewReq>,
-  res: MedusaResponse
+  req: AuthenticatedMedusaRequest<StoreCreateReviewType>,
+  res: MedusaResponse<StoreCreateReviewResponse>
 ) => {
   const input = req.validatedBody
 
@@ -35,5 +20,7 @@ export const POST = async (
     },
   })
 
-  res.json(result)
+  res.json({
+    review: result.review,
+  })
 }

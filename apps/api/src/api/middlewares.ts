@@ -1,69 +1,30 @@
-import {
-  defineMiddlewares,
-  authenticate,
-  validateAndTransformBody,
-  validateAndTransformQuery,
-} from '@medusajs/framework/http'
-import { PostStoreReviewSchema } from './store/reviews/route'
-import { GetAdminReviewsSchema } from './admin/reviews/route'
-import { PostAdminUpdateReviewsStatusSchema } from './admin/reviews/status/route'
-import { GetStoreReviewsSchema } from './store/products/[id]/reviews/route'
+import { defineMiddlewares } from '@medusajs/framework/http'
+
+import { adminReviewRoutesMiddlewares } from './admin/reviews/middlewares'
+import { adminTranslationsMiddlewares } from './admin/translations/middlewares'
+import { adminStoreLocaleMiddlewares } from './admin/store-locales/middlewares'
+import { adminAutoTranslateRoutesMiddlewares } from './admin/auto-translate/middlewares'
+
+import { storeCartRoutesMiddlewares } from './store/carts/middlewares'
+import { storeLocaleRoutesMiddlewares } from './store/locales/middlewares'
+import { storeReviewRoutesMiddlewares } from './store/reviews/middlewares'
+import { storeProductRoutesMiddlewares } from './store/products/middlewares'
+import { storeCollectionRoutesMiddlewares } from './store/collections/middlewares'
+import { storeCustomerWishlistRoutesMiddlewares } from './store/customers/me/wishlists/middlewares'
+import { storeGlobalRoutesMiddlewares } from './store/utils/middlewares'
 
 export default defineMiddlewares({
   routes: [
-    {
-      method: ['POST'],
-      matcher: '/store/reviews',
-      middlewares: [
-        authenticate('customer', ['session', 'bearer']),
-        validateAndTransformBody(PostStoreReviewSchema),
-      ],
-    },
-    {
-      matcher: '/admin/reviews',
-      method: ['GET'],
-      middlewares: [
-        validateAndTransformQuery(GetAdminReviewsSchema, {
-          isList: true,
-          defaults: [
-            'id',
-            'title',
-            'content',
-            'rating',
-            'product_id',
-            'customer_id',
-            'status',
-            'created_at',
-            'updated_at',
-            'product.*',
-          ],
-        }),
-      ],
-    },
-    {
-      matcher: '/admin/reviews/status',
-      method: ['POST'],
-      middlewares: [
-        validateAndTransformBody(PostAdminUpdateReviewsStatusSchema),
-      ],
-    },
-    {
-      matcher: '/store/products/:id/reviews',
-      methods: ['GET'],
-      middlewares: [
-        validateAndTransformQuery(GetStoreReviewsSchema, {
-          isList: true,
-          defaults: [
-            'id',
-            'rating',
-            'title',
-            'first_name',
-            'last_name',
-            'content',
-            'created_at',
-          ],
-        }),
-      ],
-    },
+    ...adminReviewRoutesMiddlewares,
+    ...adminTranslationsMiddlewares,
+    ...adminAutoTranslateRoutesMiddlewares,
+    ...adminStoreLocaleMiddlewares,
+    ...storeGlobalRoutesMiddlewares,
+    ...storeReviewRoutesMiddlewares,
+    ...storeProductRoutesMiddlewares,
+    ...storeCollectionRoutesMiddlewares,
+    ...storeCartRoutesMiddlewares,
+    ...storeLocaleRoutesMiddlewares,
+    ...storeCustomerWishlistRoutesMiddlewares,
   ],
 })

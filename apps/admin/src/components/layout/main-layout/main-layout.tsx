@@ -13,7 +13,6 @@ import {
   SquaresPlus,
   Tag,
   Users,
-  ChatBubbleLeftRight,
 } from '@medusajs/icons'
 import { Avatar, Divider, DropdownMenu, Text, clx } from '@medusajs/ui'
 import { Collapsible as RadixCollapsible } from 'radix-ui'
@@ -313,17 +312,7 @@ const ExtensionRouteSection = () => {
 
   const menuItems = getMenu('coreExtensions').filter((item) => !item.nested)
 
-  // Add Reviews as a built-in extension
-  const reviewsItem: INavItem = {
-    to: '/reviews',
-    label: t('reviews.domain'),
-    icon: <ChatBubbleLeftRight />,
-    items: [],
-  }
-
-  const allItems = [reviewsItem, ...menuItems]
-
-  if (!allItems.length) {
+  if (!menuItems.length) {
     return null
   }
 
@@ -349,7 +338,7 @@ const ExtensionRouteSection = () => {
           </div>
           <RadixCollapsible.Content>
             <nav className="flex flex-col gap-y-0.5 py-1 pb-4">
-              {allItems.map((item, i) => {
+              {menuItems.map((item, i) => {
                 return (
                   <NavItem
                     key={i}

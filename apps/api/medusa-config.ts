@@ -4,18 +4,17 @@ import {
   defineConfig,
   ContainerRegistrationKeys,
 } from '@medusajs/framework/utils'
-import { z } from 'zod/v4'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 module.exports = defineConfig({
   admin: {
-    path: '/',
     backendUrl: process.env.BACKEND_URL,
     storefrontUrl: process.env.STOREFRONT_URL,
-    disable: z.coerce.boolean().default(true).parse(process.env.ADMIN_DISABLED),
+    disable: process.env.ADMIN_DISABLED === 'true',
   },
   projectConfig: {
+    redisUrl: process.env.REDIS_URL,
     databaseUrl: process.env.DATABASE_URL,
     http: {
       storeCors: process.env.STORE_CORS!,
@@ -106,7 +105,19 @@ module.exports = defineConfig({
       },
     },
     {
+      resolve: '@medusajs/index',
+      options: {},
+    },
+    {
       resolve: './src/modules/product-review',
+      options: {},
+    },
+    {
+      resolve: './src/modules/translation',
+      options: {},
+    },
+    {
+      resolve: './src/modules/wishlist',
       options: {},
     },
   ],

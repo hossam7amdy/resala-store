@@ -1,4 +1,3 @@
-import { HttpTypes } from '@medusajs/types'
 import {
   DEFAULT_FIELDS,
   DEFAULT_PROPERTIES,
