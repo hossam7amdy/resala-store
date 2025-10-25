@@ -32,9 +32,9 @@
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
     "@medusajs/test-utils": "2.10.0",
-    "@medusajs/types": "2.10.1",
+    "@medusajs/types": "2.10.0",
     "@mikro-orm/cli": "6.4.3",
-    "@repo/shared-types": "workspace:*",
+    "@resala/types": "workspace:*",
     "@swc/core": "1.5.7",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.13",

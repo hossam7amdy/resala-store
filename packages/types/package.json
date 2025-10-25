@@ -1,5 +1,5 @@
 {
-  "name": "@repo/shared-types",
+  "name": "@resala/types",
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -21,6 +21,6 @@
   "devDependencies": {
     "rimraf": "^5.0.1",
     "typescript": "^5.6.2",
-    "@medusajs/types": "2.10.1"
+    "@medusajs/types": "2.10.0"
   }
 }
