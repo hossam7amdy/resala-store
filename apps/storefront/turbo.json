@@ -4,9 +4,9 @@
     "build": {
       "env": [
         "NODE_ENV",
+        "BACKEND_URL",
         "REVALIDATE_SECRET",
-        "RESALA_BACKEND_URL",
-        "RESALA_PUBLISHABLE_KEY"
+        "NEXT_PUBLIC_PUBLISHABLE_KEY"
       ],
       "outputs": [".next/**", "!.next/cache/**"]
     }
