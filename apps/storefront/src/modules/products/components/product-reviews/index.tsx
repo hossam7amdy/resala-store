@@ -6,6 +6,7 @@ import { StoreProductReview } from '../../../../types/global'
 import { Button } from '@medusajs/ui'
 import { useState, useEffect } from 'react'
 import ProductReviewsForm from './form'
+
 type ProductReviewsProps = {
   productId: string
 }
@@ -44,7 +45,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
           <div className="flex gap-x-1">
             {Array.from({ length: 5 }).map((_, index) => (
               <span key={index}>
-                {index <= review.rating ? (
+                {index < review.rating ? (
                   <StarSolid className="text-ui-tag-orange-icon" />
                 ) : (
                   <Star />
@@ -74,7 +75,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
           <div className="flex gap-x-2">
             {Array.from({ length: 5 }).map((_, index) => (
               <span key={index}>
-                {!rating || index > rating ? (
+                {!rating || index + 1 > rating ? (
                   <Star />
                 ) : (
                   <StarSolid className="text-ui-tag-orange-icon" />
