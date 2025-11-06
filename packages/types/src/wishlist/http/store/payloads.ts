@@ -3,7 +3,7 @@ export type StoreCreateWishlist = {
 }
 
 export type StoreCreateWishlistItem = {
-  variant_id: string
+  product_id: string
 }
 
 export type StoreShareWishlist = {
