@@ -5,7 +5,7 @@ import {
 import { useQueryGraphStep } from '@medusajs/medusa/core-flows'
 import { validateWishlistSalesChannelStep } from './steps/validate-wishlist-sales-channel'
 import { createWishlistItemStep } from './steps/create-wishlist-item'
-import { validateVariantWishlistStep } from './steps/validate-variant-wishlist'
+import { validateProductWishlistStep } from './steps/validate-product-wishlist'
 import { validateWishlistExistsStep } from './steps/validate-wishlist-exists'
 import { Wishlist } from '../../modules/wishlist/models'
 import type { InferTypeOf } from '@medusajs/framework/types'
@@ -14,7 +14,7 @@ import { validateWishlistThresholdStep } from './steps/validate-wishlist-thresho
 type WishlistEntity = InferTypeOf<typeof Wishlist>
 
 type CreateWishlistItemWorkflowInput = {
-  variant_id: string
+  product_id: string
   customer_id: string
   sales_channel_id: string
 }
@@ -30,7 +30,7 @@ export const createWishlistItemWorkflow = createWorkflow(
       },
     })
 
-    const wishlists = data as WishlistEntity[]
+    const wishlists = data as unknown as WishlistEntity[]
 
     validateWishlistExistsStep({
       wishlists,
@@ -41,8 +41,8 @@ export const createWishlistItemWorkflow = createWorkflow(
       sales_channel_id: input.sales_channel_id,
     })
 
-    validateVariantWishlistStep({
-      variant_id: input.variant_id,
+    validateProductWishlistStep({
+      product_id: input.product_id,
       sales_channel_id: input.sales_channel_id,
       wishlist: wishlists[0],
     })
@@ -52,7 +52,7 @@ export const createWishlistItemWorkflow = createWorkflow(
     })
 
     createWishlistItemStep({
-      variant_id: input.variant_id,
+      product_id: input.product_id,
       wishlist_id: wishlists[0].id,
     })
 

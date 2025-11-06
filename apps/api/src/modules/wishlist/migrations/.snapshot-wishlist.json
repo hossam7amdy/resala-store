@@ -109,8 +109,8 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "variant_id": {
-          "name": "variant_id",
+        "product_id": {
+          "name": "product_id",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -182,13 +182,13 @@
           "expression": "CREATE INDEX IF NOT EXISTS \"IDX_wishlist_item_deleted_at\" ON \"wishlist_item\" (deleted_at) WHERE deleted_at IS NULL"
         },
         {
-          "keyName": "IDX_wishlist_item_variant_id_wishlist_id_unique",
+          "keyName": "IDX_wishlist_item_product_id_wishlist_id_unique",
           "columnNames": [],
           "composite": false,
           "constraint": false,
           "primary": false,
           "unique": false,
-          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_wishlist_item_variant_id_wishlist_id_unique\" ON \"wishlist_item\" (variant_id, wishlist_id) WHERE deleted_at IS NULL"
+          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_wishlist_item_product_id_wishlist_id_unique\" ON \"wishlist_item\" (product_id, wishlist_id) WHERE deleted_at IS NULL"
         },
         {
           "keyName": "wishlist_item_pkey",
