@@ -14,7 +14,7 @@ export default class WishlistModuleService extends MedusaService({
 }) {
   @InjectManager()
   async getWishlistsOfVariants(
-    variantIds: string[],
+    productId: string,
     @MedusaContext() context: Context<EntityManager> = {}
   ): Promise<number> {
     return (
@@ -22,7 +22,7 @@ export default class WishlistModuleService extends MedusaService({
         await context.manager
           ?.createQueryBuilder('wishlist_item', 'wi')
           .select(['wi.wishlist_id'], true)
-          .where('wi.variant_id IN (?)', [variantIds])
+          .where('wi.product_id = (?)', [productId])
           .execute()
       )?.length || 0
     )
