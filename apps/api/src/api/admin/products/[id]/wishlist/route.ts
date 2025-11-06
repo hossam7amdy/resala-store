@@ -18,7 +18,7 @@ export async function GET(
     data: [product],
   } = await query.graph({
     entity: 'product',
-    fields: ['variants.*'],
+    fields: ['id'],
     filters: {
       id,
     },
@@ -31,9 +31,7 @@ export async function GET(
     )
   }
 
-  const count = await wishlistModuleService.getWishlistsOfVariants(
-    product.variants.map((v) => v.id)
-  )
+  const count = await wishlistModuleService.getWishlistsOfVariants(id)
 
   res.json({
     count,
