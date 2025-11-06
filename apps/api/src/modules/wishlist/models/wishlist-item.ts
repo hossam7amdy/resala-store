@@ -4,14 +4,14 @@ import { Wishlist } from './wishlist'
 export const WishlistItem = model
   .define('wishlist_item', {
     id: model.id().primaryKey(),
-    variant_id: model.text(),
+    product_id: model.text(),
     wishlist: model.belongsTo(() => Wishlist, {
       mappedBy: 'items',
     }),
   })
   .indexes([
     {
-      on: ['variant_id', 'wishlist_id'],
+      on: ['product_id', 'wishlist_id'],
       unique: true,
     },
   ])

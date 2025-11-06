@@ -4,7 +4,7 @@ import { createStep, StepResponse } from '@medusajs/framework/workflows-sdk'
 
 type CreateWishlistItemStepInput = {
   wishlist_id: string
-  variant_id: string
+  product_id: string
 }
 
 export const createWishlistItemStep = createStep(

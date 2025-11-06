@@ -23,7 +23,7 @@ export const validateCustomerCreateWishlistStep = createStep(
 
     if (data.length) {
       throw new MedusaError(
-        MedusaError.Types.NOT_FOUND,
+        MedusaError.Types.INVALID_DATA,
         'Customer already has a wishlist'
       )
     }
@@ -39,7 +39,7 @@ export const validateCustomerCreateWishlistStep = createStep(
 
     if (customers.length === 0) {
       throw new MedusaError(
-        MedusaError.Types.INVALID_DATA,
+        MedusaError.Types.NOT_FOUND,
         'Specified customer was not found'
       )
     }

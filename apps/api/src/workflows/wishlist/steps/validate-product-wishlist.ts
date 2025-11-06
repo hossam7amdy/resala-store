@@ -3,52 +3,52 @@ import { createStep } from '@medusajs/framework/workflows-sdk'
 import { MedusaError } from '@medusajs/framework/utils'
 import { Wishlist } from '../../../modules/wishlist/models/wishlist'
 
-type ValidateVariantWishlistStepInput = {
-  variant_id: string
+type ValidateProductWishlistStepInput = {
+  product_id: string
   sales_channel_id: string
   wishlist: InferTypeOf<typeof Wishlist>
 }
 
-export const validateVariantWishlistStep = createStep(
-  'validate-variant-in-wishlist',
+export const validateProductWishlistStep = createStep(
+  'validate-product-in-wishlist',
   async (
     {
-      variant_id,
+      product_id,
       sales_channel_id,
       wishlist,
-    }: ValidateVariantWishlistStepInput,
+    }: ValidateProductWishlistStepInput,
     { container }
   ) => {
-    // validate whether variant is in wishlist
+    // validate whether product is in wishlist
     const isInWishlist = wishlist.items?.some(
-      (item) => item.variant_id === variant_id
+      (item) => item.product_id === product_id
     )
 
     if (isInWishlist) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        'Variant is already in wishlist'
+        'Product is already in wishlist'
       )
     }
 
-    // validate that the variant is available in the specified sales channel
+    // validate that the product is available in the specified sales channel
     const query = container.resolve('query')
     const { data } = await query.graph({
-      entity: 'variant',
-      fields: ['product.sales_channels.*'],
+      entity: 'product',
+      fields: ['sales_channels.*'],
       filters: {
-        id: variant_id,
+        id: product_id,
       },
     })
 
-    const variantInSalesChannel = data[0]?.product?.sales_channels?.some(
+    const productInSalesChannel = data[0]?.sales_channels?.some(
       (sc) => sc?.id === sales_channel_id
     )
 
-    if (!variantInSalesChannel) {
+    if (!productInSalesChannel) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        'Variant is not available in the specified sales channel'
+        'Product is not available in the specified sales channel'
       )
     }
   }

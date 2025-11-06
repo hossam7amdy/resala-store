@@ -18,7 +18,7 @@ export async function POST(
   }
   const { result } = await createWishlistItemWorkflow(req.scope).run({
     input: {
-      variant_id: req.validatedBody.variant_id,
+      product_id: req.validatedBody.product_id,
       customer_id: req.auth_context.actor_id,
       sales_channel_id: req.publishable_key_context?.sales_channel_ids[0],
     },
