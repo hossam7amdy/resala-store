@@ -11,23 +11,21 @@ export const localizeWishlist = async (
   locale?: string
 ) => {
   wishlist?.items?.forEach((item) => {
-    if (item?.product_variant?.product?.['translations']) {
+    if (item?.product?.['translations']) {
       const productTranslation = findPublishedTranslation<any>(
-        item.product_variant.product['translations'],
+        item.product['translations'],
         locale
       )
 
       if (productTranslation) {
-        item.product_variant.product.title =
-          productTranslation.title || item.product_variant.product.title
-        item.product_variant.product.subtitle =
-          productTranslation.subtitle || item.product_variant.product.subtitle
-        item.product_variant.product.description =
-          productTranslation.description ||
-          item.product_variant.product.description
+        item.product.title = productTranslation.title || item.product.title
+        item.product.subtitle =
+          productTranslation.subtitle || item.product.subtitle
+        item.product.description =
+          productTranslation.description || item.product.description
       }
 
-      delete item.product_variant.product['translations']
+      delete item.product['translations']
     }
   })
 

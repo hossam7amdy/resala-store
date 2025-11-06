@@ -8,5 +8,5 @@ export type StoreCreateWishlistItemType = z.infer<
   typeof StoreCreateWishlistItem
 >
 export const StoreCreateWishlistItem = z.object({
-  variant_id: z.string(),
+  product_id: z.string(),
 })

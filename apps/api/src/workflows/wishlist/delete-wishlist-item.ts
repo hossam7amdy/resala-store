@@ -27,7 +27,7 @@ export const deleteWishlistItemWorkflow = createWorkflow(
       },
     })
 
-    const wishlists = data as WishlistEntity[]
+    const wishlists = data as unknown as WishlistEntity[]
 
     validateWishlistExistsStep({
       wishlists,
