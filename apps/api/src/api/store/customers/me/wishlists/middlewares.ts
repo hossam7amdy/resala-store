@@ -20,6 +20,16 @@ export const storeCustomerWishlistRoutesMiddlewares: MiddlewareRoute[] = [
   },
   {
     matcher: '/store/customers/me/wishlists',
+    method: 'POST',
+    middlewares: [
+      validateAndTransformQuery(
+        StoreGetWishlist,
+        QueryConfig.retrieveTransformQueryConfig
+      ),
+    ],
+  },
+  {
+    matcher: '/store/customers/me/wishlists',
     method: 'GET',
     middlewares: [
       validateAndTransformQuery(
