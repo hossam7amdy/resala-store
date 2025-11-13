@@ -5,6 +5,7 @@ import {
 import { MedusaError } from '@medusajs/framework/utils'
 import { refetchWishlist } from './helpers'
 import {
+  StoreCreateWishlistResponse,
   StoreCreateWishlistItemResponse,
   StoreGetWishlistResponse,
 } from '@repo/shared-types'
@@ -13,7 +14,7 @@ import { createWishlistWorkflow } from '../../../../../workflows/wishlist'
 /** Create wishlist for a customer */
 export async function POST(
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse<StoreCreateWishlistItemResponse>
+  res: MedusaResponse<StoreCreateWishlistResponse>
 ) {
   if (!req.publishable_key_context?.sales_channel_ids.length) {
     throw new MedusaError(
