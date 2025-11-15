@@ -18,6 +18,11 @@ export const adminReviewRoutesMiddlewares: MiddlewareRoute[] = [
     ],
   },
   {
+    matcher: '/admin/reviews',
+    method: ['DELETE'],
+    middlewares: [],
+  },
+  {
     matcher: '/admin/reviews/status',
     method: ['POST'],
     middlewares: [validateAndTransformBody(AdminUpdateReviewsStatus)],
