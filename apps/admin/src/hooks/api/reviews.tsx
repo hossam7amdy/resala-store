@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { FetchError } from '@medusajs/js-sdk'
 import type {
+  AdminDeleteReviewResponse,
   AdminReviewListParams,
   AdminReviewListResponse,
   AdminUpdateReviewsStatus,
@@ -42,6 +43,22 @@ export const useUpdateReviewsStatus = () => {
           body: data,
         }
       ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: reviewsQueryKeys.lists(),
+      })
+    },
+  })
+}
+
+export const useDeleteReview = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (id: string) =>
+      sdk.client.fetch<AdminDeleteReviewResponse>(`/admin/reviews/${id}`, {
+        method: 'DELETE',
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: reviewsQueryKeys.lists(),
