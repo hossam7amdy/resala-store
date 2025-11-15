@@ -5,6 +5,11 @@ export type AdminUpdateReviewsStatusResponse = {
   reviews: AdminReview[]
 }
 
+export type AdminDeleteReviewResponse = {
+  id: string
+  deleted: boolean
+}
+
 export type AdminReviewListResponse = PaginatedResponse<{
   reviews: AdminReview[]
 }>

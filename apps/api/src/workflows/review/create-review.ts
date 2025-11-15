@@ -3,6 +3,7 @@ import {
   WorkflowResponse,
 } from '@medusajs/framework/workflows-sdk'
 import { createReviewStep } from './steps/create-review'
+import { validateUniqueReviewStep } from './steps/validate-unique-review'
 import { useQueryGraphStep } from '@medusajs/medusa/core-flows'
 
 export type CreateReviewWorkflowInput = {
@@ -32,7 +33,11 @@ export const createReviewWorkflow = createWorkflow(
       },
     })
 
-    // Create the review
+    validateUniqueReviewStep({
+      product_id: input.product_id,
+      customer_id: input.customer_id,
+    })
+
     const review = createReviewStep(input)
 
     return new WorkflowResponse({

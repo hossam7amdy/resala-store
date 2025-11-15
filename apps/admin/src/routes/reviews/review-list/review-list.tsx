@@ -15,6 +15,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import type { AdminReview } from '@repo/shared-types'
+import { ReviewActions } from './components/review-actions'
 import { useReviews, useUpdateReviewsStatus } from '../../../hooks/api'
 
 const columnHelper = createDataTableColumnHelper<AdminReview>()
@@ -70,11 +71,18 @@ const columns = [
       )
     },
   }),
+  columnHelper.display({
+    id: 'actions',
+    header: '',
+    cell: ({ row }) => <ReviewActions review={row.original} />,
+  }),
 ]
 
 const commandHelper = createDataTableCommandHelper()
 
-const useCommands = () => {
+const useCommands = (
+  setRowSelection: (selection: DataTableRowSelectionState) => void
+) => {
   const updateReviewsStatus = useUpdateReviewsStatus()
 
   return [
@@ -90,6 +98,7 @@ const useCommands = () => {
             status: 'approved',
           })
           toast.success('Reviews approved')
+          setRowSelection({})
         } catch {
           toast.error('Failed to approve reviews')
         }
@@ -107,6 +116,7 @@ const useCommands = () => {
             status: 'rejected',
           })
           toast.success('Reviews rejected')
+          setRowSelection({})
         } catch {
           toast.error('Failed to reject reviews')
         }
@@ -136,7 +146,7 @@ const ReviewList = () => {
     limit,
   })
 
-  const commands = useCommands()
+  const commands = useCommands(setRowSelection)
 
   const table = useDataTable({
     columns,
