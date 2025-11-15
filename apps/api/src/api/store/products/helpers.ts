@@ -155,22 +155,24 @@ export const localizeProduct = (
   // Localize product options if they exist
   if (product.options?.length && translation.options?.length) {
     localizedProduct.options = product.options.map((option) => {
-      const translatedOption = findPublishedTranslation(
-        translation.options,
-        locale
+      const translatedOption = translation.options.find(
+        (t) =>
+          t.option_id === option.id && translation.locale_id === t.locale_id
       )
       if (translatedOption) {
         return {
           ...option,
           title: translatedOption.title || option.title,
-          values: option.values?.map((value) => {
-            const translatedValue = findPublishedTranslation(
-              translatedOption.values,
-              locale
+          values: (option.values || []).map((value) => {
+            const translatedValue = translatedOption.values.find(
+              (t) =>
+                t.option_value_id === value.id &&
+                translation.locale_id === t.locale_id
             )
-            return translatedValue
-              ? { ...value, value: translatedValue.value || value.value }
-              : value
+            return {
+              ...value,
+              value: translatedValue?.value || value.value,
+            }
           }),
         }
       }
