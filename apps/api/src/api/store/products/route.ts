@@ -24,7 +24,8 @@ export const GET = async (
     // TODO: These filters are not supported by the index engine yet
     if (
       isPresent(req.filterableFields.tags) ||
-      isPresent(req.filterableFields.categories)
+      isPresent(req.filterableFields.categories) ||
+      isPresent(req.filterableFields.q)
     ) {
       return await getProducts(req, res)
     }
@@ -99,6 +100,7 @@ async function getProducts(
   res: MedusaResponse<HttpTypes.StoreProductListResponse>
 ) {
   const remoteQuery = req.scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
+
   const context: object = {}
   const withInventoryQuantity = req.queryConfig.fields.some((field) =>
     field.includes('variants.inventory_quantity')
@@ -113,6 +115,53 @@ async function getProducts(
   if (isPresent(req.pricingContext)) {
     context['variants.calculated_price'] = {
       context: req.pricingContext,
+    }
+  }
+
+  // If search query exists, search in translations
+  if (isPresent(req.filterableFields.q)) {
+    const searchVariables = {
+      filters: {
+        q: req.filterableFields.q,
+      },
+      ...req.queryConfig.pagination,
+      ...context,
+    }
+    delete req.filterableFields.q
+
+    const productQueryObject = remoteQueryObjectFromString({
+      entryPoint: 'products',
+      variables: searchVariables,
+      fields: ['id'],
+    })
+    const translationQueryObject = remoteQueryObjectFromString({
+      entryPoint: 'product_translations',
+      variables: searchVariables,
+      fields: ['product_id'],
+    })
+
+    const [{ rows: products }, { rows: translations }] = await Promise.all([
+      remoteQuery(productQueryObject),
+      remoteQuery(translationQueryObject),
+    ])
+
+    // Extract unique product IDs matches
+    const uniqueMatchingIds = new Set<string>(
+      products
+        .map((product) => product.id as string)
+        .concat(translations.map((t) => t.product_id as string))
+    )
+
+    // If translations found, add to product ID filter
+    if (uniqueMatchingIds.size > 0) {
+      req.filterableFields.id = Array.from(uniqueMatchingIds)
+    } else {
+      return res.json({
+        products: [],
+        count: 0,
+        offset: req.queryConfig.pagination.skip,
+        limit: req.queryConfig.pagination.take || 10,
+      })
     }
   }
 
