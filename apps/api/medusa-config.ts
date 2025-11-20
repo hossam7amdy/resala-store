@@ -117,6 +117,13 @@ module.exports = defineConfig({
       options: {},
     },
     {
+      resolve: './src/modules/auto-translation',
+      options: {
+        apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
+        projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
+      },
+    },
+    {
       resolve: './src/modules/wishlist',
       options: {},
     },
