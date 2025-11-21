@@ -1,13 +1,15 @@
 import {
   loadEnv,
   Modules,
+  isDefined,
   defineConfig,
   ContainerRegistrationKeys,
 } from '@medusajs/framework/utils'
+import type { InputConfig } from '@medusajs/types'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
-module.exports = defineConfig({
+const appConfig: InputConfig = {
   admin: {
     backendUrl: process.env.BACKEND_URL,
     storefrontUrl: process.env.STOREFRONT_URL,
@@ -128,4 +130,43 @@ module.exports = defineConfig({
       options: {},
     },
   ],
-})
+}
+
+if (isDefined(process.env.REDIS_URL)) {
+  if (!Array.isArray(appConfig.modules)) {
+    appConfig.modules = []
+  }
+  appConfig.modules.push(
+    {
+      resolve: '@medusajs/medusa/event-bus-redis',
+      options: {
+        redisUrl: process.env.REDIS_URL,
+      },
+    },
+    {
+      resolve: '@medusajs/medusa/workflow-engine-redis',
+      options: {
+        redis: {
+          url: process.env.REDIS_URL,
+        },
+      },
+    },
+    {
+      resolve: '@medusajs/medusa/locking',
+      options: {
+        providers: [
+          {
+            resolve: '@medusajs/medusa/locking-redis',
+            id: 'locking-redis',
+            is_default: true,
+            options: {
+              redisUrl: process.env.REDIS_URL,
+            },
+          },
+        ],
+      },
+    }
+  )
+}
+
+module.exports = defineConfig(appConfig)
