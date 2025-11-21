@@ -48,7 +48,9 @@ export const refetchCart = async (
     ),
   })
 
-  const [cart] = await remoteQuery(queryObject)
+  const [cart] = await remoteQuery(queryObject, {
+    throwIfKeyNotFound: true,
+  })
 
   return localizeCart(cart, locale)
 }
