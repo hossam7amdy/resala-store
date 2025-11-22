@@ -46,6 +46,7 @@ import { AddCampaignPromotionFields } from '../../../promotion-add-campaign/comp
 import { Tab } from './constants'
 import { CreatePromotionSchema } from './form-schema'
 import { templates } from './templates'
+import { useDocumentDirection } from '../../../../../hooks/use-document-direction'
 
 const defaultValues = {
   campaign_id: undefined,
@@ -80,7 +81,7 @@ export const CreatePromotionForm = () => {
 
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
-
+  const direction = useDocumentDirection()
   const form = useForm<z.infer<typeof CreatePromotionSchema>>({
     defaultValues,
     resolver: zodResolver(CreatePromotionSchema),
@@ -136,6 +137,13 @@ export const CreatePromotionForm = () => {
             attribute: rule.attribute,
             values: rule.values,
           }))
+      }
+
+      if (data.campaign) {
+        data.campaign.budget.attribute = data.campaign.budget.attribute || null
+        data.campaign.budget.type = data.campaign.budget.attribute
+          ? 'use_by_attribute'
+          : data.campaign.budget.type
       }
 
       createPromotion(
@@ -364,6 +372,7 @@ export const CreatePromotionForm = () => {
     <RouteFocusModal.Form form={form}>
       <KeyboundForm className="flex h-full flex-col" onSubmit={handleSubmit}>
         <ProgressTabs
+          dir={direction}
           value={tab}
           onValueChange={(tab) => handleTabChange(tab as Tab)}
           className="flex h-full flex-col overflow-hidden"
@@ -417,6 +426,7 @@ export const CreatePromotionForm = () => {
 
                           <Form.Control>
                             <RadioGroup
+                              dir={direction}
                               key={'template_id'}
                               className="flex-col gap-y-3"
                               {...field}
@@ -486,6 +496,7 @@ export const CreatePromotionForm = () => {
 
                           <Form.Control>
                             <RadioGroup
+                              dir={direction}
                               className="flex gap-y-3"
                               {...field}
                               value={field.value}
@@ -530,6 +541,7 @@ export const CreatePromotionForm = () => {
 
                           <Form.Control>
                             <RadioGroup
+                              dir={direction}
                               className="flex gap-y-3"
                               {...field}
                               value={field.value}
@@ -619,7 +631,8 @@ export const CreatePromotionForm = () => {
                                   </div>
                                   <Form.Control className="mr-2 self-center">
                                     <Switch
-                                      className="mt-[2px]"
+                                      dir="ltr"
+                                      className="mt-[2px] rtl:rotate-180"
                                       checked={!!value}
                                       onCheckedChange={onChange}
                                       {...field}
@@ -647,6 +660,7 @@ export const CreatePromotionForm = () => {
                             </Form.Label>
                             <Form.Control>
                               <RadioGroup
+                                dir={direction}
                                 className="flex gap-y-3"
                                 {...field}
                                 onValueChange={field.onChange}
@@ -699,6 +713,7 @@ export const CreatePromotionForm = () => {
                               </Form.Label>
                               <Form.Control>
                                 <RadioGroup
+                                  dir={direction}
                                   className="flex gap-y-3"
                                   {...field}
                                   onValueChange={field.onChange}
@@ -825,7 +840,9 @@ export const CreatePromotionForm = () => {
                     </>
                   )}
 
-                  {((isTypeStandard && watchAllocation === 'each') ||
+                  {((isTypeStandard &&
+                    (watchAllocation === 'each' ||
+                      watchAllocation === 'once')) ||
                     isTypeBuyGet) && (
                     <>
                       {isTypeBuyGet && (
@@ -883,37 +900,65 @@ export const CreatePromotionForm = () => {
                         render={({ field }) => {
                           return (
                             <Form.Item>
-                              <Form.Label>
+                              <Form.Label
+                                tooltip={t(
+                                  'promotions.fields.allocationTooltip'
+                                )}
+                              >
                                 {t('promotions.fields.allocation')}
                               </Form.Label>
 
                               <Form.Control>
                                 <RadioGroup
+                                  dir={direction}
                                   className="flex gap-y-3"
                                   {...field}
                                   onValueChange={field.onChange}
                                 >
-                                  <RadioGroup.ChoiceBox
-                                    value={'each'}
-                                    label={t(
-                                      'promotions.form.allocation.each.title'
-                                    )}
-                                    description={t(
-                                      'promotions.form.allocation.each.description'
-                                    )}
-                                    className={clx('basis-1/2')}
-                                  />
+                                  {!currentTemplate?.hiddenFields?.includes(
+                                    'application_method.allocation.each'
+                                  ) && (
+                                    <RadioGroup.ChoiceBox
+                                      value={'each'}
+                                      label={t(
+                                        'promotions.form.allocation.each.title'
+                                      )}
+                                      description={t(
+                                        'promotions.form.allocation.each.description'
+                                      )}
+                                      className={clx('basis-1/3')}
+                                    />
+                                  )}
 
-                                  <RadioGroup.ChoiceBox
-                                    value={'across'}
-                                    label={t(
-                                      'promotions.form.allocation.across.title'
-                                    )}
-                                    description={t(
-                                      'promotions.form.allocation.across.description'
-                                    )}
-                                    className={clx('basis-1/2')}
-                                  />
+                                  {!currentTemplate?.hiddenFields?.includes(
+                                    'application_method.allocation.across'
+                                  ) && (
+                                    <RadioGroup.ChoiceBox
+                                      value={'across'}
+                                      label={t(
+                                        'promotions.form.allocation.across.title'
+                                      )}
+                                      description={t(
+                                        'promotions.form.allocation.across.description'
+                                      )}
+                                      className={clx('basis-1/3')}
+                                    />
+                                  )}
+
+                                  {!currentTemplate?.hiddenFields?.includes(
+                                    'application_method.allocation.once'
+                                  ) && (
+                                    <RadioGroup.ChoiceBox
+                                      value={'once'}
+                                      label={t(
+                                        'promotions.form.allocation.once.title'
+                                      )}
+                                      description={t(
+                                        'promotions.form.allocation.once.description'
+                                      )}
+                                      className={clx('basis-1/3')}
+                                    />
+                                  )}
                                 </RadioGroup>
                               </Form.Control>
                               <Form.ErrorMessage />

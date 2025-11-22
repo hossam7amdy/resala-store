@@ -37,7 +37,6 @@ export const POST = async (
       id: req.params.id,
       additional_data: req.validatedBody.additional_data,
     },
-    transactionId: 'cart-update-' + req.params.id,
   })
 
   const cart = await refetchCart(

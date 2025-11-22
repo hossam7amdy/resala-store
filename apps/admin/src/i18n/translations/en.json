@@ -52,6 +52,7 @@
     "noSearchResultsFor": "No search results for <0>'{{query}}'</0>",
     "noRecordsTitle": "No records",
     "noRecordsMessage": "There are no records to show",
+    "noRecordsMessageFiltered": "There are no records to show matching the filters",
     "unsavedChangesTitle": "Are you sure you want to leave this form?",
     "unsavedChangesDescription": "You have unsaved changes that will be lost if you exit this form.",
     "includesTaxTooltip": "Prices in this column are tax inclusive.",
@@ -121,6 +122,8 @@
     "continue": "Continue",
     "continueWithEmail": "Continue with Email",
     "idCopiedToClipboard": "ID copied to clipboard",
+    "editVariantImages": "Edit variant images",
+    "editImages": "Edit images",
     "addReason": "Add Reason",
     "addNote": "Add Note",
     "reset": "Reset",
@@ -505,6 +508,7 @@
     "media": {
       "label": "Media",
       "editHint": "Add media to the product to showcase it in your storefront.",
+      "manageImageVariants": "Manage associated variants",
       "makeThumbnail": "Make thumbnail",
       "uploadImagesLabel": "Upload images",
       "uploadImagesHint": "Drag and drop images here or click to upload.",
@@ -520,10 +524,27 @@
       "deleteImageLabel": "Delete current image",
       "emptyState": {
         "header": "No media yet",
-        "description": "Add media to the product to showcase it in your storefront.",
+        "description": "Add media to showcase it in your storefront.",
         "action": "Add media"
       },
-      "successToast": "Media was successfully updated."
+      "successToast": "Media was successfully updated.",
+      "variantImages": "Variant images",
+      "showAvailableImages": "Show available images",
+      "availableImages": "Select images",
+      "selectToAdd": "Add product images to the variant. To add new images, add them to the product first.",
+      "removeSelected": "Remove Selected"
+    },
+    "variantMedia": {
+      "label": "Variant Media",
+      "manageVariants": "Manage variants",
+      "addToMultipleVariants": "Add to multiple variants",
+      "manageVariantsDescription": "Manage associated variants for the image",
+      "successToast": "Image variants successfully updated.",
+      "emptyState": {
+        "header": "No media yet",
+        "description": "Add media to the variant to showcase it in your storefront.",
+        "action": "Add media"
+      }
     },
     "discountableHint": "When unchecked, discounts will not be applied to this product.",
     "noSalesChannels": "Not available in any sales channels",
@@ -535,6 +556,18 @@
       "published": "Published",
       "proposed": "Proposed",
       "rejected": "Rejected"
+    },
+    "columns": {
+      "product_display": "Product",
+      "variants_count": "Variants",
+      "sales_channels_display": "Sales Channels",
+      "collection": "Collection",
+      "status": "Status",
+      "thumbnail": "Thumbnail",
+      "title": "Title",
+      "handle": "Handle",
+      "created_at": "Created",
+      "updated_at": "Updated"
     },
     "fields": {
       "title": {
@@ -819,6 +852,7 @@
     "deleteWarning": "You are about to delete an inventory item. This action cannot be undone.",
     "editItemDetails": "Edit item details",
     "quantityAcrossLocations": "{{quantity}} across {{locations}} locations",
+    "levelDeleted": "Inventory level deleted successfully.",
     "create": {
       "title": "Create Inventory Item",
       "details": "Details",
@@ -961,9 +995,6 @@
         "successToast": "Address was successfully created."
       }
     }
-  },
-  "reviews": {
-    "domain": "Reviews"
   },
   "customerGroups": {
     "domain": "Customer Groups",
@@ -1319,6 +1350,8 @@
     "shipment": {
       "title": "Mark fulfillment shipped",
       "trackingNumber": "Tracking number",
+      "trackingUrl": "Tracking URL",
+      "labelUrl": "Label URL",
       "addTracking": "Add tracking number",
       "sendNotification": "Send notification",
       "sendNotificationHint": "Notify the customer about this shipment.",
@@ -1382,7 +1415,7 @@
       "title": "Create Refund",
       "sendNotificationHint": "Notify customers about the created refund.",
       "systemPayment": "System payment",
-      "systemPaymentDesc": "One or more of your payments is a system payment. Be aware, that captures and refunds are not handled by Resala for such payments.",
+      "systemPaymentDesc": "One or more of your payments is a system payment. Be aware, that captures and refunds are not handled by Medusa for such payments.",
       "error": {
         "amountToLarge": "Cannot refund more than the original order amount.",
         "amountNegative": "Refund amount must be a positive number.",
@@ -1525,7 +1558,10 @@
   "stockLocations": {
     "domain": "Locations & Shipping",
     "list": {
-      "description": "Manage your store's stock locations and shipping options."
+      "description": "Manage your store's stock locations and shipping options.",
+      "noRecordsMessage": "No records",
+      "noRecordsMessageEmpty": "No locations found",
+      "noRecordsMessageFiltered": "No locations found matching the filters"
     },
     "create": {
       "header": "Create Stock Location",
@@ -1538,7 +1574,8 @@
       "successToast": "Location {{name}} was successfully updated."
     },
     "delete": {
-      "confirmation": "You are about to delete the stock location \"{{name}}\". This action cannot be undone."
+      "confirmation": "You are about to delete the stock location \"{{name}}\". This action cannot be undone.",
+      "successToast": "Location \"{{name}}\" was successfully deleted."
     },
     "fulfillmentProviders": {
       "header": "Fulfillment Providers",
@@ -2006,6 +2043,7 @@
       "campaign": "Campaign",
       "method": "Method",
       "allocation": "Allocation",
+      "allocationTooltip": "Each enforces the quantity limit per item, while Once enforces the quantity limit across the entire cart",
       "addCondition": "Add condition",
       "clearAll": "Clear all",
       "taxInclusive": "Tax Inclusive",
@@ -2147,6 +2185,10 @@
         "across": {
           "title": "Across",
           "description": "Applies value across items"
+        },
+        "once": {
+          "title": "Once",
+          "description": "Applies value to a limited number of items"
         }
       },
       "code": {
@@ -2189,7 +2231,7 @@
     "delete": {
       "title": "Are you sure?",
       "description": "You are about to delete the campaign '{{name}}'. This action cannot be undone.",
-      "successToast": "Campaign '{{name}}' was successfully created."
+      "successToast": "Campaign '{{name}}' was successfully deleted."
     },
     "edit": {
       "header": "Edit Campaign",
@@ -2218,12 +2260,17 @@
       "end_date": "End date",
       "total_spend": "Budget spent",
       "total_used": "Budget used",
+      "totalUsedByAttribute": "Total used",
       "budget_limit": "Budget limit",
       "campaign_id": {
-        "hint": "Only campaigns with the same currency code as the promotion are shown in this list."
+        "hint": "Disabled campaigns have budget in a different currency than the promotion."
       }
     },
     "budget": {
+      "attribute": {
+        "customer_id": "customer",
+        "customer_email": "email"
+      },
       "create": {
         "hint": "Create a budget for the campaign.",
         "header": "Campaign Budget"
@@ -2233,7 +2280,12 @@
         "type": "Type",
         "currency": "Currency",
         "limit": "Limit",
-        "used": "Used"
+        "used": "Used",
+        "budgetAttribute": "Limit usage per",
+        "budgetAttributeTooltip": "Define how many times the promotion can be used by each customer or email.",
+        "totalUsedByAttribute": "Budget limit per: {{attribute}}",
+        "totalUsedByAttributeCustomerId": "Budget limit per customer",
+        "totalUsedByAttributeEmail": "Budget limit per email"
       },
       "type": {
         "spend": {
@@ -2243,6 +2295,12 @@
         "usage": {
           "title": "Usage",
           "description": "Set a limit on how many times the promotion can be used."
+        },
+        "useByAttribute": {
+          "title": "Usage by attribute (customer id, email, etc.)",
+          "titleCustomerId": "Usage per customer",
+          "titleEmail": "Usage per email",
+          "description": "Set a limit on how many times the promotion can be used by a specific attribute value."
         }
       },
       "edit": {
@@ -2381,7 +2439,7 @@
       "header": "Edit Profile",
       "languageHint": "The language you want to use in the admin dashboard. This doesn't change the language of your store.",
       "languagePlaceholder": "Select language",
-      "usageInsightsHint": "Share usage insights and help us improve Resala. You can read more about what we collect and how we use it in our <0>documentation</0>."
+      "usageInsightsHint": "Share usage insights and help us improve Medusa. You can read more about what we collect and how we use it in our <0>documentation</0>."
     },
     "toast": {
       "edit": "Profiles changes saved"
@@ -2636,7 +2694,7 @@
       "createPublishableHeader": "Create Publishable API Key",
       "createPublishableHint": "Create a new publishable API key to limit the scope of requests to specific sales channels.",
       "createSecretHeader": "Create Secret API Key",
-      "createSecretHint": "Create a new secret API key to access the Resala API as an authenticated admin user.",
+      "createSecretHint": "Create a new secret API key to access the Medusa API as an authenticated admin user.",
       "secretKeyCreatedHeader": "Secret Key Created",
       "secretKeyCreatedHint": "Your new secret key has been generated. Copy and securely store it now. This is the only time it will be displayed.",
       "copySecretTokenSuccess": "Secret key was copied to clipboard.",
@@ -2731,13 +2789,48 @@
       }
     }
   },
+  "refundReasons": {
+    "domain": "Refund Reasons",
+    "subtitle": "Manage reasons for issuing refunds.",
+    "calloutHint": "Manage the reasons to categorize refunds.",
+    "editReason": "Edit Refund Reason",
+    "create": {
+      "header": "Add Refund Reason",
+      "subtitle": "Specify the most common reasons for refunds.",
+      "hint": "Create a new refund reason to categorize refunds.",
+      "successToast": "Refund reason {{label}} was successfully created."
+    },
+    "edit": {
+      "header": "Edit Refund Reason",
+      "subtitle": "Edit the value of the refund reason.",
+      "successToast": "Refund reason {{label}} was successfully updated."
+    },
+    "delete": {
+      "confirmation": "You are about to delete the refund reason \"{{label}}\". This action cannot be undone.",
+      "successToast": "Refund reason was successfully deleted."
+    },
+    "fields": {
+      "label": {
+        "label": "Label",
+        "placeholder": "Gesture of goodwill"
+      },
+      "code": {
+        "label": "Code",
+        "placeholder": "gesture_of_goodwill"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Customer had a bad shopping experience"
+      }
+    }
+  },
   "login": {
     "forgotPassword": "Forgot password? - <0>Reset</0>",
-    "title": "Welcome to Resala",
+    "title": "Welcome to Medusa",
     "hint": "Sign in to access the account area"
   },
   "invite": {
-    "title": "Welcome to Resala",
+    "title": "Welcome to Medusa",
     "hint": "Create your account below",
     "backToLogin": "Back to login",
     "createAccount": "Create account",
@@ -2745,8 +2838,8 @@
     "emailTooltip": "Your email cannot be changed. If you would like to use another email, a new invite must be sent.",
     "invalidInvite": "The invite is invalid or has expired.",
     "successTitle": "Your account has been registered",
-    "successHint": "Get started with Resala Admin right away.",
-    "successAction": "Start Resala Admin",
+    "successHint": "Get started with Medusa Admin right away.",
+    "successAction": "Start Medusa Admin",
     "invalidTokenTitle": "Your invite token is invalid",
     "invalidTokenHint": "Try requesting a new invite link.",
     "passwordMismatch": "Passwords do not match",
@@ -2779,7 +2872,7 @@
   },
   "workflowExecutions": {
     "domain": "Workflows",
-    "subtitle": "View and keep track of workflow executions in your Resala application.",
+    "subtitle": "View and keep track of workflow executions in your Medusa application.",
     "transactionIdLabel": "Transaction ID",
     "workflowIdLabel": "Workflow ID",
     "progressLabel": "Progress",
@@ -2892,7 +2985,7 @@
       "description": "You don't have any notifications at the moment, but once you do they will live here."
     },
     "accessibility": {
-      "description": "Notifications about Resala activities will be listed here."
+      "description": "Notifications about Medusa activities will be listed here."
     }
   },
   "errors": {
@@ -2954,6 +3047,7 @@
     "category": "Category",
     "collection": "Collection",
     "discountable": "Discountable",
+    "promotionCode": "Promotion code",
     "handle": "Handle",
     "subtitle": "Subtitle",
     "by": "By",
@@ -3101,5 +3195,25 @@
     "minutes_other": "Minutes",
     "seconds_one": "Second",
     "seconds_other": "Seconds"
+  },
+  "views": {
+    "save": "Save",
+    "saveAsNew": "Save as new view",
+    "updateDefaultForEveryone": "Update default for everyone",
+    "updateViewName": "Update view",
+    "prompts": {
+      "updateDefault": {
+        "title": "Update default view",
+        "description": "This will update the default view for all users. Are you sure?",
+        "confirmText": "Update for everyone",
+        "cancelText": "Cancel"
+      },
+      "updateView": {
+        "title": "Update view",
+        "description": "Are you sure you want to update \"{{name}}\"?",
+        "confirmText": "Update",
+        "cancelText": "Cancel"
+      }
+    }
   }
 }

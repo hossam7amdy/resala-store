@@ -27,7 +27,13 @@ export const refetchProduct = async (
   scope: MedusaContainer,
   fields: string[]
 ) => {
-  return await refetchEntity('product', idOrFilter, scope, fields)
+  const product = await refetchEntity({
+    entity: 'product',
+    idOrFilter,
+    scope,
+    fields,
+  })
+  return product as unknown as HttpTypes.StoreProduct
 }
 
 export const filterOutInternalProductCategories = (

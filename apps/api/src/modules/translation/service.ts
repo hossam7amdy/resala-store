@@ -5,7 +5,7 @@ import {
   InjectTransactionManager,
 } from '@medusajs/framework/utils'
 import type { Context, DAL, InferTypeOf } from '@medusajs/types'
-import type { EntityManager } from '@mikro-orm/core'
+import type { EntityManager } from '@medusajs/framework/mikro-orm/core'
 
 import type { TranslatableEntity, TranslationDTO } from '@repo/shared-types'
 

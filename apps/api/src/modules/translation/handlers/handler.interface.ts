@@ -1,6 +1,6 @@
 import type { TranslationDTO } from '@repo/shared-types'
 import type { Context } from '@medusajs/types'
-import type { EntityManager } from '@mikro-orm/core'
+import type { EntityManager } from '@medusajs/framework/mikro-orm/core'
 
 export interface TranslationHandler<
   TInput = any,

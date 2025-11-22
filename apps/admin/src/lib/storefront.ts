@@ -1,2 +1,2 @@
-export const RESALA_STOREFRONT_URL =
+export const MEDUSA_STOREFRONT_URL =
   __STOREFRONT_URL__ ?? 'http://localhost:8000'

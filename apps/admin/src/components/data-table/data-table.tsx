@@ -66,15 +66,18 @@ interface DataTableProps<TData> {
   filters?: DataTableFilter[]
   commands?: DataTableCommand[]
   action?: DataTableActionProps
+  actions?: DataTableActionProps[]
   actionMenu?: DataTableActionMenuProps
   rowCount?: number
   getRowId: (row: TData) => string
   enablePagination?: boolean
   enableSearch?: boolean
   autoFocusSearch?: boolean
+  enableFilterMenu?: boolean
   rowHref?: (row: TData) => string
   emptyState?: DataTableEmptyStateProps
   heading?: string
+  headingLevel?: 'h1' | 'h2' | 'h3'
   subHeading?: string
   prefix?: string
   pageSize?: number
@@ -105,14 +108,17 @@ export const DataTable = <TData,>({
   filters,
   commands,
   action,
+  actions,
   actionMenu,
   getRowId,
   rowCount = 0,
   enablePagination = true,
   enableSearch = true,
   autoFocusSearch = false,
+  enableFilterMenu,
   rowHref,
   heading,
+  headingLevel = 'h1',
   subHeading,
   prefix,
   pageSize = 10,
@@ -139,6 +145,8 @@ export const DataTable = <TData,>({
   const effectiveEnableViewSelector = isViewConfigEnabled && enableViewSelector
 
   const enableFiltering = filters && filters.length > 0
+  const showFilterMenu =
+    enableFilterMenu !== undefined ? enableFilterMenu : enableFiltering
   const enableCommands = commands && commands.length > 0
   const enableSorting = columns.some((column) => column.enableSorting)
 
@@ -378,7 +386,7 @@ export const DataTable = <TData,>({
           <div className="flex items-center gap-x-4">
             {shouldRenderHeading && (
               <div>
-                {heading && <Heading>{heading}</Heading>}
+                {heading && <Heading level={headingLevel}>{heading}</Heading>}
                 {subHeading && (
                   <Text size="small" className="text-ui-fg-subtle">
                     {subHeading}
@@ -395,7 +403,7 @@ export const DataTable = <TData,>({
             )}
           </div>
           <div className="flex items-center gap-x-2">
-            {enableFiltering && <UiDataTable.FilterMenu />}
+            {showFilterMenu && <UiDataTable.FilterMenu />}
             {enableSorting && <UiDataTable.SortingMenu />}
             {enableSearch && (
               <div className="w-full md:w-auto">
@@ -406,7 +414,10 @@ export const DataTable = <TData,>({
               </div>
             )}
             {actionMenu && <ActionMenu variant="primary" {...actionMenu} />}
-            {action && <DataTableAction {...action} />}
+            {actions && actions.length > 0 && (
+              <DataTableActions actions={actions} />
+            )}
+            {!actions && action && <DataTableAction {...action} />}
           </div>
         </div>
       </UiDataTable.Toolbar>
@@ -518,5 +529,15 @@ const DataTableAction = ({
     <Button {...buttonProps} onClick={props.onClick}>
       {label}
     </Button>
+  )
+}
+
+const DataTableActions = ({ actions }: { actions: DataTableActionProps[] }) => {
+  return (
+    <div className="flex items-center gap-x-2">
+      {actions.map((action, index) => (
+        <DataTableAction key={index} {...action} />
+      ))}
+    </div>
   )
 }

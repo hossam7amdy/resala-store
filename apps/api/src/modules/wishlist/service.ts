@@ -6,7 +6,7 @@ import {
 import { Wishlist } from './models/wishlist'
 import { WishlistItem } from './models/wishlist-item'
 import { Context } from '@medusajs/framework/types'
-import { EntityManager } from '@mikro-orm/knex'
+import { EntityManager } from '@medusajs/framework/mikro-orm/knex'
 
 export default class WishlistModuleService extends MedusaService({
   Wishlist,

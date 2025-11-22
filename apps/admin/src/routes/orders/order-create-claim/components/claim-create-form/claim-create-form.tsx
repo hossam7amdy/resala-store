@@ -405,8 +405,8 @@ export const ClaimCreateForm = ({
   })
 
   const onItemsSelected = async () => {
-    itemsToAdd.length &&
-      (await addInboundItem(
+    if (itemsToAdd.length)
+      await addInboundItem(
         {
           items: itemsToAdd.map((id) => ({
             id,
@@ -418,7 +418,7 @@ export const ClaimCreateForm = ({
             toast.error(error.message)
           },
         }
-      ))
+      )
 
     for (const itemToRemove of itemsToRemove) {
       const actionId = previewItems
@@ -1028,7 +1028,8 @@ export const ClaimCreateForm = ({
                       <div className="flex items-center">
                         <Form.Control className="mr-4 self-start">
                           <Switch
-                            className="mt-[2px]"
+                            dir="ltr"
+                            className="mt-[2px] rtl:rotate-180"
                             checked={!!value}
                             onCheckedChange={onChange}
                             {...field}

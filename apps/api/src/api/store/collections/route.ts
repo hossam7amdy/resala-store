@@ -12,7 +12,7 @@ import { localizeCollections } from './helpers'
 import { storeCollectionTranslationFields } from './query-config'
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<HttpTypes.StoreCollectionFilters>,
+  req: AuthenticatedMedusaRequest<HttpTypes.StoreCollectionListParams>,
   res: MedusaResponse<HttpTypes.StoreCollectionListResponse>
 ) => {
   const remoteQuery = req.scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
