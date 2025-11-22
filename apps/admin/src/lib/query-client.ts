@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query'
 
-export const RESALA_BACKEND_URL = __BACKEND_URL__ ?? '/'
+export const MEDUSA_BACKEND_URL = __BACKEND_URL__ ?? '/'
 
 export const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,5 +1,5 @@
 import { Context } from '@medusajs/types'
-import { EntityManager } from '@mikro-orm/core'
+import { EntityManager } from '@medusajs/framework/mikro-orm/core'
 
 import TranslationModuleService from '../service'
 import type { TranslationDTO } from '@repo/shared-types'

@@ -3,7 +3,6 @@
 import { sdk } from '@lib/config'
 import { sortProducts } from '@lib/util/sort-products'
 import { HttpTypes } from '@medusajs/types'
-import { StoreProductReview } from '../../types/global'
 import { SortOptions } from '@modules/store/components/refinement-list/sort-products'
 import { getAuthHeaders, getCacheOptions } from './cookies'
 import { getRegion, retrieveRegion } from './regions'
@@ -15,13 +14,13 @@ export const listProducts = async ({
   regionId,
 }: {
   pageParam?: number
-  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductListParams
   countryCode?: string
   regionId?: string
 }): Promise<{
   response: { products: HttpTypes.StoreProduct[]; count: number }
   nextPage: number | null
-  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductListParams
 }> => {
   if (!countryCode && !regionId) {
     throw new Error('Country code or region ID is required')
@@ -64,7 +63,7 @@ export const listProducts = async ({
           offset,
           region_id: region?.id,
           fields:
-            '*variants.calculated_price,+variants.inventory_quantity,+metadata,+tags',
+            '*variants.calculated_price,+variants.inventory_quantity,*variants.images,+metadata,+tags,',
           ...queryParams,
         },
         headers,
@@ -134,62 +133,4 @@ export const listProductsWithSort = async ({
     nextPage,
     queryParams,
   }
-}
-
-export const getProductReviews = async ({
-  productId,
-  limit = 10,
-  offset = 0,
-}: {
-  productId: string
-  limit?: number
-  offset?: number
-}) => {
-  const headers = {
-    ...(await getAuthHeaders()),
-  }
-
-  const next = {
-    ...(await getCacheOptions(`product-reviews-${productId}`)),
-  }
-
-  return sdk.client.fetch<{
-    reviews: StoreProductReview[]
-    average_rating: number
-    limit: number
-    offset: number
-    count: number
-  }>(`/store/products/${productId}/reviews`, {
-    headers,
-    query: {
-      limit,
-      offset,
-      order: '-created_at',
-    },
-    next,
-    cache: 'force-cache',
-  })
-}
-
-export const addProductReview = async (input: {
-  title?: string
-  content: string
-  first_name: string
-  last_name: string
-  rating: number
-  product_id: string
-}) => {
-  const headers = {
-    ...(await getAuthHeaders()),
-  }
-
-  return sdk.client.fetch(`/store/reviews`, {
-    method: 'POST',
-    headers,
-    body: input,
-    next: {
-      ...(await getCacheOptions(`product-reviews-${input.product_id}`)),
-    },
-    cache: 'no-store',
-  })
 }

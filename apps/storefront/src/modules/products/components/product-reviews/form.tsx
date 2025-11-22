@@ -7,7 +7,7 @@ import { retrieveCustomer } from '../../../../lib/data/customer'
 import { HttpTypes } from '@medusajs/types'
 import { Button, Input, Label, Textarea, toast, Toaster } from '@medusajs/ui'
 import { Star, StarSolid } from '@medusajs/icons'
-import { addProductReview } from '../../../../lib/data/products'
+import { addProductReview } from '../../../../lib/data/reviews'
 
 type ProductReviewsFormProps = {
   productId: string

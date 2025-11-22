@@ -1,15 +1,17 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { isPaymob as isPaymobFunc, paymentInfoMap } from '@lib/constants'
+import { isStripeLike, paymentInfoMap, isPaymob } from '@lib/constants'
 import { initiatePaymentSession } from '@lib/data/cart'
 import { CheckCircleSolid, CreditCard } from '@medusajs/icons'
 import { Button, Container, Heading, Text, clx } from '@medusajs/ui'
 import ErrorMessage from '@modules/checkout/components/error-message'
-import PaymentContainer from '@modules/checkout/components/payment-container'
+import PaymentContainer, {
+  StripeCardContainer,
+} from '@modules/checkout/components/payment-container'
 import Divider from '@modules/common/components/divider'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
 import PaymobCardContainer from '../payment-container/paymob-container'
 
 const Payment = ({
@@ -25,10 +27,12 @@ const Payment = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [cardBrand, setCardBrand] = useState<string | null>(null)
   const [cardComplete, setCardComplete] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     activeSession?.provider_id ?? ''
   )
+
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -39,8 +43,6 @@ const Payment = ({
   )
 
   const isOpen = searchParams.get('step') === 'payment'
-
-  const isPaymob = isPaymobFunc(selectedPaymentMethod)
 
   const setPaymentMethod = async (method: string) => {
     setError(null)
@@ -80,7 +82,9 @@ const Payment = ({
     setIsLoading(true)
     try {
       const shouldInputCard =
-        isPaymobFunc(selectedPaymentMethod) && !activeSession
+        (isStripeLike(selectedPaymentMethod) ||
+          isPaymob(selectedPaymentMethod)) &&
+        !activeSession
 
       const checkActiveSession =
         activeSession?.provider_id === selectedPaymentMethod
@@ -145,31 +149,42 @@ const Payment = ({
       <div>
         <div className={isOpen ? 'block' : 'hidden'}>
           {!paidByGiftCard && availablePaymentMethods?.length && (
-            <RadioGroup
-              value={selectedPaymentMethod}
-              onChange={(value: string) => setPaymentMethod(value)}
-            >
-              {availablePaymentMethods.map((paymentMethod) => (
-                <div key={paymentMethod.id}>
-                  {isPaymobFunc(paymentMethod.id) ? (
-                    <PaymobCardContainer
-                      cart={cart}
-                      paymentProviderId={paymentMethod.id}
-                      selectedPaymentOptionId={selectedPaymentMethod}
-                      paymentInfoMap={paymentInfoMap}
-                      setError={setError}
-                      setCardComplete={setCardComplete}
-                    />
-                  ) : (
-                    <PaymentContainer
-                      paymentInfoMap={paymentInfoMap}
-                      paymentProviderId={paymentMethod.id}
-                      selectedPaymentOptionId={selectedPaymentMethod}
-                    />
-                  )}
-                </div>
-              ))}
-            </RadioGroup>
+            <>
+              <RadioGroup
+                value={selectedPaymentMethod}
+                onChange={(value: string) => setPaymentMethod(value)}
+              >
+                {availablePaymentMethods.map((paymentMethod) => (
+                  <div key={paymentMethod.id}>
+                    {isPaymob(paymentMethod.id) ? (
+                      <PaymobCardContainer
+                        cart={cart}
+                        paymentProviderId={paymentMethod.id}
+                        selectedPaymentOptionId={selectedPaymentMethod}
+                        paymentInfoMap={paymentInfoMap}
+                        setError={setError}
+                        setCardComplete={setCardComplete}
+                      />
+                    ) : isStripeLike(paymentMethod.id) ? (
+                      <StripeCardContainer
+                        paymentProviderId={paymentMethod.id}
+                        selectedPaymentOptionId={selectedPaymentMethod}
+                        paymentInfoMap={paymentInfoMap}
+                        setCardBrand={setCardBrand}
+                        setError={setError}
+                        setCardComplete={setCardComplete}
+                      />
+                    ) : (
+                      <PaymentContainer
+                        paymentInfoMap={paymentInfoMap}
+                        paymentProviderId={paymentMethod.id}
+                        selectedPaymentOptionId={selectedPaymentMethod}
+                      />
+                    )}
+                  </div>
+                ))}
+              </RadioGroup>
+            </>
           )}
 
           {paidByGiftCard && (
@@ -196,10 +211,15 @@ const Payment = ({
             className="mt-6"
             onClick={handleSubmit}
             isLoading={isLoading}
-            disabled={(isPaymob && !cardComplete) || !selectedPaymentMethod}
+            disabled={
+              ((isPaymob(selectedPaymentMethod) ||
+                isStripeLike(selectedPaymentMethod)) &&
+                !cardComplete) ||
+              (!selectedPaymentMethod && !paidByGiftCard)
+            }
             data-testid="submit-payment-button"
           >
-            {!activeSession && isPaymobFunc(selectedPaymentMethod)
+            {!activeSession && isStripeLike(selectedPaymentMethod)
               ? ' Enter card details'
               : 'Continue to review'}
           </Button>
@@ -233,6 +253,11 @@ const Payment = ({
                       <CreditCard />
                     )}
                   </Container>
+                  <Text>
+                    {isStripeLike(selectedPaymentMethod) && cardBrand
+                      ? cardBrand
+                      : 'Another step will appear'}
+                  </Text>
                 </div>
               </div>
             </div>
