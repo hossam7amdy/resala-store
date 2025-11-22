@@ -1,4 +1,4 @@
-import { useParams, Navigate, useSearchParams } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import { FormActions, LocaleSelector } from './components/common'
 import { useTranslationForm } from './hooks'
 import { TranslationProvider } from './contexts'
@@ -6,7 +6,6 @@ import { ENTITY_CONFIG, isValidEntityType } from './config'
 import { RouteFocusModal } from '../../../components/modals'
 
 export const TranslationPage = () => {
-  const [searchParams] = useSearchParams()
   const { entity_type } = useParams()
   const form = useTranslationForm(entity_type!)
 
@@ -18,12 +17,7 @@ export const TranslationPage = () => {
 
   return (
     <TranslationProvider>
-      <RouteFocusModal
-        prev={{
-          pathname: '/translations',
-          search: `?locale=${searchParams.get('locale') ?? ''}`,
-        }}
-      >
+      <RouteFocusModal>
         <RouteFocusModal.Form form={form}>
           <RouteFocusModal.Header>
             <RouteFocusModal.Title>

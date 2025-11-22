@@ -99,7 +99,6 @@ const BillingAddress = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
           data-testid="billing-province-input"
         />
         <Input
-          required
           label="Phone"
           name="billing_address.phone"
           autoComplete="tel"

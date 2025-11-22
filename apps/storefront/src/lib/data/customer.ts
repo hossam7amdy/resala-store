@@ -109,13 +109,13 @@ export async function login(_currentState: unknown, formData: FormData) {
   const password = formData.get('password') as string
 
   try {
-    const token = await sdk.auth.login('customer', 'emailpass', {
-      email,
-      password,
-    })
-    await setAuthToken(token as string)
-    const customerCacheTag = await getCacheTag('customers')
-    revalidateTag(customerCacheTag)
+    await sdk.auth
+      .login('customer', 'emailpass', { email, password })
+      .then(async (token) => {
+        await setAuthToken(token as string)
+        const customerCacheTag = await getCacheTag('customers')
+        revalidateTag(customerCacheTag)
+      })
   } catch (error: any) {
     return error.toString()
   }
@@ -223,7 +223,7 @@ export const addCustomerAddress = async (
 
   return sdk.store.customer
     .createAddress(address, {}, headers)
-    .then(async ({ customer: _ }) => {
+    .then(async ({ customer }) => {
       const customerCacheTag = await getCacheTag('customers')
       revalidateTag(customerCacheTag)
       return { success: true, error: null }

@@ -60,7 +60,7 @@ export const GET = async (
   if (withInventoryQuantity) {
     await wrapVariantsWithInventoryQuantityForSalesChannel(
       req,
-      product.variants || []
+      product.variants ?? ([] as any)
     )
   }
 

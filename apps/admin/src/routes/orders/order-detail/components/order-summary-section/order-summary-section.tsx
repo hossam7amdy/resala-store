@@ -38,7 +38,6 @@ import {
 } from '@medusajs/ui'
 
 import { AdminReservation } from '@medusajs/types/src/http'
-import { format } from 'date-fns'
 import { ActionMenu } from '../../../../../components/common/action-menu'
 import DisplayId from '../../../../../components/common/display-id/display-id'
 import { Thumbnail } from '../../../../../components/common/thumbnail'
@@ -575,9 +574,10 @@ const CostBreakdown = ({
 
     order.items.forEach((item) => {
       item.tax_lines?.forEach((line) => {
+        const currTotal = line.subtotal || 0
         const prevTotal = taxCodeMap[line.code]?.total || 0
         taxCodeMap[line.code] = {
-          total: prevTotal + line.subtotal,
+          total: prevTotal + currTotal,
           rate: line.rate,
         }
       })
@@ -585,9 +585,10 @@ const CostBreakdown = ({
 
     order.shipping_methods.forEach((sm) => {
       sm.tax_lines?.forEach((line) => {
+        const currTotal = line.subtotal || 0
         const prevTotal = taxCodeMap[line.code]?.total || 0
         taxCodeMap[line.code] = {
-          total: prevTotal + line.subtotal,
+          total: prevTotal + currTotal,
           rate: line.rate,
         }
       })
@@ -853,10 +854,6 @@ const DiscountAndTotalBreakdown = ({
                   .split('-')
                   .join(' ')
 
-                const prettyReferenceId = creditLine.reference_id ? (
-                  <DisplayId id={creditLine.reference_id} />
-                ) : null
-
                 return (
                   <div
                     key={creditLine.id}
@@ -874,32 +871,12 @@ const DiscountAndTotalBreakdown = ({
                       <span className="txt-small text-ui-fg-subtle mx-1">
                         -
                       </span>
-                      <Tooltip
-                        content={format(
-                          new Date(creditLine.created_at),
-                          'dd MMM, yyyy, HH:mm:ss'
-                        )}
-                      >
-                        <Text
-                          size="small"
-                          leading="compact"
-                          className="txt-small text-ui-fg-subtle"
-                        >
-                          {format(
-                            new Date(creditLine.created_at),
-                            'dd MMM, yyyy'
-                          )}
-                        </Text>
-                      </Tooltip>
-                      <span className="txt-small text-ui-fg-subtle mx-1">
-                        -
-                      </span>
                       <Text
                         size="small"
                         leading="compact"
                         className="txt-small text-ui-fg-subtle capitalize"
                       >
-                        ({prettyReference} {prettyReferenceId})
+                        ({prettyReference})
                       </Text>
                     </div>
                     <div className="relative flex-1">
