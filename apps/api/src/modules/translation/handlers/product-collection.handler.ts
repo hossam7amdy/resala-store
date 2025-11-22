@@ -1,4 +1,4 @@
-import type { EntityManager } from '@mikro-orm/core'
+import type { EntityManager } from '@medusajs/framework/mikro-orm/core'
 import type { Context, InferTypeOf } from '@medusajs/types'
 
 import { BaseTranslationHandler } from './base.handler'

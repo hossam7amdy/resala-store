@@ -204,7 +204,6 @@ const ShippingAddress = ({
           data-testid="shipping-email-input"
         />
         <Input
-          required
           label="Phone"
           name="shipping_address.phone"
           autoComplete="tel"

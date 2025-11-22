@@ -3,7 +3,8 @@
 import React, { useEffect } from 'react'
 import Script from 'next/script'
 import { HttpTypes } from '@medusajs/types'
-import PaymentContainer, { PaymentContainerProps } from '.'
+import PaymentContainer from '.'
+import type { PaymentContainerProps } from '.'
 import { placeOrder } from '@lib/data/cart'
 
 declare global {
@@ -47,6 +48,7 @@ const PaymobCardContainer: React.FC<PaymobContainerProps> = ({
           showSaveCard: false,
           forceSaveCard: false,
           disablePay: true,
+          hideCardHolderName: true,
           cardValidationChanged: setCardComplete,
           beforePaymentComplete: async (paymentMethod: unknown) => {
             console.log('beforePaymentComplete', { paymentMethod })

@@ -1,6 +1,7 @@
 import { HttpTypes, MedusaContainer } from '@medusajs/framework/types'
 import {
   ContainerRegistrationKeys,
+  MedusaError,
   remoteQueryObjectFromString,
 } from '@medusajs/framework/utils'
 import { findPublishedTranslation } from '../utils'
@@ -48,9 +49,14 @@ export const refetchCart = async (
     ),
   })
 
-  const [cart] = await remoteQuery(queryObject, {
-    throwIfKeyNotFound: true,
-  })
+  const [cart] = await remoteQuery(queryObject)
+
+  if (!cart) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Cart with id '${id}' not found`
+    )
+  }
 
   return localizeCart(cart, locale)
 }

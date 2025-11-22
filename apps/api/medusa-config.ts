@@ -165,8 +165,26 @@ if (isDefined(process.env.REDIS_URL)) {
           },
         ],
       },
+    },
+    {
+      resolve: '@medusajs/medusa/caching',
+      options: {
+        providers: [
+          {
+            id: 'caching-redis',
+            resolve: '@medusajs/caching-redis',
+            options: {
+              redisUrl: process.env.REDIS_URL,
+            },
+          },
+        ],
+      },
     }
   )
+  if (!isDefined(appConfig.featureFlags)) {
+    appConfig.featureFlags = {}
+  }
+  appConfig.featureFlags.caching = true
 }
 
 module.exports = defineConfig(appConfig)

@@ -1,11 +1,11 @@
-import { HttpTypes, PaymentProviderDTO } from '@medusajs/types'
+import { HttpTypes } from '@medusajs/types'
 import { Button, Input, Select, Switch, Text, toast } from '@medusajs/ui'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import * as zod from 'zod'
 
 import { Form } from '../../../../../components/common/form/index.ts'
-import { Combobox } from '../../../../../components/inputs/combobox/index.ts'
+import { Combobox } from '../../../../../components/inputs/combobox'
 import {
   RouteDrawer,
   useRouteModal,
@@ -14,11 +14,13 @@ import { KeyboundForm } from '../../../../../components/utilities/keybound-form/
 import { useUpdateRegion } from '../../../../../hooks/api/regions.tsx'
 import { CurrencyInfo } from '../../../../../lib/data/currencies.ts'
 import { formatProvider } from '../../../../../lib/format-provider.ts'
+import { useDocumentDirection } from '../../../../../hooks/use-document-direction'
+import { useComboboxData } from '../../../../../hooks/use-combobox-data.tsx'
+import { sdk } from '../../../../../lib/client/index.ts'
 
 type EditRegionFormProps = {
   region: HttpTypes.AdminRegion
   currencies: CurrencyInfo[]
-  paymentProviders: PaymentProviderDTO[]
   pricePreferences: HttpTypes.AdminPricePreference[]
 }
 
@@ -33,7 +35,6 @@ const EditRegionSchema = zod.object({
 export const EditRegionForm = ({
   region,
   currencies,
-  paymentProviders,
   pricePreferences,
 }: EditRegionFormProps) => {
   const { t } = useTranslation()
@@ -42,7 +43,7 @@ export const EditRegionForm = ({
     (preference) =>
       preference.attribute === 'region_id' && preference.value === region.id
   )
-
+  const direction = useDocumentDirection()
   const form = useForm<zod.infer<typeof EditRegionSchema>>({
     defaultValues: {
       name: region.name,
@@ -51,6 +52,17 @@ export const EditRegionForm = ({
       automatic_taxes: region.automatic_taxes,
       is_tax_inclusive: pricePreferenceForRegion?.is_tax_inclusive || false,
     },
+  })
+
+  const comboboxProviders = useComboboxData({
+    queryKey: ['payment_providers'],
+    queryFn: (params) =>
+      sdk.admin.payment.listPaymentProviders({ ...params, is_enabled: true }),
+    getOptions: (data) =>
+      data.payment_providers.map((pp) => ({
+        label: formatProvider(pp.id),
+        value: pp.id,
+      })),
   })
 
   const { mutateAsync: updateRegion, isPending: isPendingRegion } =
@@ -109,7 +121,11 @@ export const EditRegionForm = ({
                     <Form.Item>
                       <Form.Label>{t('fields.currency')}</Form.Label>
                       <Form.Control>
-                        <Select onValueChange={onChange} {...field}>
+                        <Select
+                          dir={direction}
+                          onValueChange={onChange}
+                          {...field}
+                        >
                           <Select.Trigger ref={ref}>
                             <Select.Value />
                           </Select.Trigger>
@@ -140,6 +156,8 @@ export const EditRegionForm = ({
                           <Form.Label>{t('fields.automaticTaxes')}</Form.Label>
                           <Form.Control>
                             <Switch
+                              dir="ltr"
+                              className="rtl:rotate-180"
                               {...field}
                               checked={value}
                               onCheckedChange={onChange}
@@ -167,6 +185,8 @@ export const EditRegionForm = ({
                           </Form.Label>
                           <Form.Control>
                             <Switch
+                              dir="ltr"
+                              className="rtl:rotate-180"
                               {...field}
                               checked={value}
                               onCheckedChange={onChange}
@@ -199,10 +219,9 @@ export const EditRegionForm = ({
                       <Form.Label>{t('fields.paymentProviders')}</Form.Label>
                       <Form.Control>
                         <Combobox
-                          options={paymentProviders.map((pp) => ({
-                            label: formatProvider(pp.id),
-                            value: pp.id,
-                          }))}
+                          forceHideInput
+                          options={comboboxProviders.options}
+                          fetchNextPage={comboboxProviders.fetchNextPage}
                           {...field}
                         />
                       </Form.Control>

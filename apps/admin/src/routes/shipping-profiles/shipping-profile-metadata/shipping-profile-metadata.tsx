@@ -13,7 +13,7 @@ export const ShippingProfileMetadata = () => {
   )
 
   const { mutateAsync, isPending: isMutating } = useUpdateShippingProfile(
-    shipping_profile?.id as string
+    shipping_profile?.id!
   )
 
   if (isError) {
