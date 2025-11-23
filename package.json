@@ -7,17 +7,23 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky || echo 'husky not found'",
-    "build": "turbo run build",
     "build:api": "pnpm --filter ./apps/api... run build",
     "build:admin": "pnpm --filter ./apps/admin... run build",
     "build:storefront": "pnpm --filter ./apps/storefront... run build",
+    "build:plugins": "pnpm --filter \"@plugins/*\" run build",
+    "build:packages": "pnpm -filter \"@repo/*\" run build",
     "dev": "turbo run dev",
     "format": "prettier --write .",
     "lint": "eslint \"apps/*/src/**/*.{ts,tsx}\"",
     "test": "turbo run test",
     "check-types": "turbo run check-types"
   },
+  "dependencies": {
+    "@plugins/wishlist": "workspace:*",
+    "@plugins/reviews": "workspace:*"
+  },
   "devDependencies": {
+    "@repo/shared-types": "workspace:*",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

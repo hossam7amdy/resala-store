@@ -31,7 +31,6 @@
     "@babel/core": "^7.28.5",
     "@medusajs/types": "2.11.3",
     "@medusajs/ui-preset": "2.11.3",
-    "@repo/shared-types": "workspace:*",
     "@types/lodash": "^4.17.20",
     "@types/node": "17.0.21",
     "@types/pg": "^8.15.6",
