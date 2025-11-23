@@ -1,5 +1,3 @@
 export type * from './auto-translation'
-export type * from './review'
 export type * from './store-locale'
 export type * from './translation'
-export type * from './wishlist'
