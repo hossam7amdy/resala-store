@@ -20,10 +20,10 @@
   },
   "dependencies": {
     "@plugins/wishlist": "workspace:*",
-    "@plugins/reviews": "workspace:*"
+    "@plugins/reviews": "workspace:*",
+    "@plugins/translations": "workspace:*"
   },
   "devDependencies": {
-    "@repo/shared-types": "workspace:*",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

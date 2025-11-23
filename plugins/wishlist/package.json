@@ -42,7 +42,7 @@
     "@medusajs/framework": "2.11.3",
     "@medusajs/medusa": "2.11.3",
     "@medusajs/test-utils": "2.11.3",
-    "@medusajs/ui": "4.0.25",
+    "@medusajs/ui": "4.0.27",
     "@medusajs/icons": "2.11.3",
     "@swc/core": "1.5.7",
     "@types/node": "^20.0.0",
@@ -62,7 +62,7 @@
     "@medusajs/framework": "2.11.3",
     "@medusajs/test-utils": "2.11.3",
     "@medusajs/medusa": "2.11.3",
-    "@medusajs/ui": "4.0.25",
+    "@medusajs/ui": "4.0.27",
     "@medusajs/icons": "2.11.3"
   },
   "engines": {
