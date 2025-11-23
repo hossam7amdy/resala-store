@@ -111,10 +111,6 @@ const appConfig: InputConfig = {
       options: {},
     },
     {
-      resolve: './src/modules/product-review',
-      options: {},
-    },
-    {
       resolve: './src/modules/translation',
       options: {},
     },
@@ -125,8 +121,14 @@ const appConfig: InputConfig = {
         projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
       },
     },
+  ],
+  plugins: [
     {
-      resolve: './src/modules/wishlist',
+      resolve: '@plugins/wishlist',
+      options: {},
+    },
+    {
+      resolve: '@plugins/reviews',
       options: {},
     },
   ],

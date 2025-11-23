@@ -26,7 +26,6 @@
     "@faker-js/faker": "^10.1.0",
     "@medusajs/test-utils": "2.11.3",
     "@medusajs/types": "2.11.3",
-    "@repo/shared-types": "workspace:*",
     "@swc/core": "1.5.7",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^29.5.14",
