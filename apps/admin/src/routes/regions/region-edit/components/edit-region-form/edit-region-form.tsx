@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import * as zod from 'zod'
 
 import { Form } from '../../../../../components/common/form/index.ts'
-import { Combobox } from '../../../../../components/inputs/combobox'
+import { Combobox } from '../../../../../components/inputs/combobox/index.ts'
 import {
   RouteDrawer,
   useRouteModal,
@@ -14,7 +14,7 @@ import { KeyboundForm } from '../../../../../components/utilities/keybound-form/
 import { useUpdateRegion } from '../../../../../hooks/api/regions.tsx'
 import { CurrencyInfo } from '../../../../../lib/data/currencies.ts'
 import { formatProvider } from '../../../../../lib/format-provider.ts'
-import { useDocumentDirection } from '../../../../../hooks/use-document-direction'
+import { useDocumentDirection } from '../../../../../hooks/use-document-direction.tsx'
 import { useComboboxData } from '../../../../../hooks/use-combobox-data.tsx'
 import { sdk } from '../../../../../lib/client/index.ts'
 

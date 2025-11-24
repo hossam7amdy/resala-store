@@ -1,0 +1,47 @@
+# Node modules for all packages
+**/node_modules
+
+# Build / dist outputs
+**/build
+**/dist
+**/out
+**/.next
+**/.vercel/output
+
+# Next.js specific
+.next
+out
+public/**/*.svg      # many treat SVGs as assets, not code
+
+# Environment
+**/.env
+**/.env.*
+.env
+.env.*
+
+# Logs
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency lockfiles (optional, if you prefer not to format them)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Coverage + testing output
+**/coverage
+**/.coverage
+**/.nyc_output
+
+# Generated types & API clients
+**/generated
+**/gen
+**/types/generated
+
+# Misc artifacts
+**/.DS_Store
+**/*.min.js
+.claude
+.husky
