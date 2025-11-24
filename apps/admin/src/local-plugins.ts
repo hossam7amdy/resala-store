@@ -10,6 +10,7 @@ import { DashboardPlugin } from './dashboard-app/types'
 import reviewsPlugin from '@plugins/reviews/admin'
 import wishlistPlugin from '@plugins/wishlist/admin'
 import translationsPlugin from '@plugins/translations/admin'
+import draftOrderPlugin from '@medusajs/draft-order/admin'
 
 const localPlugin = {
   widgetModule,
@@ -25,4 +26,5 @@ export const localPlugins: DashboardPlugin[] = [
   reviewsPlugin,
   translationsPlugin,
   wishlistPlugin,
+  draftOrderPlugin,
 ]
