@@ -36,7 +36,8 @@
   "scripts": {
     "build": "medusa plugin:build",
     "dev": "medusa plugin:develop",
-    "prepublishOnly": "medusa plugin:build"
+    "prepublishOnly": "medusa plugin:build",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@google-cloud/translate": "^8.0.2",
