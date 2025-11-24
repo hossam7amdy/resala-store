@@ -35,7 +35,8 @@
     "build": "medusa plugin:build",
     "dev": "medusa plugin:develop",
     "prepublishOnly": "medusa plugin:build",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "clean": "rm -rf .medusa"
   },
   "devDependencies": {
     "@medusajs/admin-sdk": "2.11.3",
