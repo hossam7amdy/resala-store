@@ -111,11 +111,7 @@ const appConfig: InputConfig = {
       options: {},
     },
     {
-      resolve: './src/modules/translation',
-      options: {},
-    },
-    {
-      resolve: './src/modules/auto-translation',
+      resolve: '@plugins/translations/modules/auto-translation',
       options: {
         apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
         projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
@@ -129,6 +125,10 @@ const appConfig: InputConfig = {
     },
     {
       resolve: '@plugins/reviews',
+      options: {},
+    },
+    {
+      resolve: '@plugins/translations',
       options: {},
     },
   ],

@@ -17,11 +17,11 @@ import { useTranslation } from 'react-i18next'
 import {
   RouteFocusModal,
   useRouteModal,
-} from '../../../../../components/modals'
+} from '../../../../../components/modals/index.ts'
 
-import { Form } from '../../../../../components/common/form'
-import { getStylizedAmount } from '../../../../../lib/money-amount-helpers'
-import { CreateExchangeSchemaType, ExchangeCreateSchema } from './schema'
+import { Form } from '../../../../../components/common/form/index.ts'
+import { getStylizedAmount } from '../../../../../lib/money-amount-helpers.ts'
+import { CreateExchangeSchemaType, ExchangeCreateSchema } from './schema.ts'
 
 import { AdminReturn } from '@medusajs/types'
 import { KeyboundForm } from '../../../../../components/utilities/keybound-form/keybound-form.tsx'
@@ -30,10 +30,10 @@ import {
   useExchangeConfirmRequest,
   useUpdateExchangeInboundShipping,
   useUpdateExchangeOutboundShipping,
-} from '../../../../../hooks/api/exchanges'
-import { currencies } from '../../../../../lib/data/currencies'
+} from '../../../../../hooks/api/exchanges.tsx'
+import { currencies } from '../../../../../lib/data/currencies.ts'
 import { ExchangeInboundSection } from './exchange-inbound-section.tsx'
-import { ExchangeOutboundSection } from './exchange-outbound-section'
+import { ExchangeOutboundSection } from './exchange-outbound-section.tsx'
 
 type ReturnCreateFormProps = {
   order: AdminOrder

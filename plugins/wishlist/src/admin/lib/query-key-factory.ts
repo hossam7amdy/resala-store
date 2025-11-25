@@ -36,18 +36,18 @@ export const queryKeysFactory = <
 >(
   globalKey: T
 ) => {
-  const queryKeyFactory: TQueryKey<T, TListQueryType, TDetailQueryType> = {
-    all: [globalKey],
-    lists: () => [...queryKeyFactory.all, 'list'],
+  const queryKeyFactory = {
+    all: [globalKey] as const,
+    lists: () => [...queryKeyFactory.all, 'list'] as const,
     list: (query?: TListQueryType) =>
       [...queryKeyFactory.lists(), query ? { query } : undefined].filter(
         (k) => !!k
-      ),
-    details: () => [...queryKeyFactory.all, 'detail'],
+      ) as any,
+    details: () => [...queryKeyFactory.all, 'detail'] as const,
     detail: (id: TDetailQueryType, query?: TListQueryType) =>
       [...queryKeyFactory.details(), id, query ? { query } : undefined].filter(
         (k) => !!k
-      ),
+      ) as any,
   }
   return queryKeyFactory
 }

@@ -37,31 +37,31 @@ import {
   usePrompt,
 } from '@medusajs/ui'
 
-import { AdminReservation } from '@medusajs/types/src/http'
-import { ActionMenu } from '../../../../../components/common/action-menu'
-import DisplayId from '../../../../../components/common/display-id/display-id'
-import { Thumbnail } from '../../../../../components/common/thumbnail'
-import { useClaims } from '../../../../../hooks/api/claims'
-import { useExchanges } from '../../../../../hooks/api/exchanges'
-import { useOrderPreview } from '../../../../../hooks/api/orders'
-import { useMarkPaymentCollectionAsPaid } from '../../../../../hooks/api/payment-collections'
-import { useReservationItems } from '../../../../../hooks/api/reservations'
-import { useReturns } from '../../../../../hooks/api/returns'
-import { useDate } from '../../../../../hooks/use-date'
-import { getTotalCreditLines } from '../../../../../lib/credit-line'
-import { formatCurrency } from '../../../../../lib/format-currency'
-import { getReservationsLimitCount } from '../../../../../lib/orders'
+import { AdminReservation } from '@medusajs/types'
+import { ActionMenu } from '../../../../../components/common/action-menu/index.ts'
+import DisplayId from '../../../../../components/common/display-id/display-id.tsx'
+import { Thumbnail } from '../../../../../components/common/thumbnail/index.ts'
+import { useClaims } from '../../../../../hooks/api/claims.tsx'
+import { useExchanges } from '../../../../../hooks/api/exchanges.tsx'
+import { useOrderPreview } from '../../../../../hooks/api/orders.tsx'
+import { useMarkPaymentCollectionAsPaid } from '../../../../../hooks/api/payment-collections.tsx'
+import { useReservationItems } from '../../../../../hooks/api/reservations.tsx'
+import { useReturns } from '../../../../../hooks/api/returns.tsx'
+import { useDate } from '../../../../../hooks/use-date.tsx'
+import { getTotalCreditLines } from '../../../../../lib/credit-line.ts'
+import { formatCurrency } from '../../../../../lib/format-currency.ts'
+import { getReservationsLimitCount } from '../../../../../lib/orders.ts'
 import {
   getLocaleAmount,
   getStylizedAmount,
   isAmountLessThenRoundingError,
-} from '../../../../../lib/money-amount-helpers'
-import { getTotalCaptured } from '../../../../../lib/payment'
-import { getLoyaltyPlugin } from '../../../../../lib/plugins'
-import { getReturnableQuantity } from '../../../../../lib/rma'
-import { CopyPaymentLink } from '../copy-payment-link/copy-payment-link'
-import ReturnInfoPopover from './return-info-popover'
-import ShippingInfoPopover from './shipping-info-popover'
+} from '../../../../../lib/money-amount-helpers.ts'
+import { getTotalCaptured } from '../../../../../lib/payment.ts'
+import { getLoyaltyPlugin } from '../../../../../lib/plugins.ts'
+import { getReturnableQuantity } from '../../../../../lib/rma.ts'
+import { CopyPaymentLink } from '../copy-payment-link/copy-payment-link.tsx'
+import ReturnInfoPopover from './return-info-popover.tsx'
+import ShippingInfoPopover from './shipping-info-popover.tsx'
 import { formatPercentage } from '../../../../../lib/percentage-helpers.ts'
 
 type OrderSummarySectionProps = {
@@ -129,11 +129,11 @@ export const OrderSummarySection = ({
 
   const unpaidPaymentCollection = order.payment_collections.find(
     (pc) => pc.status === 'not_paid'
-  )
+  )!
 
   const { mutateAsync: markAsPaid } = useMarkPaymentCollectionAsPaid(
     order.id,
-    unpaidPaymentCollection?.id!
+    unpaidPaymentCollection?.id
   )
 
   const pendingDifference = order.summary?.pending_difference || 0

@@ -1,25 +1,8 @@
 import { DashboardApp } from './dashboard-app'
 import { DashboardPlugin } from './dashboard-app/types'
-
-import displayModule from 'virtual:medusa/displays'
-import formModule from 'virtual:medusa/forms'
-import i18nModule from 'virtual:medusa/i18n'
-import menuItemModule from 'virtual:medusa/menu-items'
-import routeModule from 'virtual:medusa/routes'
-import widgetModule from 'virtual:medusa/widgets'
-
-import { customPlugins } from './plugins'
+import { localPlugins } from './local-plugins'
 
 import './index.css'
-
-const localPlugin = {
-  widgetModule,
-  routeModule,
-  displayModule,
-  formModule,
-  menuItemModule,
-  i18nModule,
-}
 
 interface AppProps {
   plugins?: DashboardPlugin[]
@@ -27,7 +10,7 @@ interface AppProps {
 
 function App({ plugins = [] }: AppProps) {
   const app = new DashboardApp({
-    plugins: [localPlugin, ...customPlugins, ...plugins],
+    plugins: [...localPlugins, ...plugins],
   })
 
   return <div>{app.render()}</div>
