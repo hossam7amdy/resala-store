@@ -21,7 +21,8 @@
   "dependencies": {
     "@plugins/wishlist": "workspace:*",
     "@plugins/reviews": "workspace:*",
-    "@plugins/translations": "workspace:*"
+    "@plugins/translations": "workspace:*",
+    "@plugins/localization": "workspace:*"
   },
   "devDependencies": {
     "eslint": "^9.39.1",
