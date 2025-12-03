@@ -1,0 +1,58 @@
+{
+  "languages": {
+    "title": "Store Languages",
+    "table": {
+      "name": "Name",
+      "code": "Code",
+      "status": "Status",
+      "default": "(default)",
+      "published": "Published",
+      "notPublished": "Not published"
+    },
+    "actions": {
+      "add": "Add",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "setAsDefault": "Set as default",
+      "default": "Default"
+    },
+    "create": {
+      "title": "Add language",
+      "description": "Create a new language for your store.",
+      "languageLabel": "Language",
+      "selectPlaceholder": "Select a language",
+      "successToast": "Language created successfully",
+      "errorToast": "Failed to create language"
+    },
+    "update": {
+      "publishSuccess": "Language published successfully",
+      "unpublishSuccess": "Language unpublished successfully",
+      "setDefaultSuccess": "Language set as default successfully",
+      "error": "Failed to update language"
+    },
+    "delete": {
+      "successToast": "Language deleted successfully",
+      "errorToast": "Failed to delete language"
+    }
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete"
+  },
+  "general": {
+    "areYouSure": "Are you sure?",
+    "areYouSureDescription": "You are about to delete the {{entity}}: {{title}}. This action cannot be undone.",
+    "noRecordsTitle": "No languages",
+    "noRecordsMessage": "Start by adding a language to your store.",
+    "of": "of",
+    "results": "results",
+    "pages": "pages",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "filters": {
+    "searchLabel": "Search",
+    "sortLabel": "Sort"
+  }
+}

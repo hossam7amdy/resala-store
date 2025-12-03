@@ -1,0 +1,58 @@
+{
+  "languages": {
+    "title": "لغات المتجر",
+    "table": {
+      "name": "الاسم",
+      "code": "الرمز",
+      "status": "الحالة",
+      "default": "(افتراضية)",
+      "published": "منشورة",
+      "notPublished": "غير منشورة"
+    },
+    "actions": {
+      "add": "إضافة",
+      "publish": "نشر",
+      "unpublish": "إلغاء النشر",
+      "setAsDefault": "تعيين كافتراضية",
+      "default": "افتراضية"
+    },
+    "create": {
+      "title": "إضافة لغة",
+      "description": "إنشاء لغة جديدة للمتجر.",
+      "languageLabel": "اللغة",
+      "selectPlaceholder": "اختر لغة",
+      "successToast": "تم إنشاء اللغة بنجاح",
+      "errorToast": "فشل إنشاء اللغة"
+    },
+    "update": {
+      "publishSuccess": "تم نشر اللغة بنجاح",
+      "unpublishSuccess": "تم إلغاء نشر اللغة بنجاح",
+      "setDefaultSuccess": "تم تعيين اللغة كافتراضية بنجاح",
+      "error": "فشل تحديث اللغة"
+    },
+    "delete": {
+      "successToast": "تم حذف اللغة بنجاح",
+      "errorToast": "فشل حذف اللغة"
+    }
+  },
+  "actions": {
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "delete": "حذف"
+  },
+  "general": {
+    "areYouSure": "هل أنت متأكد؟",
+    "areYouSureDescription": "أنت على وشك حذف {{entity}}: {{title}}. لا يمكن التراجع عن هذا الإجراء.",
+    "noRecordsTitle": "لا توجد لغات",
+    "noRecordsMessage": "ابدأ بإضافة لغة إلى متجرك.",
+    "of": "من",
+    "results": "نتائج",
+    "pages": "صفحات",
+    "prev": "السابق",
+    "next": "التالي"
+  },
+  "filters": {
+    "searchLabel": "بحث",
+    "sortLabel": "ترتيب"
+  }
+}
