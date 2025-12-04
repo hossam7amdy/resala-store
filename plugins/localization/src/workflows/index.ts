@@ -1,3 +1,5 @@
 export * from './create-language'
 export * from './update-language'
 export * from './delete-language'
+export * from './register-translations'
+export * from './remove-translations'

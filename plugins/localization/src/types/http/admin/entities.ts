@@ -1,5 +1,4 @@
-import type { MetadataType } from '@medusajs/types'
-import { BaseLanguage } from '../../common'
+import type { BaseLanguage, TranslatableResourceType } from '../../common'
 
 export interface AdminLanguage extends BaseLanguage {
   is_published: boolean
@@ -10,12 +9,11 @@ export interface AdminLanguage extends BaseLanguage {
 export interface AdminTranslation {
   id: string
   resource_id: string
-  resource_type: string
-  key: string
+  resource_type: TranslatableResourceType
+  field: string
   value: string
   is_outdated: boolean
   language: AdminLanguage
-  metadata: MetadataType
   created_at: Date | string
   updated_at: Date | string
   deleted_at: Date | string | null

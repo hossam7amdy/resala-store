@@ -1,6 +1,6 @@
 import { Migration } from '@mikro-orm/migrations'
 
-export class Migration20251202073851 extends Migration {
+export class Migration20251204075553 extends Migration {
   override async up(): Promise<void> {
     this.addSql(
       `alter table if exists "language" drop constraint if exists "language_code_unique";`
@@ -16,7 +16,7 @@ export class Migration20251202073851 extends Migration {
     )
 
     this.addSql(
-      `create table if not exists "translation" ("id" text not null, "resource_id" text not null, "resource_type" text not null, "key" text not null, "value" text not null, "is_outdated" boolean not null default false, "metadata" jsonb null, "language_id" text not null, "created_at" timestamptz not null default now(), "updated_at" timestamptz not null default now(), "deleted_at" timestamptz null, constraint "translation_pkey" primary key ("id"));`
+      `create table if not exists "translation" ("id" text not null, "resource_id" text not null, "resource_type" text not null, "field" text not null, "value" text not null, "is_outdated" boolean not null default false, "language_id" text not null, "created_at" timestamptz not null default now(), "updated_at" timestamptz not null default now(), "deleted_at" timestamptz null, constraint "translation_pkey" primary key ("id"));`
     )
     this.addSql(
       `CREATE INDEX IF NOT EXISTS "IDX_translation_language_id" ON "translation" ("language_id") WHERE deleted_at IS NULL;`
@@ -25,7 +25,7 @@ export class Migration20251202073851 extends Migration {
       `CREATE INDEX IF NOT EXISTS "IDX_translation_deleted_at" ON "translation" ("deleted_at") WHERE deleted_at IS NULL;`
     )
     this.addSql(
-      `CREATE UNIQUE INDEX IF NOT EXISTS "IDX_translation_lookup" ON "translation" ("language_id", "resource_type", "resource_id", "key") WHERE deleted_at IS NULL;`
+      `CREATE UNIQUE INDEX IF NOT EXISTS "IDX_translation_lookup" ON "translation" ("language_id", "resource_type", "resource_id", "field") WHERE deleted_at IS NULL;`
     )
     this.addSql(
       `CREATE INDEX IF NOT EXISTS "IDX_translation_resource" ON "translation" ("resource_type", "resource_id") WHERE deleted_at IS NULL;`

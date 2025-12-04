@@ -34,25 +34,5 @@
       "successToast": "تم حذف اللغة بنجاح",
       "errorToast": "فشل حذف اللغة"
     }
-  },
-  "actions": {
-    "cancel": "إلغاء",
-    "confirm": "تأكيد",
-    "delete": "حذف"
-  },
-  "general": {
-    "areYouSure": "هل أنت متأكد؟",
-    "areYouSureDescription": "أنت على وشك حذف {{entity}}: {{title}}. لا يمكن التراجع عن هذا الإجراء.",
-    "noRecordsTitle": "لا توجد لغات",
-    "noRecordsMessage": "ابدأ بإضافة لغة إلى متجرك.",
-    "of": "من",
-    "results": "نتائج",
-    "pages": "صفحات",
-    "prev": "السابق",
-    "next": "التالي"
-  },
-  "filters": {
-    "searchLabel": "بحث",
-    "sortLabel": "ترتيب"
   }
 }

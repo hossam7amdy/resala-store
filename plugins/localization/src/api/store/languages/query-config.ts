@@ -1,4 +1,4 @@
-export const defaultStoreLocaleFields = [
+export const defaultStoreLanguageFields = [
   'code',
   'name',
   'is_default',
@@ -8,7 +8,7 @@ export const defaultStoreLocaleFields = [
 ]
 
 export const listTransformQueryConfig = {
-  defaults: defaultStoreLocaleFields,
+  defaults: defaultStoreLanguageFields,
   defaultLimit: 20,
   isList: true,
 }

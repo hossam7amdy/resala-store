@@ -156,8 +156,8 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "key": {
-          "name": "key",
+        "field": {
+          "name": "field",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -183,15 +183,6 @@
           "nullable": false,
           "default": "false",
           "mappedType": "boolean"
-        },
-        "metadata": {
-          "name": "metadata",
-          "type": "jsonb",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "json"
         },
         "language_id": {
           "name": "language_id",
@@ -263,7 +254,7 @@
           "constraint": false,
           "primary": false,
           "unique": false,
-          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_translation_lookup\" ON \"translation\" (\"language_id\", \"resource_type\", \"resource_id\", \"key\") WHERE deleted_at IS NULL"
+          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_translation_lookup\" ON \"translation\" (\"language_id\", \"resource_type\", \"resource_id\", \"field\") WHERE deleted_at IS NULL"
         },
         {
           "keyName": "IDX_translation_resource",
