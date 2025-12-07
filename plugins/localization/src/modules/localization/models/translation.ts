@@ -1,9 +1,10 @@
 import { model } from '@medusajs/framework/utils'
 import Language from './language'
+import TranslationProvider from './translation-provider'
 
 const Translation = model
   .define('Translation', {
-    id: model.id({ prefix: 'tr' }).primaryKey(),
+    id: model.id({ prefix: 'trans' }).primaryKey(),
     resource_id: model.text(),
     resource_type: model.text(),
     field: model.text(),
@@ -12,6 +13,11 @@ const Translation = model
     language: model.belongsTo(() => Language, {
       mappedBy: 'translations',
     }),
+    provider: model
+      .belongsTo(() => TranslationProvider, {
+        mappedBy: 'translations',
+      })
+      .nullable(),
   })
   .indexes([
     {

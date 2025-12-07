@@ -19,7 +19,10 @@ export const GET = async (
     scope: req.scope,
     fields: req.queryConfig.fields,
     pagination: req.queryConfig.pagination,
-    idOrFilter: req.filterableFields,
+    idOrFilter: {
+      ...req.filterableFields,
+      region_id: '*',
+    },
   })
 
   res.status(200).json({

@@ -14,7 +14,8 @@ export interface BaseLanguage {
 }
 
 export interface BaseLanguageListParams
-  extends FindParams, BaseFilterable<BaseLanguageListParams> {
+  extends FindParams,
+    BaseFilterable<BaseLanguageListParams> {
   q?: string
   is_default?: boolean
 }

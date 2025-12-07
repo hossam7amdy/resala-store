@@ -20,6 +20,7 @@ export const GET = async (
     idOrFilter: {
       ...req.filterableFields,
       is_published: true,
+      region_id: '*',
     },
   })
 

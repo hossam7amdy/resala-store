@@ -34,10 +34,6 @@
     "check-types": "tsc --noEmit",
     "clean": "rm -rf .medusa"
   },
-  "dependencies": {
-    "@google-cloud/translate": "^8.0.2",
-    "slugify": "^1.6.6"
-  },
   "devDependencies": {
     "@medusajs/admin-sdk": "2.11.3",
     "@medusajs/cli": "2.11.3",
@@ -65,7 +61,8 @@
     "@medusajs/test-utils": "2.11.3",
     "@medusajs/medusa": "2.11.3",
     "@medusajs/ui": "4.0.25",
-    "@medusajs/icons": "2.11.3"
+    "@medusajs/icons": "2.11.3",
+    "@google-cloud/translate": "^8.0.2"
   },
   "engines": {
     "node": ">=20"
