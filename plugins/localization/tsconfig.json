@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["ES2021"],
     "target": "ES2021",
     "esModuleInterop": true,
     "module": "Node16",
@@ -8,16 +9,26 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "declaration": false,
-    "sourceMap": false,
-    "inlineSourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "outDir": "./.medusa/server",
     "rootDir": "./",
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "checkJs": false,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "incremental": false,
+    "isolatedModules": true
   },
   "ts-node": {
     "swc": true

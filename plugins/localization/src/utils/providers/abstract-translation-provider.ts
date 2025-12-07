@@ -38,7 +38,7 @@ abstract class AbstractTranslationProvider<TConfig extends Record<string, any>>
   }
 
   normalizeLanguageCode(code: LanguageCode): LanguageCode {
-    return code.toLowerCase().split('-')[0]
+    return code.toLowerCase().split('-')[0]!
   }
 }
 

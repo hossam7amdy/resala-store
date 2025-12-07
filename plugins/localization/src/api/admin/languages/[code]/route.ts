@@ -5,11 +5,9 @@ export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
-  const { code } = req.params
-
   const { result } = await deleteLanguageWorkflow(req.scope).run({
     input: {
-      code,
+      code: req.params.code!,
     },
   })
 

@@ -21,7 +21,7 @@ export default async ({ container }: LoaderOptions): Promise<void> => {
     )
     if (languages.length > 0) {
       logger.info(
-        `[${LOCALIZATION_MODULE}] Default language already exist (${languages[0].code})`
+        `[${LOCALIZATION_MODULE}] Default language already exist (${languages[0]?.code})`
       )
       return
     }
@@ -37,7 +37,7 @@ export default async ({ container }: LoaderOptions): Promise<void> => {
     logger.info(
       `[${LOCALIZATION_MODULE}] Default language (${language.code}) loaded successfully`
     )
-  } catch (error) {
+  } catch (error: any) {
     logger.warn(
       `[${LOCALIZATION_MODULE}] Failed to load default language: ${error.message}`
     )

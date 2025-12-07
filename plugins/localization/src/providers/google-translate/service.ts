@@ -15,7 +15,7 @@ type InjectedDependencies = {
 }
 
 export class GoogleTranslateProviderService extends AbstractTranslationProvider<GoogleTranslateOptions> {
-  static identifier = 'google'
+  static override identifier = 'google'
 
   readonly supportedLanguages: LanguageCode[]
 
@@ -23,7 +23,7 @@ export class GoogleTranslateProviderService extends AbstractTranslationProvider<
   protected _options: GoogleTranslateOptions
   protected _logger: Logger
 
-  static validateOptions(options: Record<string, any>): void | never {
+  static override validateOptions(options: Record<string, any>): void | never {
     if (!options.projectId) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
@@ -101,11 +101,11 @@ export class GoogleTranslateProviderService extends AbstractTranslationProvider<
       return {
         translatedItems: translations.map((translation, i) => ({
           translatedText: translation,
-          format: input.items[i].format,
+          format: input.items[i]?.format,
         })),
         metadata,
       }
-    } catch (error) {
+    } catch (error: any) {
       this._logger.error(`Google Translate error: ${error.message}`)
       throw error
     }

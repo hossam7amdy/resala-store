@@ -9,13 +9,10 @@ export const PUT = async (
   req: AuthenticatedMedusaRequest<AdminUpdateLanguage>,
   res: MedusaResponse<AdminLanguageResponse>
 ) => {
-  const { id } = req.params
-  const body = req.validatedBody
-
   const { result } = await updateLanguageWorkflow(req.scope).run({
     input: {
-      id,
-      ...body,
+      id: req.params.id!,
+      ...req.validatedBody,
     },
   })
 
