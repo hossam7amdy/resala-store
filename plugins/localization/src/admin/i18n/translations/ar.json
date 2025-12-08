@@ -33,6 +33,13 @@
     "delete": {
       "successToast": "تم حذف اللغة بنجاح",
       "errorToast": "فشل حذف اللغة"
+    },
+    "fields": {
+      "language": "اللغة",
+      "selectLanguage": "اختر لغة",
+      "displayName": "الاسم",
+      "nativeName": "الاسم الأصلى",
+      "isRTL": "من اليمين إلى اليسار"
     }
   }
 }

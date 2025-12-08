@@ -33,6 +33,13 @@
     "delete": {
       "successToast": "Language deleted successfully",
       "errorToast": "Failed to delete language"
+    },
+    "fields": {
+      "language": "Language",
+      "selectLanguage": "Select language",
+      "displayName": "Display name",
+      "nativeName": "Native name",
+      "isRTL": "Right to left"
     }
   }
 }

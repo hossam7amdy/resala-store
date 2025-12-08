@@ -4,6 +4,7 @@ import { TranslatableResourceIdentifier } from '../../common'
 export interface AdminCreateLanguage {
   code: string
   name: string
+  is_rtl: boolean
   metadata?: MetadataType
 }
 
@@ -13,7 +14,8 @@ export interface AdminUpdateLanguage {
   metadata?: MetadataType
 }
 
-export interface AdminRegisterTranslations extends TranslatableResourceIdentifier {
+export interface AdminRegisterTranslations
+  extends TranslatableResourceIdentifier {
   translations: {
     locale: string
     field: string
@@ -22,6 +24,7 @@ export interface AdminRegisterTranslations extends TranslatableResourceIdentifie
   }[]
 }
 
-export interface AdminRemoveTranslations extends TranslatableResourceIdentifier {
+export interface AdminRemoveTranslations
+  extends TranslatableResourceIdentifier {
   locale: string
 }

@@ -7,13 +7,15 @@ import {
   Heading,
   StatusBadge,
   Toaster,
+  Button,
   DataTablePaginationState,
 } from '@medusajs/ui'
+import { Link } from 'react-router-dom'
 import { defineRouteConfig } from '@medusajs/admin-sdk'
 import { useTranslation } from 'react-i18next'
 import type { AdminLanguage } from '../../../../types'
 import { useLanguages } from '../../../hooks/api'
-import { AddLanguagePrompt, LanguageActions } from './components'
+import { LanguageActions } from './components'
 
 const columnHelper = createDataTableColumnHelper<AdminLanguage>()
 
@@ -57,7 +59,7 @@ const useColumns = () => {
   ]
 }
 
-const limit = 15
+const limit = 20
 
 const LanguageListPage = () => {
   const { t } = useTranslation()
@@ -104,7 +106,11 @@ const LanguageListPage = () => {
     <Container>
       <div className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center">
         <Heading>{t('languages.title')}</Heading>
-        <AddLanguagePrompt />
+        <Link to="create">
+          <Button variant="secondary" size="small">
+            {t('actions.create')}
+          </Button>
+        </Link>
       </div>
       <DataTable instance={table} className="mt-4">
         <DataTable.Table

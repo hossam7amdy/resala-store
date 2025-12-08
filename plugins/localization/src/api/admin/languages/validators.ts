@@ -8,6 +8,7 @@ import {
 export const AdminCreateLanguage = z.object({
   code: z.string().min(2).max(3),
   name: z.string().min(2).max(50),
+  is_rtl: z.boolean().default(false),
   metadata: z.record(z.unknown()).optional(),
 })
 
