@@ -1,4 +1,8 @@
-import { MedusaResponse, AuthenticatedMedusaRequest } from '@medusajs/framework'
+import {
+  MedusaResponse,
+  AuthenticatedMedusaRequest,
+  refetchEntity,
+} from '@medusajs/framework'
 import { updateLanguageWorkflow } from '../../../../workflows'
 import type {
   AdminUpdateLanguage,
@@ -9,14 +13,44 @@ export const PUT = async (
   req: AuthenticatedMedusaRequest<AdminUpdateLanguage>,
   res: MedusaResponse<AdminLanguageResponse>
 ) => {
-  const { result } = await updateLanguageWorkflow(req.scope).run({
+  const id = req.params.id!
+
+  await updateLanguageWorkflow(req.scope).run({
     input: {
-      id: req.params.id!,
+      id,
       ...req.validatedBody,
     },
   })
 
+  const language = await refetchEntity({
+    entity: 'language',
+    idOrFilter: id,
+    scope: req.scope,
+    fields: req.queryConfig.fields,
+  })
+
   res.status(200).json({
-    language: result.language,
+    language,
+  })
+}
+
+export const GET = async (
+  req: AuthenticatedMedusaRequest,
+  res: MedusaResponse<AdminLanguageResponse>
+) => {
+  const id = req.params.id!
+
+  const language = await refetchEntity({
+    entity: 'language',
+    idOrFilter: id,
+    scope: req.scope,
+    fields: req.queryConfig.fields,
+    options: {
+      throwIfKeyNotFound: true,
+    },
+  })
+
+  res.status(200).json({
+    language,
   })
 }

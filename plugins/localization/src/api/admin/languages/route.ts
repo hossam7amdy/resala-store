@@ -2,6 +2,7 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
   refetchEntities,
+  refetchEntity,
 } from '@medusajs/framework'
 import {
   AdminCreateLanguage,
@@ -21,7 +22,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
     idOrFilter: {
       ...req.filterableFields,
-      region_id: '*',
+      region_id: '*', // Only base languages
     },
   })
 
@@ -41,7 +42,14 @@ export const POST = async (
     input: req.validatedBody,
   })
 
+  const language = await refetchEntity({
+    entity: 'language',
+    scope: req.scope,
+    idOrFilter: result.language.id,
+    fields: req.queryConfig.fields,
+  })
+
   res.status(201).json({
-    language: result.language,
+    language,
   })
 }

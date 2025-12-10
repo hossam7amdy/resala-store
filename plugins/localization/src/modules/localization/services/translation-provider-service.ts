@@ -1,7 +1,12 @@
 import type { DAL, Logger } from '@medusajs/types'
 import { ModulesSdkUtils } from '@medusajs/framework/utils'
 import { TranslationProvider } from '../models'
-import { ITranslationProvider } from '../../../types'
+import {
+  ITranslationProvider,
+  LanguageCode,
+  TranslationInput,
+  TranslationOutput,
+} from '../../../types'
 
 type InjectedDependencies = {
   logger?: Logger
@@ -40,6 +45,32 @@ class TranslationProviderService extends ModulesSdkUtils.MedusaInternalService<I
 
       throw new Error(errorMessage)
     }
+  }
+
+  getIdentifier(providerId: string): string {
+    const provider = this.retrieveProvider(providerId)
+    return provider.getIdentifier()
+  }
+
+  async translate(
+    providerId: string,
+    input: TranslationInput
+  ): Promise<TranslationOutput> {
+    const provider = this.retrieveProvider(providerId)
+    return await provider.translate(input)
+  }
+
+  async getSupportedLanguages(providerId: string): Promise<LanguageCode[]> {
+    const provider = this.retrieveProvider(providerId)
+    return await provider.getSupportedLanguages()
+  }
+
+  async isLanguageSupported(
+    providerId: string,
+    code: LanguageCode
+  ): Promise<boolean> {
+    const provider = this.retrieveProvider(providerId)
+    return await provider.isLanguageSupported(code)
   }
 }
 

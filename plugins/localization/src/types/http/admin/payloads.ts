@@ -9,6 +9,8 @@ export interface AdminCreateLanguage {
 }
 
 export interface AdminUpdateLanguage {
+  name?: string
+  is_rtl?: boolean
   is_default?: boolean
   is_published?: boolean
   metadata?: MetadataType

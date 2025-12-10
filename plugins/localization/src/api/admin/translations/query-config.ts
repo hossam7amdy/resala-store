@@ -10,6 +10,14 @@ export const defaultAdminTranslationFields = [
   '*language',
 ]
 
+export const defaultAdminTranslationProviderFields = [
+  'id',
+  'is_enabled',
+  'is_default',
+  'created_at',
+  'updated_at',
+]
+
 export const retrieveTransformQueryConfig = {
   defaults: defaultAdminTranslationFields,
   isList: false,
@@ -17,5 +25,10 @@ export const retrieveTransformQueryConfig = {
 
 export const listTransformQueryConfig = {
   ...retrieveTransformQueryConfig,
+  isList: true,
+}
+
+export const listTranslationProviderTransformQueryConfig = {
+  defaults: defaultAdminTranslationProviderFields,
   isList: true,
 }

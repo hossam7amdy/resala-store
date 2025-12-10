@@ -1,8 +1,18 @@
 import type { PaginatedResponse } from '@medusajs/framework/types'
-import { AdminLanguage, AdminTranslation } from './entities'
+import {
+  AdminLanguage,
+  AdminTranslation,
+  AdminTranslationProvider,
+} from './entities'
 
 export type AdminLanguageResponse = {
   language: AdminLanguage
+}
+
+export type AdminDeleteLanguageResponse = {
+  code: string
+  object: 'language'
+  deleted: boolean
 }
 
 export type AdminLanguageListResponse = PaginatedResponse<{
@@ -20,4 +30,8 @@ export type AdminRemoveTranslationsResponse = {
 
 export type AdminTranslationListResponse = PaginatedResponse<{
   translations: AdminTranslation[]
+}>
+
+export type AdminTranslationProviderListResponse = PaginatedResponse<{
+  translation_providers: AdminTranslationProvider[]
 }>

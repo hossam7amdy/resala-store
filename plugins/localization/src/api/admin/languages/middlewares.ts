@@ -5,7 +5,7 @@ import {
 } from '@medusajs/framework'
 import {
   AdminCreateLanguage,
-  AdminGetLanguage,
+  AdminGetLanguageParams,
   AdminGetLanguageListParams,
   AdminUpdateLanguage,
 } from './validators'
@@ -28,7 +28,17 @@ export const adminLanguageMiddlewares: MiddlewareRoute[] = [
     middlewares: [
       validateAndTransformBody(AdminCreateLanguage),
       validateAndTransformQuery(
-        AdminGetLanguage,
+        AdminGetLanguageParams,
+        QueryConfig.retrieveLanguageQueryConfig
+      ),
+    ],
+  },
+  {
+    method: ['GET'],
+    matcher: '/admin/languages/:id',
+    middlewares: [
+      validateAndTransformQuery(
+        AdminGetLanguageParams,
         QueryConfig.retrieveLanguageQueryConfig
       ),
     ],
@@ -39,7 +49,7 @@ export const adminLanguageMiddlewares: MiddlewareRoute[] = [
     middlewares: [
       validateAndTransformBody(AdminUpdateLanguage),
       validateAndTransformQuery(
-        AdminGetLanguage,
+        AdminGetLanguageParams,
         QueryConfig.retrieveLanguageQueryConfig
       ),
     ],
@@ -47,5 +57,6 @@ export const adminLanguageMiddlewares: MiddlewareRoute[] = [
   {
     method: ['DELETE'],
     matcher: '/admin/languages/:code',
+    middlewares: [],
   },
 ]

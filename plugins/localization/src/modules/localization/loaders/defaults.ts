@@ -11,12 +11,11 @@ export default async ({ container }: LoaderOptions): Promise<void> => {
 
   try {
     const languages = await languageService.list(
-      {},
+      {
+        is_default: true,
+      },
       {
         select: ['code'],
-        filters: {
-          is_default: true,
-        },
       }
     )
     if (languages.length > 0) {

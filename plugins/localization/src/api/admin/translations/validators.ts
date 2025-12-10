@@ -1,5 +1,8 @@
 import { z } from 'zod'
-import { booleanString } from '@medusajs/medusa/api/utils/common-validators/common'
+import {
+  applyAndAndOrOperators,
+  booleanString,
+} from '@medusajs/medusa/api/utils/common-validators/common'
 import { createFindParams } from '@medusajs/medusa/api/utils/validators'
 import {
   isValidField,
@@ -44,12 +47,30 @@ export const AdminRemoveTranslations = z.object({
   locale: z.string().min(2).max(5),
 })
 
-export const AdminGetTranslationListParams = createFindParams().merge(
-  z.object({
-    q: z.string().max(100).optional(),
-    resource_id: z.string().optional(),
-    resource_type: z.nativeEnum(TranslatableResource).optional(),
-    locale: z.string().min(2).max(5).optional(),
-    is_outdated: booleanString().optional(),
-  })
-)
+export const AdminGetTranslationListParamsFields = z.object({
+  q: z.string().max(100).optional(),
+  resource_id: z.string().optional(),
+  resource_type: z.nativeEnum(TranslatableResource).optional(),
+  locale: z.string().min(2).max(5).optional(),
+  is_outdated: booleanString().optional(),
+})
+
+export const AdminGetTranslationListParams = createFindParams({
+  limit: 20,
+  offset: 0,
+})
+  .merge(AdminGetTranslationListParamsFields)
+  .merge(applyAndAndOrOperators(AdminGetTranslationListParamsFields))
+
+export const AdminGetTranslationProvidersParamsFields = z.object({
+  id: z.union([z.string(), z.array(z.string())]).optional(),
+  is_enabled: booleanString().optional(),
+  is_default: booleanString().optional(),
+})
+
+export const AdminGetTranslationProvidersParams = createFindParams({
+  limit: 20,
+  offset: 0,
+})
+  .merge(AdminGetTranslationProvidersParamsFields)
+  .merge(applyAndAndOrOperators(AdminGetTranslationProvidersParamsFields))

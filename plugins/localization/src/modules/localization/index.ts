@@ -9,3 +9,5 @@ export default Module(LOCALIZATION_MODULE, {
   service: LocalizationModuleService,
   loaders: [defaultsLoader, providersLoader],
 })
+
+export type { LocalizationModuleOptions } from './types'

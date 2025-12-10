@@ -122,7 +122,19 @@ const appConfig: InputConfig = {
     },
     {
       resolve: '@plugins/localization',
-      options: {},
+      options: {
+        providers: [
+          {
+            resolve: '@plugins/localization/providers/google-translate',
+            id: 'google',
+            is_default: true,
+            options: {
+              projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
+              apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
+            },
+          },
+        ],
+      },
     },
   ],
 }

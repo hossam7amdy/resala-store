@@ -5,6 +5,7 @@ import {
 } from '@medusajs/framework'
 import {
   AdminGetTranslationListParams,
+  AdminGetTranslationProvidersParams,
   AdminRegisterTranslations,
   AdminRemoveTranslations,
 } from './validators'
@@ -36,5 +37,15 @@ export const adminTranslationMiddlewares: MiddlewareRoute[] = [
     matcher: '/admin/translations/remove',
     method: ['POST'],
     middlewares: [validateAndTransformBody(AdminRemoveTranslations)],
+  },
+  {
+    matcher: '/admin/translations/translation-providers',
+    method: ['GET'],
+    middlewares: [
+      validateAndTransformQuery(
+        AdminGetTranslationProvidersParams,
+        QueryConfig.listTranslationProviderTransformQueryConfig
+      ),
+    ],
   },
 ]

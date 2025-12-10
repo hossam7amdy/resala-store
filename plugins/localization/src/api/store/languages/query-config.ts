@@ -1,6 +1,8 @@
 export const defaultStoreLanguageFields = [
+  'id',
   'code',
   'name',
+  'is_rtl',
   'is_default',
   'metadata',
   'created_at',

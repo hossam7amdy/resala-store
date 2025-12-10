@@ -51,19 +51,13 @@ export default async ({
   container,
   options,
 }: LoaderOptions<ProviderLoaderOptions>): Promise<void> => {
-  const logger = container.resolve(ContainerRegistrationKeys.LOGGER) ?? console
-
   const providers = options?.providers || []
-  if (providers.length === 0) {
-    logger.info(`[${LOCALIZATION_MODULE}] No translations providers to load`)
-    return
-  }
 
   const defaultProvider = providers.filter((p) => p.is_default)
-  if (defaultProvider.length !== 1) {
+  if (providers.length > 0 && defaultProvider.length !== 1) {
     throw new MedusaError(
       MedusaError.Types.INVALID_ARGUMENT,
-      'Exactly one translation provider must be marked as is_default.'
+      `Exactly one translation provider must be marked as 'is_default'`
     )
   }
 
@@ -85,14 +79,16 @@ const syncDatabaseProviders = async ({
 }: LoaderOptions<ProviderLoaderOptions>) => {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER) ?? console
 
+  let providersToEnable: string[]
+  try {
+    providersToEnable = container.resolve<string[]>(PROVIDER_REGISTRATION_KEY)
+  } catch {
+    providersToEnable = []
+  }
+
   const providerServiceRegistrationKey = lowerCaseFirst(
     TranslationProviderService.name
   )
-
-  const providersToEnable = container.resolve<string[]>(
-    PROVIDER_REGISTRATION_KEY
-  )
-
   const providerService = container.resolve<TranslationProviderService>(
     providerServiceRegistrationKey
   )
@@ -128,5 +124,7 @@ const syncDatabaseProviders = async ({
 
   await providerService.upsert(upsertData)
 
-  logger.info(`[${LOCALIZATION_MODULE}] Translations providers synced`)
+  logger.info(
+    `[${LOCALIZATION_MODULE}] Translations providers synced, ${providersToEnable.length} providers enabled`
+  )
 }
