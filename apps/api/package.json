@@ -14,9 +14,9 @@
     "clean": "rm -rf .medusa"
   },
   "dependencies": {
-    "@medusajs/cli": "2.11.3",
-    "@medusajs/framework": "2.11.3",
-    "@medusajs/medusa": "2.11.3",
+    "@medusajs/cli": "2.12.2",
+    "@medusajs/framework": "2.12.2",
+    "@medusajs/medusa": "2.12.2",
     "@react-email/components": "0.5.3",
     "redaxios": "^0.5.1",
     "resend": "^6.5.2",
@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
-    "@medusajs/test-utils": "2.11.3",
-    "@medusajs/types": "2.11.3",
+    "@medusajs/test-utils": "2.12.2",
+    "@medusajs/types": "2.12.2",
     "@swc/core": "1.5.7",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^29.5.14",
