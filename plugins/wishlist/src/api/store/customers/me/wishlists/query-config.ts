@@ -7,8 +7,6 @@ const defaultStoreCustomerWishlistFields = [
   'deleted_at',
   'items.*',
   'items.product.*',
-  'items.product.translations.*',
-  'items.product.translations.locale.*',
 ]
 
 export const retrieveTransformQueryConfig = {

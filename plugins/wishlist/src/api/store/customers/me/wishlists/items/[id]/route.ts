@@ -18,8 +18,7 @@ export async function DELETE(
   const wishlist = await refetchWishlist(
     result.wishlist.customer_id,
     req.scope,
-    req.queryConfig.fields,
-    req.context?.locale
+    req.queryConfig.fields
   )
 
   res.json({ wishlist })
