@@ -282,6 +282,9 @@ const useReferenceValues = (
     {
       id: ids.slice(0, DISPLAY_OVERRIDE_ITEMS_LIMIT),
       limit: DISPLAY_OVERRIDE_ITEMS_LIMIT,
+      // TODO: Remove exclusion once we avoid including unnecessary relations by default in the query config
+      fields:
+        '-type,-collection,-options,-tags,-images,-variants,-sales_channels',
     },
     {
       enabled: !!ids.length && type === TaxRateRuleReferenceType.PRODUCT,

@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 
-import { RouteFocusModal } from '../../../components/modals/index.ts'
-import { useProductVariant } from '../../../hooks/api/products.tsx'
+import { RouteFocusModal } from '../../../components/modals'
+import { useProductVariant } from '../../../hooks/api/products'
 import { VARIANT_DETAIL_FIELDS } from '../product-variant-detail/constants.ts'
-import { ManageVariantInventoryItemsForm } from './components/manage-variant-inventory-items-form/index.ts'
+import { ManageVariantInventoryItemsForm } from './components/manage-variant-inventory-items-form'
 
 export function ProductVariantManageInventoryItems() {
   const { id, variant_id } = useParams()

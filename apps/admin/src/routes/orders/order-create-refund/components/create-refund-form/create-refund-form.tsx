@@ -14,21 +14,15 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import * as zod from 'zod'
-import { Form } from '../../../../../components/common/form/index.ts'
-import {
-  RouteDrawer,
-  useRouteModal,
-} from '../../../../../components/modals/index.ts'
-import { KeyboundForm } from '../../../../../components/utilities/keybound-form/index.ts'
-import {
-  useRefundPayment,
-  useRefundReasons,
-} from '../../../../../hooks/api/index.ts'
-import { currencies } from '../../../../../lib/data/currencies.ts'
-import { formatCurrency } from '../../../../../lib/format-currency.ts'
-import { getLocaleAmount } from '../../../../../lib/money-amount-helpers.ts'
-import { getPaymentsFromOrder } from '../../../../../lib/orders.ts'
-import { useDocumentDirection } from '../../../../../hooks/use-document-direction.tsx'
+import { Form } from '../../../../../components/common/form'
+import { RouteDrawer, useRouteModal } from '../../../../../components/modals'
+import { KeyboundForm } from '../../../../../components/utilities/keybound-form'
+import { useRefundPayment, useRefundReasons } from '../../../../../hooks/api'
+import { currencies } from '../../../../../lib/data/currencies'
+import { formatCurrency } from '../../../../../lib/format-currency'
+import { getLocaleAmount } from '../../../../../lib/money-amount-helpers'
+import { getPaymentsFromOrder } from '../../../../../lib/orders'
+import { useDocumentDirection } from '../../../../../hooks/use-document-direction'
 import { formatProvider } from '../../../../../lib/format-provider.ts'
 
 type CreateRefundFormProps = {
@@ -55,7 +49,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
     searchParams.get('paymentId') || undefined
   )
   const payments = getPaymentsFromOrder(order)
-  const payment = payments.find((p) => p.id === paymentId)!
+  const payment = payments.find((p) => p.id === paymentId)
   const paymentAmount = payment?.amount || 0
 
   const currency = useMemo(
@@ -91,7 +85,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
     })
   }, [payment?.id || ''])
 
-  const { mutateAsync, isPending } = useRefundPayment(order.id, payment?.id)
+  const { mutateAsync, isPending } = useRefundPayment(order.id, payment?.id!)
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(
@@ -106,7 +100,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
             t('orders.payment.refundPaymentSuccess', {
               amount: formatCurrency(
                 data.amount.float!,
-                payment?.currency_code
+                payment?.currency_code!
               ),
             })
           )
@@ -187,7 +181,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                     payment!.currency_code
                   )}
                 </span>
-                <span> - </span>
+                <span> - </span>
                 <span>(#{payment!.id.substring(23)})</span>
               </div>
             )}

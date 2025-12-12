@@ -3,6 +3,7 @@ import { sdk } from '../../lib/client'
 
 export type FeatureFlags = {
   view_configurations?: boolean
+  translation?: boolean
   [key: string]: boolean | undefined
 }
 

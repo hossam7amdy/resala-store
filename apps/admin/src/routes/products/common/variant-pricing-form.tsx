@@ -7,12 +7,12 @@ import {
   DataGrid,
   createDataGridHelper,
   createDataGridPriceColumns,
-} from '../../../components/data-grid/index.ts'
+} from '../../../components/data-grid'
 import { useRouteModal } from '../../../components/modals/index'
-import { usePricePreferences } from '../../../hooks/api/price-preferences.tsx'
+import { usePricePreferences } from '../../../hooks/api/price-preferences'
 import { useRegions } from '../../../hooks/api/regions.tsx'
-import { useStore } from '../../../hooks/api/store.tsx'
-import { ProductCreateSchemaType } from '../product-create/types.ts'
+import { useStore } from '../../../hooks/api/store'
+import { ProductCreateSchemaType } from '../product-create/types'
 
 type VariantPricingFormProps = {
   form: UseFormReturn<ProductCreateSchemaType>

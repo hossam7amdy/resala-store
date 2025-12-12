@@ -13,7 +13,10 @@ import { DisplayIdCell } from '../../components/table/table-cells/order/display-
 import { TotalCell } from '../../components/table/table-cells/order/total-cell'
 import { MoneyAmountCell } from '../../components/table/table-cells/common/money-amount-cell'
 import { TFunction } from 'i18next'
-import { toCamelCase } from '../common'
+import {
+  getOrderPaymentStatus,
+  getOrderFulfillmentStatus,
+} from '../order-helpers'
 
 export type CellRenderer<TData = any> = (
   value: any,
@@ -52,7 +55,17 @@ const StatusRenderer: CellRenderer = (value, row, column, t) => {
     return <ProductStatusCell status={row.status} />
   }
 
-  // Generic status badge
+  if (column.context === 'payment' && t) {
+    const { label, color } = getOrderPaymentStatus(t, value)
+    return <StatusBadge color={color}>{label}</StatusBadge>
+  }
+
+  if (column.context === 'fulfillment' && t) {
+    const { label, color } = getOrderFulfillmentStatus(t, value)
+    return <StatusBadge color={color}>{label}</StatusBadge>
+  }
+
+  // Generic status badge for other status types
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
       case 'active':
@@ -76,14 +89,10 @@ const StatusRenderer: CellRenderer = (value, row, column, t) => {
   }
 
   // Use existing translation keys where available
-  const getTranslatedStatus = (
-    status: string,
-    column: HttpTypes.AdminColumn
-  ): string => {
+  const getTranslatedStatus = (status: string): string => {
     if (!t) return status
 
     const lowerStatus = status.toLowerCase()
-    const camelCaseStatus = toCamelCase(lowerStatus)
     switch (lowerStatus) {
       case 'active':
         return t('general.active', 'Active') as string
@@ -96,21 +105,12 @@ const StatusRenderer: CellRenderer = (value, row, column, t) => {
       case 'canceled':
         return t('orders.status.canceled', 'Canceled') as string
       default:
-        if (column.context === 'payment') {
-          return t(`orders.payment.status.${camelCaseStatus}`, status) as string
-        }
-        if (column.context === 'fulfillment') {
-          return t(
-            `orders.fulfillment.status.${camelCaseStatus}`,
-            status
-          ) as string
-        }
         // Try generic status translation with fallback
         return t(`status.${lowerStatus}`, status) as string
     }
   }
 
-  const translatedValue = getTranslatedStatus(value, column)
+  const translatedValue = getTranslatedStatus(value)
 
   return (
     <StatusBadge color={getStatusColor(value)}>{translatedValue}</StatusBadge>
@@ -167,8 +167,9 @@ const VariantsRenderer: CellRenderer = (_, row, _column, _t) => {
 // Order-specific renderers
 const CustomerNameRenderer: CellRenderer = (_, row, _column, t) => {
   if (row.customer?.first_name || row.customer?.last_name) {
-    const fullName =
-      `${row.customer.first_name || ''} ${row.customer.last_name || ''}`.trim()
+    const fullName = `${row.customer.first_name || ''} ${
+      row.customer.last_name || ''
+    }`.trim()
     if (fullName) return fullName
   }
 

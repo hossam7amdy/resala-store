@@ -7,9 +7,9 @@ import {
   useQuery,
   UseQueryOptions,
 } from '@tanstack/react-query'
-import { sdk } from '../../lib/client/index.ts'
-import { queryClient } from '../../lib/query-client.ts'
-import { queryKeysFactory } from '../../lib/query-key-factory.ts'
+import { sdk } from '../../lib/client'
+import { queryClient } from '../../lib/query-client'
+import { queryKeysFactory } from '../../lib/query-key-factory'
 import { inventoryItemsQueryKeys } from './inventory.tsx'
 
 const PRODUCTS_QUERY_KEY = 'products' as const
@@ -340,7 +340,11 @@ export const useUpdateProduct = (
   >
 ) => {
   return useMutation({
-    mutationFn: (payload) => sdk.admin.product.update(id, payload),
+    mutationFn: (payload) =>
+      sdk.admin.product.update(id, payload, {
+        fields:
+          '-type,-collection,-options,-tags,-images,-variants,-sales_channels',
+      }),
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
         queryKey: productsQueryKeys.lists(),
@@ -409,7 +413,7 @@ export const useImportProducts = (
 }
 
 export const useConfirmImportProducts = (
-  options?: UseMutationOptions<object, FetchError, string>
+  options?: UseMutationOptions<{}, FetchError, string>
 ) => {
   return useMutation({
     mutationFn: (payload) => sdk.admin.product.confirmImport(payload),

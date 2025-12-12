@@ -10,6 +10,7 @@ import {
   DocumentText,
   ExclamationCircle,
   PencilSquare,
+  ReceiptPercent,
   TriangleDownMini,
 } from '@medusajs/icons'
 import {
@@ -37,31 +38,31 @@ import {
   usePrompt,
 } from '@medusajs/ui'
 
-import { AdminReservation } from '@medusajs/types'
-import { ActionMenu } from '../../../../../components/common/action-menu/index.ts'
-import DisplayId from '../../../../../components/common/display-id/display-id.tsx'
-import { Thumbnail } from '../../../../../components/common/thumbnail/index.ts'
-import { useClaims } from '../../../../../hooks/api/claims.tsx'
-import { useExchanges } from '../../../../../hooks/api/exchanges.tsx'
-import { useOrderPreview } from '../../../../../hooks/api/orders.tsx'
-import { useMarkPaymentCollectionAsPaid } from '../../../../../hooks/api/payment-collections.tsx'
-import { useReservationItems } from '../../../../../hooks/api/reservations.tsx'
-import { useReturns } from '../../../../../hooks/api/returns.tsx'
-import { useDate } from '../../../../../hooks/use-date.tsx'
-import { getTotalCreditLines } from '../../../../../lib/credit-line.ts'
-import { formatCurrency } from '../../../../../lib/format-currency.ts'
-import { getReservationsLimitCount } from '../../../../../lib/orders.ts'
+import { AdminReservation } from '@medusajs/types/src/http'
+import { ActionMenu } from '../../../../../components/common/action-menu'
+import DisplayId from '../../../../../components/common/display-id/display-id'
+import { Thumbnail } from '../../../../../components/common/thumbnail'
+import { useClaims } from '../../../../../hooks/api/claims'
+import { useExchanges } from '../../../../../hooks/api/exchanges'
+import { useOrderPreview } from '../../../../../hooks/api/orders'
+import { useMarkPaymentCollectionAsPaid } from '../../../../../hooks/api/payment-collections'
+import { useReservationItems } from '../../../../../hooks/api/reservations'
+import { useReturns } from '../../../../../hooks/api/returns'
+import { useDate } from '../../../../../hooks/use-date'
+import { getTotalCreditLines } from '../../../../../lib/credit-line'
+import { formatCurrency } from '../../../../../lib/format-currency'
+import { getReservationsLimitCount } from '../../../../../lib/orders'
 import {
   getLocaleAmount,
   getStylizedAmount,
   isAmountLessThenRoundingError,
-} from '../../../../../lib/money-amount-helpers.ts'
-import { getTotalCaptured } from '../../../../../lib/payment.ts'
-import { getLoyaltyPlugin } from '../../../../../lib/plugins.ts'
-import { getReturnableQuantity } from '../../../../../lib/rma.ts'
-import { CopyPaymentLink } from '../copy-payment-link/copy-payment-link.tsx'
-import ReturnInfoPopover from './return-info-popover.tsx'
-import ShippingInfoPopover from './shipping-info-popover.tsx'
+} from '../../../../../lib/money-amount-helpers'
+import { getTotalCaptured } from '../../../../../lib/payment'
+import { getLoyaltyPlugin } from '../../../../../lib/plugins'
+import { getReturnableQuantity } from '../../../../../lib/rma'
+import { CopyPaymentLink } from '../copy-payment-link/copy-payment-link'
+import ReturnInfoPopover from './return-info-popover'
+import ShippingInfoPopover from './shipping-info-popover'
 import { formatPercentage } from '../../../../../lib/percentage-helpers.ts'
 
 type OrderSummarySectionProps = {
@@ -129,11 +130,11 @@ export const OrderSummarySection = ({
 
   const unpaidPaymentCollection = order.payment_collections.find(
     (pc) => pc.status === 'not_paid'
-  )!
+  )
 
   const { mutateAsync: markAsPaid } = useMarkPaymentCollectionAsPaid(
     order.id,
-    unpaidPaymentCollection?.id
+    unpaidPaymentCollection?.id!
   )
 
   const pendingDifference = order.summary?.pending_difference || 0
@@ -402,29 +403,49 @@ const Item = ({
       item.variant?.inventory_items?.some((i) => i.required_quantity > 1))
   const hasUnfulfilledItems = item.quantity - item.detail.fulfilled_quantity > 0
 
+  const appliedPromoCodes = (item.adjustments || []).map((a) => a.code)
+
   return (
     <>
       <div
         key={item.id}
         className="text-ui-fg-subtle grid grid-cols-2 items-center gap-x-4 px-6 py-4"
       >
-        <div className="flex items-start gap-x-4">
-          <Thumbnail src={item.thumbnail} />
-          <div>
-            <Text size="small" leading="compact" className="text-ui-fg-base">
-              {item.title}
-            </Text>
+        <div className=" flex justify-between gap-x-2 ">
+          <div className=" group flex items-start gap-x-4">
+            <Thumbnail src={item.thumbnail} />
+            <div>
+              <Text size="small" leading="compact" className="text-ui-fg-base">
+                {item.title}
+              </Text>
 
-            {item.variant_sku && (
-              <div className="flex items-center gap-x-1">
-                <Text size="small">{item.variant_sku}</Text>
-                <Copy content={item.variant_sku} className="text-ui-fg-muted" />
-              </div>
-            )}
-            <Text size="small">
-              {item.variant?.options?.map((o) => o.value).join(' · ')}
-            </Text>
+              {item.variant_sku && (
+                <div className="flex items-center gap-x-1">
+                  <Text size="small">{item.variant_sku}</Text>
+                  <Copy
+                    content={item.variant_sku}
+                    className="text-ui-fg-muted hidden group-hover:block"
+                  />
+                </div>
+              )}
+              <Text size="small">
+                {item.variant?.options?.map((o) => o.value).join(' · ')}
+              </Text>
+            </div>
           </div>
+          {appliedPromoCodes.length > 0 && (
+            <Tooltip
+              content={
+                <span className="text-pretty">
+                  {appliedPromoCodes.map((code) => (
+                    <div key={code}>{code}</div>
+                  ))}
+                </span>
+              }
+            >
+              <ReceiptPercent className="text-ui-fg-subtle flex-shrink self-center " />
+            </Tooltip>
+          )}
         </div>
 
         <div className="grid grid-cols-3 items-center gap-x-4">

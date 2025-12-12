@@ -2,12 +2,12 @@ import { Switch } from '@medusajs/ui'
 import { ReactNode } from 'react'
 import { ControllerProps, FieldPath, FieldValues } from 'react-hook-form'
 
-import { Form } from '../form'
+import { Form } from '../../common/form'
 
-type HeadlessControllerProps<
+interface HeadlessControllerProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = Omit<ControllerProps<TFieldValues, TName>, 'render'>
+> extends Omit<ControllerProps<TFieldValues, TName>, 'render'> {}
 
 interface SwitchBoxProps<
   TFieldValues extends FieldValues = FieldValues,

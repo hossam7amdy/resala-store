@@ -20,8 +20,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useStore } from '../../../hooks/api/store'
 import { Skeleton } from '../../common/skeleton'
-import { INavItem, NavItem } from '../nav-item'
-import { Shell } from '../shell'
+import { INavItem, NavItem } from '../../layout/nav-item'
+import { Shell } from '../../layout/shell'
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLogout } from '../../../hooks/api'
@@ -347,6 +347,7 @@ const ExtensionRouteSection = () => {
                     label={item.label}
                     icon={item.icon ? item.icon : <SquaresPlus />}
                     items={item.items}
+                    translationNs={item.translationNs}
                     type="extension"
                   />
                 )

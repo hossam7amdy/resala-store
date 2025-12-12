@@ -26,16 +26,16 @@ import {
   StackedFocusModal,
   useRouteModal,
   useStackedModal,
-} from '../../../../../components/modals/index.ts'
+} from '../../../../../components/modals'
 
-import { Form } from '../../../../../components/common/form/index.ts'
-import { Combobox } from '../../../../../components/inputs/combobox/index.ts'
-import { useShippingOptions } from '../../../../../hooks/api/shipping-options.tsx'
-import { useStockLocations } from '../../../../../hooks/api/stock-locations.tsx'
-import { getStylizedAmount } from '../../../../../lib/money-amount-helpers.ts'
-import { AddClaimItemsTable } from '../add-claim-items-table/index.ts'
+import { Form } from '../../../../../components/common/form'
+import { Combobox } from '../../../../../components/inputs/combobox'
+import { useShippingOptions } from '../../../../../hooks/api/shipping-options'
+import { useStockLocations } from '../../../../../hooks/api/stock-locations'
+import { getStylizedAmount } from '../../../../../lib/money-amount-helpers'
+import { AddClaimItemsTable } from '../add-claim-items-table'
 import { ClaimInboundItem } from './claim-inbound-item.tsx'
-import { ClaimCreateSchema, CreateClaimSchemaType } from './schema.ts'
+import { ClaimCreateSchema, CreateClaimSchemaType } from './schema'
 
 import { AdminReturn, HttpTypes } from '@medusajs/types'
 import { KeyboundForm } from '../../../../../components/utilities/keybound-form/keybound-form.tsx'
@@ -49,13 +49,13 @@ import {
   useUpdateClaimInboundItem,
   useUpdateClaimInboundShipping,
   useUpdateClaimOutboundShipping,
-} from '../../../../../hooks/api/claims.tsx'
-import { useUpdateReturn } from '../../../../../hooks/api/returns.tsx'
-import { sdk } from '../../../../../lib/client/index.ts'
-import { currencies } from '../../../../../lib/data/currencies.ts'
-import { ReturnShippingPlaceholder } from '../../../common/placeholders.tsx'
-import { ClaimOutboundSection } from './claim-outbound-section.tsx'
-import { ItemPlaceholder } from './item-placeholder.tsx'
+} from '../../../../../hooks/api/claims'
+import { useUpdateReturn } from '../../../../../hooks/api/returns'
+import { sdk } from '../../../../../lib/client'
+import { currencies } from '../../../../../lib/data/currencies'
+import { ReturnShippingPlaceholder } from '../../../common/placeholders'
+import { ClaimOutboundSection } from './claim-outbound-section'
+import { ItemPlaceholder } from './item-placeholder'
 
 type ReturnCreateFormProps = {
   order: AdminOrder
@@ -115,7 +115,7 @@ export const ClaimCreateForm = ({
   // TODO: implement update claim request
 
   const { mutateAsync: updateReturn, isPending: isUpdating } = useUpdateReturn(
-    preview?.order_change?.return_id,
+    preview?.order_change?.return_id!,
     order.id
   )
 
@@ -405,8 +405,8 @@ export const ClaimCreateForm = ({
   })
 
   const onItemsSelected = async () => {
-    if (itemsToAdd.length)
-      await addInboundItem(
+    itemsToAdd.length &&
+      (await addInboundItem(
         {
           items: itemsToAdd.map((id) => ({
             id,
@@ -418,7 +418,7 @@ export const ClaimCreateForm = ({
             toast.error(error.message)
           },
         }
-      )
+      ))
 
     for (const itemToRemove of itemsToRemove) {
       const actionId = previewItems
@@ -567,6 +567,16 @@ export const ClaimCreateForm = ({
       }
     }
   }, [])
+
+  /**
+   * For estimated difference show pending difference and subtract the total of inbound items (assume all items will be returned correctly)
+   * We don't include inbound total in the pending difference because it will be considered returned when the receive flow is completed
+   */
+  const estimatedDifference =
+    preview.summary.pending_difference -
+    inboundPreviewItems.reduce((acc, item) => {
+      return acc + item.total
+    }, 0)
 
   const inboundShippingTotal = useMemo(() => {
     const method = preview.shipping_methods.find(
@@ -1010,10 +1020,7 @@ export const ClaimCreateForm = ({
                   {t('orders.claims.refundAmount')}
                 </span>
                 <span className="txt-small font-medium">
-                  {getStylizedAmount(
-                    preview.summary.pending_difference,
-                    order.currency_code
-                  )}
+                  {getStylizedAmount(estimatedDifference, order.currency_code)}
                 </span>
               </div>
             </div>

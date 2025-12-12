@@ -10,6 +10,9 @@ import type { InputConfig } from '@medusajs/types'
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 const appConfig: InputConfig = {
+  featureFlags: {
+    view_configurations: true,
+  },
   admin: {
     backendUrl: process.env.BACKEND_URL,
     storefrontUrl: process.env.STOREFRONT_URL,
@@ -110,13 +113,6 @@ const appConfig: InputConfig = {
       resolve: '@medusajs/index',
       options: {},
     },
-    {
-      resolve: '@plugins/translations/modules/auto-translation',
-      options: {
-        apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
-        projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
-      },
-    },
   ],
   plugins: [
     {
@@ -125,10 +121,6 @@ const appConfig: InputConfig = {
     },
     {
       resolve: '@plugins/reviews',
-      options: {},
-    },
-    {
-      resolve: '@plugins/translations',
       options: {},
     },
   ],
@@ -149,7 +141,7 @@ if (isDefined(process.env.REDIS_URL)) {
       resolve: '@medusajs/medusa/workflow-engine-redis',
       options: {
         redis: {
-          url: process.env.REDIS_URL,
+          redisUrl: process.env.REDIS_URL,
         },
       },
     },

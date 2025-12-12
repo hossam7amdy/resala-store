@@ -2,11 +2,11 @@ import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 
 import { HttpTypes } from '@medusajs/types'
 
-import { sdk } from '../../lib/client/index.ts'
-import { queryClient } from '../../lib/query-client.ts'
-import { ordersQueryKeys } from './orders.tsx'
+import { sdk } from '../../lib/client'
+import { queryClient } from '../../lib/query-client'
+import { ordersQueryKeys } from './orders'
 import { FetchError } from '@medusajs/js-sdk'
-import { reservationItemsQueryKeys } from './reservations.tsx'
+import { reservationItemsQueryKeys } from './reservations'
 import { inventoryItemsQueryKeys } from './inventory.tsx'
 
 export const useCreateOrderEdit = (

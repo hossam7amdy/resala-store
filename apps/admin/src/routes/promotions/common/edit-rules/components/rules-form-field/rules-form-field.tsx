@@ -338,12 +338,12 @@ export const RulesFormField = ({
 
                   <RuleValueFormField
                     form={form}
-                    identifier={identifier}
+                    identifier={identifier!}
                     scope={scope}
                     name={`${scope}.${index}.values`}
                     operator={`${scope}.${index}.operator`}
                     fieldRule={fieldRule}
-                    attributes={attributes}
+                    attributes={attributes!}
                     ruleType={ruleType}
                     applicationMethodTargetType={applicationMethodTargetType}
                   />
@@ -358,10 +358,8 @@ export const RulesFormField = ({
                     className="text-ui-fg-muted"
                     type="button"
                     onClick={() => {
-                      if (!fieldRule.required) {
-                        if (setRulesToRemove)
-                          setRulesToRemove([...rulesToRemove, fieldRule])
-
+                      if (!fieldRule.required && setRulesToRemove) {
+                        setRulesToRemove?.([...rulesToRemove, fieldRule])
                         remove(index)
                       }
                     }}
@@ -412,8 +410,7 @@ export const RulesFormField = ({
                 .map((field: any, index) => (field.required ? null : index))
                 .filter((f) => f !== null)
 
-              if (setRulesToRemove)
-                setRulesToRemove(fields.filter((field: any) => !field.required))
+              setRulesToRemove?.(fields.filter((field: any) => !field.required))
               remove(indicesToRemove)
             }}
           >
