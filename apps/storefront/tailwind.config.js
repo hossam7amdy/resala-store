@@ -1,5 +1,11 @@
 const path = require('path')
 
+const medusaUI = path.join(
+  path.dirname(require.resolve('@medusajs/ui')),
+  '**/*.{js,jsx,ts,tsx}'
+)
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
   presets: [require('@medusajs/ui-preset')],
@@ -8,7 +14,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/modules/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@medusajs/ui/dist/**/*.{js,jsx,ts,tsx}',
+    medusaUI,
   ],
   theme: {
     extend: {

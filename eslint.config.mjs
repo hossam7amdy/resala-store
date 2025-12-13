@@ -1,5 +1,6 @@
 // @ts-check
 import js from '@eslint/js'
+import globals from 'globals'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
@@ -17,6 +18,14 @@ export default defineConfig(
   js.configs.recommended,
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
+    },
+  },
   {
     plugins: {
       prettier: eslintPluginPrettier,
@@ -80,6 +89,12 @@ export default defineConfig(
           argsIgnorePattern: '^_',
         },
       ],
+    },
+  },
+  {
+    files: ['**/*.js', '**/*.cjs'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
   {
