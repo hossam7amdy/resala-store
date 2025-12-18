@@ -11,7 +11,8 @@ loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 const appConfig: InputConfig = {
   featureFlags: {
-    view_configurations: true,
+    translation: process.env.FF_TRANSLATION === 'true',
+    view_configurations: process.env.FF_VIEW_CONFIGURATIONS === 'true',
   },
   admin: {
     backendUrl: process.env.BACKEND_URL,
@@ -113,6 +114,9 @@ const appConfig: InputConfig = {
       resolve: '@medusajs/index',
       options: {},
     },
+    {
+      resolve: '@medusajs/translation',
+    },
   ],
   plugins: [
     {
@@ -178,7 +182,7 @@ if (isDefined(process.env.REDIS_URL)) {
   if (!isDefined(appConfig.featureFlags)) {
     appConfig.featureFlags = {}
   }
-  appConfig.featureFlags.caching = true
+  appConfig.featureFlags.caching = process.env.FF_CACHING === 'true'
 }
 
 module.exports = defineConfig(appConfig)
