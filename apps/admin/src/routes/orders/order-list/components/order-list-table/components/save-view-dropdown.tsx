@@ -69,7 +69,7 @@ export const SaveViewDropdown: React.FC<SaveViewDropdownProps> = ({
         ) : (
           <>
             <DropdownMenu.Item onClick={handleUpdateExisting}>
-              Update &ldquo;{currentViewName}&rdquo;
+              Update "{currentViewName}"
             </DropdownMenu.Item>
             <DropdownMenu.Item onClick={onSaveAsNew}>
               Save as new view

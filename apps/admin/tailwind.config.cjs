@@ -22,7 +22,6 @@ function getPluginContent(packageName) {
 const plugins = [
   '@plugins/reviews',
   '@plugins/wishlist',
-  '@plugins/translations',
   '@medusajs/draft-order',
 ]
   .map(getPluginContent)

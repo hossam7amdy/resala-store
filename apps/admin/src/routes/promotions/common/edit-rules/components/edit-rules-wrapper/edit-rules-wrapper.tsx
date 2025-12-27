@@ -79,8 +79,8 @@ export const EditRulesWrapper = ({
         } as any)
       }
 
-      if (rulesToCreate.length)
-        await addPromotionRules({
+      rulesToCreate.length &&
+        (await addPromotionRules({
           rules: rulesToCreate.map((rule) => {
             return {
               attribute: rule.attribute,
@@ -88,15 +88,15 @@ export const EditRulesWrapper = ({
               values: rule.values,
             } as any
           }),
-        })
+        }))
 
-      if (rulesToRemove?.length)
-        await removePromotionRules({
+      rulesToRemove?.length &&
+        (await removePromotionRules({
           rule_ids: rulesToRemove.map((r) => r.id).filter(Boolean),
-        })
+        }))
 
-      if (rulesToUpdate.length)
-        await updatePromotionRules({
+      rulesToUpdate.length &&
+        (await updatePromotionRules({
           rules: rulesToUpdate.map((rule: PromotionRuleResponse) => {
             return {
               id: rule.id!,
@@ -105,7 +105,7 @@ export const EditRulesWrapper = ({
               values: rule.values as unknown as string | string[],
             }
           }),
-        })
+        }))
 
       handleSuccess()
     }
