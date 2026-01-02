@@ -110,13 +110,6 @@ const appConfig: InputConfig = {
       resolve: '@medusajs/index',
       options: {},
     },
-    {
-      resolve: '@plugins/translations/modules/auto-translation',
-      options: {
-        apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
-        projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
-      },
-    },
   ],
   plugins: [
     {
@@ -128,8 +121,20 @@ const appConfig: InputConfig = {
       options: {},
     },
     {
-      resolve: '@plugins/translations',
-      options: {},
+      resolve: '@plugins/localization',
+      options: {
+        providers: [
+          {
+            resolve: '@plugins/localization/providers/google-translate',
+            id: 'google',
+            is_default: true,
+            options: {
+              projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
+              apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
+            },
+          },
+        ],
+      },
     },
   ],
 }

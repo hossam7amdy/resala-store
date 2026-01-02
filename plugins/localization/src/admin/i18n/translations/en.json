@@ -1,0 +1,45 @@
+{
+  "languages": {
+    "title": "Store Languages",
+    "table": {
+      "name": "Name",
+      "code": "Code",
+      "status": "Status",
+      "default": "(default)",
+      "published": "Published",
+      "notPublished": "Not published"
+    },
+    "actions": {
+      "add": "Add",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "setAsDefault": "Set as default",
+      "default": "Default"
+    },
+    "create": {
+      "title": "Add language",
+      "description": "Create a new language for your store.",
+      "languageLabel": "Language",
+      "selectPlaceholder": "Select a language",
+      "successToast": "Language created successfully",
+      "errorToast": "Failed to create language"
+    },
+    "update": {
+      "publishSuccess": "Language published successfully",
+      "unpublishSuccess": "Language unpublished successfully",
+      "setDefaultSuccess": "Language set as default successfully",
+      "error": "Failed to update language"
+    },
+    "delete": {
+      "successToast": "Language deleted successfully",
+      "errorToast": "Failed to delete language"
+    },
+    "fields": {
+      "language": "Language",
+      "selectLanguage": "Select language",
+      "displayName": "Display name",
+      "nativeName": "Native name",
+      "isRTL": "Right to left"
+    }
+  }
+}

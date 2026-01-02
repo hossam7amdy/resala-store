@@ -1,0 +1,45 @@
+{
+  "languages": {
+    "title": "لغات المتجر",
+    "table": {
+      "name": "الاسم",
+      "code": "الرمز",
+      "status": "الحالة",
+      "default": "(افتراضية)",
+      "published": "منشورة",
+      "notPublished": "غير منشورة"
+    },
+    "actions": {
+      "add": "إضافة",
+      "publish": "نشر",
+      "unpublish": "إلغاء النشر",
+      "setAsDefault": "تعيين كافتراضية",
+      "default": "افتراضية"
+    },
+    "create": {
+      "title": "إضافة لغة",
+      "description": "إنشاء لغة جديدة للمتجر.",
+      "languageLabel": "اللغة",
+      "selectPlaceholder": "اختر لغة",
+      "successToast": "تم إنشاء اللغة بنجاح",
+      "errorToast": "فشل إنشاء اللغة"
+    },
+    "update": {
+      "publishSuccess": "تم نشر اللغة بنجاح",
+      "unpublishSuccess": "تم إلغاء نشر اللغة بنجاح",
+      "setDefaultSuccess": "تم تعيين اللغة كافتراضية بنجاح",
+      "error": "فشل تحديث اللغة"
+    },
+    "delete": {
+      "successToast": "تم حذف اللغة بنجاح",
+      "errorToast": "فشل حذف اللغة"
+    },
+    "fields": {
+      "language": "اللغة",
+      "selectLanguage": "اختر لغة",
+      "displayName": "الاسم",
+      "nativeName": "الاسم الأصلى",
+      "isRTL": "من اليمين إلى اليسار"
+    }
+  }
+}

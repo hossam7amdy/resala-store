@@ -1,0 +1,32 @@
+import type { MetadataType } from '@medusajs/types'
+import { TranslatableResourceIdentifier } from '../../common'
+
+export interface AdminCreateLanguage {
+  code: string
+  name: string
+  is_rtl: boolean
+  metadata?: MetadataType
+}
+
+export interface AdminUpdateLanguage {
+  name?: string
+  is_rtl?: boolean
+  is_default?: boolean
+  is_published?: boolean
+  metadata?: MetadataType
+}
+
+export interface AdminRegisterTranslations
+  extends TranslatableResourceIdentifier {
+  translations: {
+    locale: string
+    field: string
+    value: string
+    is_outdated?: boolean
+  }[]
+}
+
+export interface AdminRemoveTranslations
+  extends TranslatableResourceIdentifier {
+  locale: string
+}
