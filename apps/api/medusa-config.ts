@@ -26,6 +26,9 @@ const appConfig: InputConfig = {
       cookieSecret: process.env.COOKIE_SECRET,
     },
   },
+  featureFlags: {
+    translation: true,
+  },
   modules: [
     {
       resolve: '@medusajs/medusa/file',
@@ -111,11 +114,8 @@ const appConfig: InputConfig = {
       options: {},
     },
     {
-      resolve: '@plugins/translations/modules/auto-translation',
-      options: {
-        apiKey: process.env.GOOGLE_TRANSLATE_API_KEY,
-        projectId: process.env.GOOGLE_TRANSLATE_PROJECT_ID,
-      },
+      resolve: '@medusajs/medusa/translation',
+      options: {},
     },
   ],
   plugins: [
@@ -125,10 +125,6 @@ const appConfig: InputConfig = {
     },
     {
       resolve: '@plugins/reviews',
-      options: {},
-    },
-    {
-      resolve: '@plugins/translations',
       options: {},
     },
   ],
