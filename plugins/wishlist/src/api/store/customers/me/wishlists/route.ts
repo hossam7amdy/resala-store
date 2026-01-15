@@ -32,7 +32,7 @@ export async function POST(
     result.wishlist.customer_id,
     req.scope,
     req.queryConfig.fields,
-    req.context?.locale
+    req.locale
   )
 
   res.json({ wishlist })
@@ -47,7 +47,7 @@ export async function GET(
     req.auth_context.actor_id,
     req.scope,
     req.queryConfig.fields,
-    req.context?.locale
+    req.locale
   )
 
   if (!wishlist) {
