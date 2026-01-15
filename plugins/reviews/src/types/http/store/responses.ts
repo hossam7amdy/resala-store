@@ -6,6 +6,6 @@ export type StoreCreateReviewResponse = {
 }
 
 export type StoreProductReviewsListResponse = PaginatedResponse<{
-  review: StoreReview[]
+  reviews: StoreReview[]
   average_rating: number
 }>
