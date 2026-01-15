@@ -8,7 +8,7 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky || echo 'husky not found'",
     "build:api": "pnpm --filter api build",
-    "build:admin": "pnpm --filter admin build",
+    "build:admin": "pnpm --filter api build --admin-only",
     "build:storefront": "pnpm --filter storefront build",
     "build:plugins": "pnpm --filter \"@plugins/*\" run build",
     "dev": "turbo run dev",
