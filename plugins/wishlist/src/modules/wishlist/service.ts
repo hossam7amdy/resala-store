@@ -1,30 +1,8 @@
-import {
-  InjectManager,
-  MedusaContext,
-  MedusaService,
-} from '@medusajs/framework/utils'
+import { MedusaService } from '@medusajs/framework/utils'
 import { Wishlist } from './models/wishlist'
 import { WishlistItem } from './models/wishlist-item'
-import { Context } from '@medusajs/framework/types'
-import { EntityManager } from '@medusajs/framework/mikro-orm/knex'
 
 export default class WishlistModuleService extends MedusaService({
   Wishlist,
   WishlistItem,
-}) {
-  @InjectManager()
-  async getWishlistsOfVariants(
-    productId: string,
-    @MedusaContext() context: Context<EntityManager> = {}
-  ): Promise<number> {
-    return (
-      (
-        await context.manager
-          ?.createQueryBuilder('wishlist_item', 'wi')
-          .select(['wi.wishlist_id'], true)
-          .where('wi.product_id = (?)', [productId])
-          .execute()
-      )?.length || 0
-    )
-  }
-}
+}) {}

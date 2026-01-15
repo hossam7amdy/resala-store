@@ -1,8 +1,9 @@
-import { MedusaError } from '@medusajs/framework/utils'
-import { MedusaRequest, MedusaResponse } from '@medusajs/framework'
+import {
+  MedusaRequest,
+  MedusaResponse,
+  refetchEntities,
+} from '@medusajs/framework'
 import type { AdminProductWishlistCountResponse } from '../../../../../types'
-import WishlistModuleService from '../../../../../modules/wishlist/service'
-import { WISHLIST_MODULE } from '../../../../../modules/wishlist'
 
 export async function GET(
   req: MedusaRequest,
@@ -10,30 +11,16 @@ export async function GET(
 ) {
   const { id } = req.params
 
-  const query = req.scope.resolve('query')
-  const wishlistModuleService =
-    req.scope.resolve<WishlistModuleService>(WISHLIST_MODULE)
-
-  const {
-    data: [product],
-  } = await query.graph({
-    entity: 'product',
+  const { data: wishlistItems } = await refetchEntities({
+    entity: 'wishlist_item',
     fields: ['id'],
-    filters: {
-      id,
+    scope: req.scope,
+    idOrFilter: {
+      product_id: id,
     },
   })
 
-  if (!product) {
-    throw new MedusaError(
-      MedusaError.Types.NOT_FOUND,
-      `Product with id: ${id} was not found`
-    )
-  }
-
-  const count = await wishlistModuleService.getWishlistsOfVariants(id)
-
   res.json({
-    count,
+    count: wishlistItems.length,
   })
 }
