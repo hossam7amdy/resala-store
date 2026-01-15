@@ -11,6 +11,7 @@ loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 const appConfig: InputConfig = {
   admin: {
+    path: (process.env.ADMIN_PATH || '/app') as `/${string}`,
     backendUrl: process.env.BACKEND_URL,
     storefrontUrl: process.env.STOREFRONT_URL,
     disable: process.env.ADMIN_DISABLED === 'true',
