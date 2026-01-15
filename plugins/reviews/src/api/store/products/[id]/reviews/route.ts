@@ -1,8 +1,8 @@
-import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
 import {
-  ContainerRegistrationKeys,
-  remoteQueryObjectFromString,
-} from '@medusajs/framework/utils'
+  MedusaRequest,
+  MedusaResponse,
+  refetchEntities,
+} from '@medusajs/framework/http'
 import { StoreProductReviewsListResponse } from '../../../../../types'
 import type ProductReviewModuleService from '../../../../../modules/product-review/service'
 import { PRODUCT_REVIEW_MODULE } from '../../../../../modules/product-review'
@@ -13,27 +13,26 @@ export const GET = async (
 ) => {
   const { id } = req.params
 
-  const remoteQuery = req.scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
   const reviewModuleService = req.scope.resolve<ProductReviewModuleService>(
     PRODUCT_REVIEW_MODULE
   )
 
-  const queryConfig = remoteQueryObjectFromString({
-    entryPoint: 'review',
-    variables: {
-      filters: {
-        product_id: id,
-        status: 'approved',
-      },
-      ...req.queryConfig.pagination,
-    },
+  const { data, metadata } = await refetchEntities({
+    entity: 'reviews',
+    scope: req.scope,
     fields: req.queryConfig.fields,
+    pagination: req.queryConfig.pagination,
+    idOrFilter: {
+      product_id: id,
+      status: 'approved',
+    },
   })
-  const { rows: reviews, metadata } = await remoteQuery(queryConfig)
 
   res.json({
-    reviews,
+    reviews: data,
     average_rating: await reviewModuleService.getAverageRating(id),
-    ...metadata,
+    count: metadata.count,
+    offset: metadata.skip,
+    limit: metadata.take,
   })
 }

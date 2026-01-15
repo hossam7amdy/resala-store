@@ -4,7 +4,7 @@ import type {
 } from '@medusajs/framework/http'
 import type { StoreCreateReviewResponse } from '../../../types'
 
-import { StoreCreateReviewType } from './validators'
+import { StoreCreateReviewType } from '../validators'
 import { createReviewWorkflow } from '../../../workflows/review'
 
 export const POST = async (
