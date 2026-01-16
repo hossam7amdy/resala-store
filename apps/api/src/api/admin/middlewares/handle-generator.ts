@@ -7,7 +7,12 @@ import slugify from 'slugify'
 const generateHandle: MedusaRequestHandler<any> = (req, _res, next) => {
   if (req.body?.title || req.body?.name || req.body?.handle) {
     req.body['handle'] = slugify(
-      req.body?.handle || req.body?.title || req.body?.name
+      req.body?.handle || req.body?.title || req.body?.name,
+      {
+        lower: true,
+        trim: true,
+        strict: true,
+      }
     )
   }
   next()
